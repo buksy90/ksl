@@ -1,0 +1,13 @@
+<!-- Games list directive -->
+<div class="row games-list">
+	<div class="col-xs-12 games-heading">
+		<h2>Zoznam zápasov</h2>
+	</div>
+	<!-- List of games -->
+	<div class="col-sm-4 game-column" data-ng-repeat="game in main.games | orderBy: list.sortGames">
+		<div class="panel game-panel {{game.date > Date.now() ? 'panel-primary' : 'panel-default'}}">
+			<div class="panel-heading">{{game.date|date:"yyyy/MM/dd EEEE, H:m"}}</div>
+			<div class="panel-body">{{game.homeTeam}} @ {{game.awayTeam}}</div>
+		</div>
+	</div>
+</div>
