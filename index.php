@@ -86,8 +86,9 @@ $container['twig']  = function($c) {
     
     $env->addGlobal('navigation', [
         [ 'route' => 'index', 'text' => 'Úvod', 'navigationSwitch' => null ],
+        [ 'route' => 'rozpis', 'text' => 'Rozpis', 'navigationSwitch' => 'rozpis' ],
+        [ 'route' => 'tabulka', 'text' => 'Tabuľky', 'navigationSwitch' => 'tabulka' ],
         [ 'route' => 'o-nas', 'text' => 'O nás', 'navigationSwitch' => 'o-nas' ],
-        [ 'route' => 'tabulka', 'text' => 'Tabuľky', 'navigationSwitch' => 'tabulka' ]
     ]);
     //$env->addGlobal('request', $c['request']);
 
@@ -114,6 +115,15 @@ $app->get('/o-nas', function ($request, $response, $args) {
         'navigationSwitch' => 'o-nas'
     ]));
 })->setName('o-nas');
+
+
+$app->get('/rozpis', function ($request, $response, $args) {
+    
+    return $response->write( $this->twig->render('rozpis.tpl', [
+        'navigationSwitch' => 'rozpis'
+    ]));
+})->setName('rozpis');
+
 
 $app->get('/tabulka', function ($request, $response, $args) {
     $teams = Models\Teams::select('id', 'name')->get()->map(function(Models\Teams $team){

@@ -39,6 +39,7 @@
 			
 			.bg-primary, .bg-success, .bg-info, .bg-warning, .bg-danger { padding: 15px; color: #FFF; }
 		</style>
+		{% block styles %}{% endblock %}
 	</head>
 	<body data-ng-controller="MainController as main">
 		<div class="bootstrap-helper">
