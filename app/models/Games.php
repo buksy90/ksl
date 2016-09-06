@@ -13,14 +13,14 @@ class Games extends Base
     
     
     public function scopePlayedBy($query, $teamId) {
-        return $query->where('hometeam', $teamId)->orWhere('awayTeam', $teamName);
+        return $query->where('hometeam', $teamId)->orWhere('awayTeam', $teamId);
     }
     
     public function scopeWonBy($query, $teamId) {
-        return $query->where([['hometeam', $teamId], ['won', 'home']])->orWhere([['awayTeam', $teamName], ['won', 'away']]);
+        return $query->where([['hometeam', $teamId], ['won', 'home']])->orWhere([['awayTeam', $teamId], ['won', 'away']]);
     }
     
     public function scopeLostBy($query, $teamId) {
-        return $query->where([['hometeam', $teamId], ['won', 'away']])->orWhere([['awayTeam', $teamName], ['won', 'home']]);
+        return $query->where([['hometeam', $teamId], ['won', 'away']])->orWhere([['awayTeam', $teamId], ['won', 'home']]);
     }
 }
