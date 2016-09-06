@@ -11,16 +11,10 @@ class Players extends Base
     public $timestamps = false;
     
     
-    
+    /*
+    There may be some kind of Team scope that would filter players playing for certain team
     public function scopeTeam($query, $teamId) {
         return $query->where('hometeam', $teamId)->orWhere('awayTeam', $teamName);
     }
-    
-    public function scopeWonBy($query, $teamId) {
-        return $query->where([['hometeam', $teamId], ['won', 'home']])->orWhere([['awayTeam', $teamName], ['won', 'away']]);
-    }
-    
-    public function scopeLostBy($query, $teamId) {
-        return $query->where([['hometeam', $teamId], ['won', 'away']])->orWhere([['awayTeam', $teamName], ['won', 'home']]);
-    }
+    */
 }
