@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E_ALL); 
+ini_set('display_errors','On');
 /**
  * Step 1: Require the Slim Framework using Composer's autoloader
  *
@@ -11,6 +12,7 @@ require DIR_ROOT.'/vendor/autoload.php';
 
 use \Illuminate\Database\Connection;
 use \KSL\Models;
+use \KSL\Controllers;
 
 
 $config['displayErrorDetails'] = true;
@@ -32,9 +34,20 @@ $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
 
+
 spl_autoload_register(function ($classname) {
     if(substr($classname, 0, 11) === 'KSL\Models\\')
-        require (DIR_ROOT . '/app/models/' . substr($classname, 11) . ".php");
+        require_once(DIR_ROOT . '/app/models/' . substr($classname, 11) . ".php");
+        
+    return false;
+});
+
+
+spl_autoload_register(function ($classname) {
+    if(substr($classname, 0, 16) === 'KSL\Controllers\\') {
+        require_once(DIR_ROOT . '/app/controllers/' . substr($classname, 16) . ".php");
+    }
+        
         
     return false;
 });
@@ -52,20 +65,11 @@ $app        = new Slim\App(['settings' => $config]);
 $container  = $app->getContainer();
 
 
-//
-// Set up db
-//
-/*
-$container['db'] = function ($c) {
-    $db = $c['settings']['db'];
-    $pdo = new PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'],
-        $db['user'], $db['pass']);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    return $pdo;
+$container['connection'] = function($c) use ($capsule) {
+    return $capsule->getConnection();
 };
-*/
 
+Models\Base::SetContainer($container);
 
 
 //
@@ -90,7 +94,6 @@ $container['twig']  = function($c) {
         [ 'route' => 'tabulka', 'text' => 'Tabuľky', 'navigationSwitch' => 'tabulka' ],
         [ 'route' => 'o-nas', 'text' => 'O nás', 'navigationSwitch' => 'o-nas' ],
     ]);
-    //$env->addGlobal('request', $c['request']);
 
     return $env;
 };
@@ -117,125 +120,14 @@ $app->get('/o-nas', function ($request, $response, $args) {
 })->setName('o-nas');
 
 
-$app->get('/rozpis', function ($request, $response, $args) {
-    
-    return $response->write( $this->twig->render('rozpis.tpl', [
-        'navigationSwitch' => 'rozpis'
-    ]));
-})->setName('rozpis');
-
-
-$app->get('/tabulka', function ($request, $response, $args) {
-    $teams = Models\Teams::select('id', 'name')->get()->map(function(Models\Teams $team){
-        $games      = Models\Games::playedBy($team->id)->count();
-        $won        = Models\Games::wonBy($team->id)->count();
-        $lost       = Models\Games::lostBy($team->id)->count();
-        $points     = $lost + $won * 2;
-        $success    = $games === 0 ? 0 : ($won / $games) * 100;
-        $scored     = Models\Games::where([['won', 'home'], ['hometeam', $team->id]])->sum('home_score') + Models\Games::where([['won', 'away'], ['awayteam', $team->id]])->sum('away_score');
-        $received   = Models\Games::where([['won', 'away'], ['hometeam', $team->id]])->sum('home_score') + Models\Games::where([['won', 'home'], ['awayteam', $team->id]])->sum('away_score');
-        
-        return [
-            'teamObj'       => $team,
-            'games'         => $games,
-            'won'           => $won,
-            'lost'          => $lost,
-            'points'        => $points,
-            'success'       => $success,
-            'scored'        => $scored,
-            'received'      => $received
-        ];
-    });
-    
-    
-    $shooters = Models\Players::join(Models\Roster::getTableName(), function($join){
-        $join->on('players.id', '=', 'roster.player_id');
-        $join->on(Models\Roster::getTableName().'.year', '=', Connection::raw('"'.date('Y').'"'));
-    })->get()->map(function($player){
-        $team       = Models\Teams::first($player->attributes['team_id']);
-        
-        $games      = Models\ScoreList::select(Connection::raw('count(DISTINCT `'.Models\ScoreList::getTableName().'`.`player_id`) as count'))
-            ->where(Models\ScoreList::getTableName().'.player_id', Connection::raw('"'.$player->id.'"'))
-            ->groupBy('game_id')
-            ->groupBy(Models\Roster::getTableName().'.player_id')
-            ->join(Models\Roster::getTableName(), function($join){
-                $join->on(Models\ScoreList::getTableName().'.player_id', '=', Models\Roster::getTableName().'.player_id');
-                $join->on(Models\Roster::getTableName().'.year', '=', Connection::raw('"'.date('Y').'"'));
-            })->first();
-
-
-        $points      = Models\ScoreList::select(Connection::raw('sum(`'.Models\ScoreList::getTableName().'`.`value`) as "sum"'))
-            ->where(Models\ScoreList::getTableName().'.player_id', Connection::raw('"'.$player->id.'"'))
-            ->groupBy('game_id')
-            ->groupBy(Models\Roster::getTableName().'.player_id')
-            ->join(Models\Roster::getTableName(), function($join){
-                $join->on(Models\ScoreList::getTableName().'.player_id', '=', Models\Roster::getTableName().'.player_id');
-                $join->on(Models\Roster::getTableName().'.year', '=', Connection::raw('"'.date('Y').'"'));
-            })->first();
-
-        return [
-            'playerObj'         => $player,
-            'team'              => $team->name,
-            'games'             => $games->count == null ? 0 : $games->count,
-            'points'            => $points->sum == null ? 0 : $points->sum,
-            'avg'               => $games->count > 0 ? $points->sum / $games->count : 0
-        ];
-    })->toArray();
-    usort($shooters, function($a, $b){
-        return $b['avg'] - $a['avg'];
-    });
-    
-    
-    $shooters3pt = Models\Players::join(Models\Roster::getTableName(), function($join){
-        $join->on('players.id', '=', 'roster.player_id');
-        $join->on(Models\Roster::getTableName().'.year', '=', Connection::raw('"'.date('Y').'"'));
-    })->get()->map(function($player){
-        $team       = Models\Teams::first($player->attributes['team_id']);
-        
-        $games      = Models\ScoreList::select(Connection::raw('count(DISTINCT `'.Models\ScoreList::getTableName().'`.`player_id`) as count'))
-            ->where(Models\ScoreList::getTableName().'.player_id', Connection::raw('"'.$player->id.'"'))
-            ->groupBy('game_id')
-            ->groupBy(Models\Roster::getTableName().'.player_id')
-            ->join(Models\Roster::getTableName(), function($join){
-                $join->on(Models\ScoreList::getTableName().'.player_id', '=', Models\Roster::getTableName().'.player_id');
-                $join->on(Models\Roster::getTableName().'.year', '=', Connection::raw('"'.date('Y').'"'));
-            })->first();
-
-
-        $points      = Models\ScoreList::select(Connection::raw('sum(`'.Models\ScoreList::getTableName().'`.`value`) as "sum"'))
-            ->where(Models\ScoreList::getTableName().'.player_id', Connection::raw('"'.$player->id.'"'))
-            ->where(Models\ScoreList::getTableName().'.value', Connection::raw('"3"'))
-            ->groupBy('game_id')
-            ->groupBy(Models\Roster::getTableName().'.player_id')
-            ->join(Models\Roster::getTableName(), function($join){
-                $join->on(Models\ScoreList::getTableName().'.player_id', '=', Models\Roster::getTableName().'.player_id');
-                $join->on(Models\Roster::getTableName().'.year', '=', Connection::raw('"'.date('Y').'"'));
-            })->first();
-
-        return [
-            'playerObj'         => $player,
-            'team'              => $team->name,
-            'games'             => $games->count == null ? 0 : $games->count,
-            'points'            => $points->sum == null ? 0 : $points->sum,
-            'avg'               => $games->count > 0 ? $points->sum / $games->count : 0
-        ];
-    })->toArray();
-    usort($shooters3pt, function($a, $b){
-        return $b['avg'] - $a['avg'];
-    });
-    
-    return $response->write( $this->twig->render('tabulka.tpl', [
-        'navigationSwitch'      => 'tabulka',
-        'teams'                 => $teams,
-        'shooters'              => $shooters,
-        'shooters3pt'           => $shooters3pt
-    ]));
-})->setName('tabulka');
-
+$app->get('/rozpis', '\KSL\Controllers\Rozpis:show')->setName('rozpis');
+$app->get('/tabulka', '\KSL\Controllers\Tabulka:show')->setName('tabulka');
+/*
 $app->get('/hello[/{name}]', function ($request, $response, $args) {
     $response->write("Hello, " . $args['name']);
     return $response;
 })->setArgument('name', 'World!');
+*/
 
 /**
  * Step 4: Run the Slim application

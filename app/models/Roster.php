@@ -10,7 +10,9 @@ class Roster extends Base
     //protected $primaryKey = 'id'; // Not necessary as this is default
     public $timestamps = false;
     
-    
+    public static function GetActualYear() {
+        return date('Y');
+    }
     
     public function scopeThisYear($query) {
         return $query->where('year', date('Y'));
