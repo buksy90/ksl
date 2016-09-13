@@ -1,6 +1,6 @@
 {% extends 'layout.tpl' %}
 
-{% block title %}Tabuľka | {% endblock %}
+{% block title %}Rozpis | {% endblock %}
 
 {% block content %}
 <div class="container">

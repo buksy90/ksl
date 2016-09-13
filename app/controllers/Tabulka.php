@@ -35,6 +35,8 @@ class Tabulka extends Base
             $lost           = $history['lost'];
             $points         = $lost + $won * 2;
             $success        = $games === 0 ? 0 : ($won / $games) * 100;
+
+
             $scoredHome     = Models\Games::select($this->ci->connection->raw('SUM(home_score) as "sum"'))->where('hometeam', $team->id)->first()->sum + 0;
             $scoredAway     = Models\Games::select($this->ci->connection->raw('SUM(away_score) as "sum"'))->where('awayteam', $team->id)->first()->sum + 0;
             $scored         = $scoredHome + $scoredAway;

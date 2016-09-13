@@ -11,8 +11,8 @@ class Rozpis extends Base
         $players    = $this->GetPlayers();
         
         $games = Models\Games::all()->map(function($game) use($teams) {
-            $homeScoreList = $this->GetScoreList($game, 'home');
-            $awayScoreList = $this->GetScoreList($game, 'away');
+            $homeScoreList = Models\ScoreList::GetFromGameStatic($game, 'home');
+            $awayScoreList = Models\ScoreList::GetFromGameStatic($game, 'away');
     
             return [
                 'gameObj'       => $game,
@@ -57,30 +57,5 @@ class Rozpis extends Base
         }
         
         return $players;
-   }
-   
-   
-   //
-   // Get scoreList of players that played in a game
-   //
-   // $game - (Models\Game) instance of game
-   // $side - (sting) side of players (home / away)
-   //
-   // Returns: array of players ids and number of points they scored
-   private function GetScoreList(Models\Games $game, $side) {
-       $teamSide    = $side . 'team';
-       
-       $scoreList   = Models\ScoreList::select(Connection::raw('SUM(`score_list`.`value`) as "sum", `score_list`.`player_id`'))
-        ->where('game_id', Connection::raw('"'.$game->id.'"'))
-        ->join('roster', function($join) use($game) {
-            $join->on('roster.team_id', '=', Connection::raw('"'.$teamSide.'"'));
-            $join->on('roster.year', '=', Connection::raw('"'.Models\Roster::GetActualYear().'"'));
-            $join->on('roster.player_id', '=', 'score_list.player_id');
-        })
-        ->groupBy('score_list.player_id')
-        ->orderBy('sum', 'desc')
-        ->get();
-                
-        return $scoreList;
    }
 }

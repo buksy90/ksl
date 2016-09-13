@@ -22,4 +22,9 @@ class Teams extends Base
         
         return $this->history;
     }
+    
+    
+    public static function GetList() {
+        return static::all();
+    }
 }

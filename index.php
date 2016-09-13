@@ -65,11 +65,15 @@ $app        = new Slim\App(['settings' => $config]);
 $container  = $app->getContainer();
 
 
+// DB Connection 
+// TODO: 
+// This shouldn't be needed as models have their own pointer to db instance
+// Right now, only controllers are using this, but all db logic should be moved
+// from controllers to models
 $container['connection'] = function($c) use ($capsule) {
     return $capsule->getConnection();
 };
 
-Models\Base::SetContainer($container);
 
 
 //
@@ -122,6 +126,8 @@ $app->get('/o-nas', function ($request, $response, $args) {
 
 $app->get('/rozpis', '\KSL\Controllers\Rozpis:show')->setName('rozpis');
 $app->get('/tabulka', '\KSL\Controllers\Tabulka:show')->setName('tabulka');
+$app->get('/nova-sezona', '\KSL\Controllers\NovaSezona:show')->setName('nova-sezona');
+$app->post('/nova-sezona/generate', '\KSL\Controllers\NovaSezona:generate')->setName('nova-sezona#generate');
 /*
 $app->get('/hello[/{name}]', function ($request, $response, $args) {
     $response->write("Hello, " . $args['name']);
