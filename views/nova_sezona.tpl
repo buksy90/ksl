@@ -12,6 +12,10 @@
         </div>
     </div>
     
+    <div class="row">
+      <div class="col-xs-12 alerts-container"></div>
+    </div>
+    
     <div class="well">
         <form class="form-horizontal" id="new-season" action="{{ router.pathFor('nova-sezona#generate') }}" method="post">
             <fieldset>
@@ -59,17 +63,17 @@
             </div>
             
             <div class="form-group">
-              <label for="simultaneous" class="col-lg-3 control-label">Naraz zápasov</label>
+              <label for="simultaneous" class="col-lg-3 control-label">Počet súbežnych zápasov</label>
               <div class="col-lg-9">
                 <input type="number" class="form-control" name="simultaneous" id="simultaneous" placeholder="Počet naraz hraných zápasov" min="1" max="3" required>
               </div>
             </div>
             
             <div class="form-group">
-              <label for="day_max" class="col-lg-3 control-label">Počet zápasov v jeden deň</label>
+              <label for="day_max" class="col-lg-3 control-label">Max. počet zápasov / deň</label>
               <div class="col-lg-9">
                 <select class="form-control" id="day_max" name="day_max" required>
-                    <option value="auto">Automaticky (max. 1 zápas za deň na tím)</option>
+                    <option value="0">Automaticky (max. 1 zápas na deň za tím)</option>
                     {% for i in range(3, 8) %}
                     <option value="{{ i }}">{{ i }} (ideálne pre {{ i*2 }} tímov)</option>
                     {% endfor %}
@@ -78,12 +82,23 @@
             </div>
             
             <div class="form-group">
-              <label for="simultaneous" class="col-lg-3 control-label">Hracie dni</label>
+              <label for="day_max" class="col-lg-3 control-label">Max. počet zápasov tímu / deň</label>
+              <div class="col-lg-9">
+                <select class="form-control" id="team_day_max" name="team_day_max" required>
+                    {% for i in range(1, 3) %}
+                    <option value="{{ i }}">Jeden tím môže za deň odohrať maximálne <b>{{ i }}</b> zápasy</option>
+                    {% endfor %}
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="simultaneous" class="col-lg-3 control-label">Hracie dni&nbsp;<br class="visible-lg"><a href="#" class="check-weekend">(Označiť víkend)</a></label>
               <div class="col-lg-9">
                 <div class="row">
                   {% for day in ['Pondelok', 'Utorok', 'Streda', 'Štvrtok', 'Piatok', 'Sobota', 'Nedeľa'] %}
                     <div class="col-sm-6">
-                    <div class="checkbox"><label><input type="checkbox" name="week_days[{{ loop.index }}]" value="{{ loop.index }}">{{ day }}</label></div>
+                    <div class="checkbox"><label><input type="checkbox" name="week_days[{{ loop.index }}]" class="week_day week_day{{ loop.index }}" value="{{ loop.index }}">{{ day }}</label></div>
                   </div>
                   {% endfor %}
                 </div>
@@ -93,7 +108,7 @@
             <div class="form-group">
               <label for="start" class="col-lg-3 control-label">Štart</label>
               <div class="col-lg-9">
-                <input type="date" class="form-control" id="start" name="start" placeholder="Štart" min="{{ 'now'|date('Y-m-d') }}">
+                <input type="date" class="form-control" id="start" name="start" placeholder="Štart" min="{{ 'now'|date('Y-m-d') }}" required>
               </div>
             </div>
             
@@ -139,7 +154,11 @@ $(function () {
     
     var $teamsCount        = $(".teams-count");
     var $teamCheckboxes    = $(".team-chk");
+    var $weekendCheckboxes = $(".week_day6, .week_day7");
+    var $weekDays          = $(".week_day");
     var statusChecked      = false;
+    
+    
     $(".check-all").click(function(e){
         e.preventDefault();
         
@@ -148,8 +167,57 @@ $(function () {
         $teamsCount.text( $teamCheckboxes.filter(":checked").length );
     });
     
+    
     $teamCheckboxes.click(function(){
         $teamsCount.text( $teamCheckboxes.filter(":checked").length );
+    });
+    
+    
+    $(".check-weekend").click(function(e){
+      e.preventDefault();
+      $weekendCheckboxes.prop("checked", true);
+    });
+    
+    
+    var ShowWarning = (function() {
+      /*
+      <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again.
+      </div>
+      */
+      var d = $("<div>").addClass("alert alert-dismissible alert-danger");
+      var b = $("<button>").attr("type", "button").addClass("close").attr("data-dismiss", "alert").html("&times;");
+      var t = $("<label>");
+      var container = $(".alerts-container");
+      var menuHeight = $("nav.navbar").height();
+      
+      d.append(b).append(t);
+      
+      return function(text, forElement) {
+        if(text === undefined) return container.empty();
+        
+        $('html, body').animate({ scrollTop: container.offset().top - menuHeight }, 200);
+        t.text(text).attr("for", forElement);
+        return container.append(d.clone(true));
+      }
+    })();
+    
+    $("#new-season").submit(function(e){
+      var success = true;
+      ShowWarning();
+      
+      if($teamCheckboxes.filter(":checked").length === 0) {
+        ShowWarning("Je potrebné vybrať aspoň dva tímy.");
+        success = false;
+      }
+      
+      if($weekDays.filter(":checked").length === 0) {
+        ShowWarning("Vyberte si hracie dni");
+        success = false;
+      }
+      
+      return success;
     });
 });
 </script>
