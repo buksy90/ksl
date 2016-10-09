@@ -1,6 +1,12 @@
 <?php
 error_reporting(E_ALL); 
 ini_set('display_errors','On');
+
+// DEBUG SETTINGS
+// No need for more, and infinite cycles will be found easier
+set_time_limit(1);
+ini_set('memory_limit', '12M');
+
 /**
  * Step 1: Require the Slim Framework using Composer's autoloader
  *
@@ -97,6 +103,7 @@ $container['twig']  = function($c) {
         [ 'route' => 'rozpis', 'text' => 'Rozpis', 'navigationSwitch' => 'rozpis' ],
         [ 'route' => 'tabulka', 'text' => 'Tabuľky', 'navigationSwitch' => 'tabulka' ],
         [ 'route' => 'o-nas', 'text' => 'O nás', 'navigationSwitch' => 'o-nas' ],
+        [ 'route' => 'ihrisko', 'text' => 'Ihriská', 'navigationSwitch' => 'ihrisko' ],
     ]);
 
     return $env;
@@ -128,6 +135,9 @@ $app->get('/rozpis', '\KSL\Controllers\Rozpis:show')->setName('rozpis');
 $app->get('/tabulka', '\KSL\Controllers\Tabulka:show')->setName('tabulka');
 $app->get('/nova-sezona', '\KSL\Controllers\NovaSezona:show')->setName('nova-sezona');
 $app->post('/nova-sezona/generate', '\KSL\Controllers\NovaSezona:generate')->setName('nova-sezona#generate');
+$app->get('/ihrisko', '\KSL\Controllers\Ihrisko:showList')->setName('ihrisko');
+$app->get('/ihrisko/{link}', '\KSL\Controllers\Ihrisko:showPlayground')->setName('ihriskoByLink');
+
 /*
 $app->get('/hello[/{name}]', function ($request, $response, $args) {
     $response->write("Hello, " . $args['name']);

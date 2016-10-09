@@ -23,4 +23,9 @@ class Games extends Base
     public function scopeLostBy($query, $teamId) {
         return $query->where([['hometeam', $teamId], ['won', 'away']])->orWhere([['awayTeam', $teamId], ['won', 'home']]);
     }
+    
+    
+    public static function GetNextAtPlayground($playgroundId, $limit = 5) {
+        return static::Where('playground_id', $playgroundId)->Where('date', '>=', time())->take($limit)->get();
+    }
 }

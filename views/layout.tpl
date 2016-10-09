@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="" data-ng-app="referee">
+<html lang="" {# data-ng-app="referee" #}>
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +41,7 @@
 		</style>
 		{% block styles %}{% endblock %}
 	</head>
-	<body data-ng-controller="MainController as main">
+	<body {# data-ng-controller="MainController as main" #}>
 		<div class="bootstrap-helper">
 			<div class="visible-xs">XS</div>
 			<div class="visible-sm">SM</div>
