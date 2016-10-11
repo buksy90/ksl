@@ -120,6 +120,19 @@
             </div>
             
             <div class="form-group">
+              <label for="playgrounds" class="col-lg-3 control-label">Ihriská</label>
+              <div class="col-lg-9">
+                <div class="row">
+                  {% for playground in playgrounds %}
+                    <div class="col-sm-6">
+                      <div class="checkbox"><label><input type="checkbox" name="playgrounds[]" class="playground" value="{{ playground.id }}">{{ playground.name }}</label></div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
               <div class="col-lg-9 col-lg-offset-3">
                 <button type="reset" class="btn btn-default">Zrušiť</button>
                 <button type="submit" class="btn btn-primary">Vytvoriť sezónu + rozpis</button>
