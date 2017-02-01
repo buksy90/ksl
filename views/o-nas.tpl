@@ -3,6 +3,12 @@
 {% block title %}O nas | {% endblock %}
 
 {% block content %}
+<div class="container-fluid hidden-xs">
+    <div class="row">
+        <div class="bg-image"></div>
+    </div>
+</div>
+
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
@@ -93,3 +99,37 @@
     </div>
 </div>
 {% endblock %}
+
+{% block styles %}<style>
+.bg-image { 
+    width: 100%;
+    height: 40vh;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 0.5;
+    -webkit-box-shadow: 0px 4px 9px -1px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 4px 9px -1px rgba(0,0,0,0.75);
+box-shadow: 0px 4px 9px -1px rgba(0,0,0,0.75);
+}
+</style>{% endblock %}
+
+{% block scripts %}<script>
+$(function(){
+    "use strict";
+    
+    var image         = $(".bg-image");
+    var $window       = $(window);
+    
+    if($(document).width() < 768) {
+        image.addClass("hidden");
+        return;
+    }
+    
+    image.css("background-image", "url('/images/o-nas/image1.jpg')");
+    $(document).on("scroll", function(e){
+        image.css("background-position-y", (50 + $window.scrollTop()/6) + "%");
+        console.log("background-position-y", (50 + $window.scrollTop()/6) + "%", $(window).scrollTop());
+    });
+})
+</script>{% endblock %}
