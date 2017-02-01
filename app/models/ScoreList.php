@@ -36,8 +36,8 @@ class ScoreList extends Base
         ->where('game_id', $this->getConnection()->raw('"'.$game->id.'"'))
         ->join('roster', function($join) use($game, $teamSide) {
             $join->on('roster.team_id', '=', $this->getConnection()->raw('"'.$teamSide.'"'));
-            $join->on('roster.year', '=', $this->getConnection()->raw('"'.Roster::GetActualYear().'"'));
             $join->on('roster.player_id', '=', 'score_list.player_id');
+            $join->where('roster.season_id', '=', Season::GetActual()->id);
         })
         ->groupBy('score_list.player_id')
         ->orderBy('sum', 'desc')

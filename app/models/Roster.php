@@ -15,10 +15,12 @@ class Roster extends Base
     }
     
     public function scopeThisYear($query) {
+        throw new Exception("deprecated scopeThisYear() called");
         return $query->where('year', date('Y'));
     }
     
     public function scopeYear($query, $year) {
+        throw new Exception("deprecated scopeYear() called");
         return $query->where('year', (int) $year);
     }
 }

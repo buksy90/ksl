@@ -67,7 +67,7 @@ class Tabulka extends Base
     private function GetShooters($only3pt = null) {
         $shooters = Models\Players::join('roster', function($join){
             $join->on('players.id', '=', 'roster.player_id');
-            $join->on('roster.year', '=', $this->ci->connection->raw('"'.date('Y').'"'));
+            $join->where('roster.season_id', '=', Models\Season::GetActual()->id);
         })->get()->map(function($player) use($only3pt) {
             $team       = Models\Teams::first($player->attributes['team_id']);
             $games      = $player->GetGamesCount();
