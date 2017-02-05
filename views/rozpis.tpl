@@ -13,49 +13,65 @@
     </div>
 
     
+    {#
     <div class="row">
         <div class="col-xs-12">
             <div class="text-center">
                 <ul class="pagination center-block">
                     <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">Sobota 21.6</a></li>
-                    <li class="active"><a href="#">Nedela 22.6</a></li>
-                    <li><a href="#">Sobota 28.6</a></li>
-                    <li><a href="#">Nedela 29.6</a></li>
+                    {% for date in dates %}
+                    <li{% if nextDate == date %} class="active"{% endif %}><a href="#">{{ date | date("l d.m") }}</a></li>
+                    {% endfor %}
                     <li><a href="#">&raquo;</a></li>
                 </ul>
             </div>
             
         </div>
     </div>
+    #}
     
-
-    
-    <br>
-    
-    {% for game in games %}
-        {% if game.gameObj.won != null %}
     <div class="row">
         <div class="col-xs-12">
-            <div class="panel panel-default panel-game2 isPlayed">
+            <div class="well">
+                <form class="form-horizontal" id="new-season" action="/nova-sezona/generate" method="post">
+                <fieldset>
+                <legend>Deň</legend>
+                                  
+                <select class="form-control" id="dateSelect">
+                    {% for date in dates %}
+                    <option{% if nextDate == date %} selected="selected"{% endif %} value="{{ date }}">{{ date | date("d.m l") }}</option>
+                    {% endfor %}
+                </select>
+              </fieldset>
+              </form>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="row">
+    {% for game in games %}
+        {% if game.gameObj.getAttribute("won") != null %}
+        <div class="col-xs-12">
+            <div class="panel panel-default panel-game2 isPlayed" data-date="{{ game.dayDate }}">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-9 col-sm-3 col-md-3 col-lg-12">
                             <div class="row">
                                 <div class="col-md-12 col-lg-4 panel-game--team">
-                                    <span class="panel-game--team-name{% if game.gameObj.won == 'home' %} hasWon{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ game.homeTeam.name }}">{{ game.homeTeam.short }}</span>
+                                    <span class="panel-game--team-name{%if game.gameObj.getAttribute("won") == 'home' %} hasWon{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ game.homeTeam.name }}">{{ game.homeTeam.short }}</span>
                                     <span class="panel-game--team-history">{{ game.homeHistory.won }}-{{ game.homeHistory.lost }}</span>
                                 </div>
                                 <div class="visible-lg col-lg-4 text-center panel-game--result">
                                     <span class="panel-game--score">
-                                        <span class="more">{{ game.gameObj.home_score }}</span>
+                                        <span class="more">{{ game.gameObj.getAttribute("home_score") }}</span>
                                         <span class="separator">:</span>
-                                        <span class="less">{{ game.gameObj.away_score }}</span>
+                                        <span class="less">{{ game.gameObj.getAttribute("away_score") }}</span>
                                     </span>
                                     <span class="panel-game--date">{{ game.gameObj.date | date('d.m.Y H:i') }}</span>
                                 </div>
                                 <div class="col-md-12 col-lg-4 panel-game--team isRight">
-                                    <span class="panel-game--team-name{% if game.gameObj.won == 'away' %} hasWon{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ game.awayTeam.name }}">{{ game.awayTeam.short }}</span>
+                                    <span class="panel-game--team-name{% if game.gameObj.getAttribute("won") == 'away' %} hasWon{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ game.awayTeam.name }}">{{ game.awayTeam.short }}</span>
                                     <span class="panel-game--team-history">{{ game.awayHistory.won }}-{{ game.awayHistory.lost }}</span>
                                 </div>
                             </div>
@@ -63,9 +79,9 @@
                         
                         <div class="col-xs-3 col-sm-2 col-md-3 hidden-lg panel-game--result">
                             <span class="panel-game--score">
-                                <span class="more">{{ game.gameObj.home_score }}</span>
+                                <span class="more">{{ game.gameObj.getAttribute("home_score") }}</span>
                                 <span class="separator">:</span>
-                                <span class="less">{{ game.gameObj.away_score }}</span>
+                                <span class="less">{{ game.gameObj.getAttribute("away_score") }}</span>
                             </span>
                             <span class="panel-game--date">{{ game.gameObj.date | date('d.m.Y H:i') }}</span>
                         </div>
@@ -73,7 +89,7 @@
                         <div class="hidden-xs col-sm-7 col-md-6 col-lg-12">
                             <div class="row">
                                 <div class="col-lg-8">
-                                    <div class="shooters-list{% if game.gameObj.won == 'home' %} hasWon{% endif %}">
+                                    <div class="shooters-list{% if game.gameObj.getAttribute("won") == 'home' %} hasWon{% endif %}">
                                         {% for shooter in game.homeScoreList %}
                                         <span class="shooters-list--shooter">
                                             <span class="shooters-list--name" data-toggle="tooltip" data-placement="top" title="{{ players[shooter.player_id].name }} {{ players[shooter.player_id].surname }}">{{ players[shooter.player_id].nick | default(players[shooter.player_id].surname) }}</span>
@@ -83,7 +99,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="shooters-list isRight{% if game.gameObj.won == 'away' %} hasWon{% endif %}">
+                                    <div class="shooters-list isRight{% if game.gameObj.getAttribute("won") == 'away' %} hasWon{% endif %}">
                                         {% for shooter in game.awayScoreList %}
                                         <span class="shooters-list--shooter">
                                             <span class="shooters-list--name" data-toggle="tooltip" data-placement="top" title="{{ players[shooter.player_id].name }} {{ players[shooter.player_id].surname }}">{{ players[shooter.player_id].nick | default(players[shooter.player_id].surname) }}</span>
@@ -99,9 +115,27 @@
                 </div>
             </div>
         </div>
-    </div>
+        {% else %}
+        <div class="col-xs-12">
+            <div class="panel panel-default panel-game2" data-date="{{ game.dayDate }}">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4 panel-game--team">
+                            <span class="panel-game--team-name" data-toggle="tooltip" data-placement="top" title="{{ game.homeTeam.name }}">{{ game.homeTeam.short }}</span>
+                            <span class="panel-game--team-history">{{ game.homeHistory.won }}-{{ game.homeHistory.lost }}</span>
+                        </div>
+                        <div class="col-lg-4 text-center panel-game--date">{{ game.gameObj.date | date('l dS') }}<br>{{ game.gameObj.date | date('H:i') }}</div>
+                        <div class="col-lg-4 text-right panel-game--team">
+                            <span class="panel-game--team-name" data-toggle="tooltip" data-placement="top" title="{{ game.awayTeam.name }}">{{ game.awayTeam.short }}</span>
+                            <span class="panel-game--team-history">{{ game.awayHistory.won }}-{{ game.awayHistory.lost }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endif %}
     {% endfor %}
+    </div>
     
     
     <div class="row">
@@ -293,6 +327,16 @@
 /*global $*/
 $(function () {
     $('span.panel-game--team-name, span.shooters-list--name').tooltip({container: "body"});
+    
+    var $games         = $(".panel-game2");
+    var $dateSelect    = $("#dateSelect");
+    function ShowGamesByDate() {
+        $games.addClass("hidden");
+        $games.filter("[data-date='"+$dateSelect.val()+"']").removeClass("hidden");
+    }
+    
+    $dateSelect.change(ShowGamesByDate);
+    ShowGamesByDate();
 });
 </script>
 {% endblock %}

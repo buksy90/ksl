@@ -7,8 +7,20 @@ use \Illuminate\Database\Connection;
 class Rozpis extends Base
 {
     public function show($request, $response, $args) {
+        $season     = Models\Season::GetActual();
         $teams      = $this->GetTeams();
-        $players    = $this->GetPlayers();
+        $dates      = Models\Games::GetListOfDates();
+        $nextDate   = null;
+        
+        
+        // Get next game time
+        foreach($dates as $date) {
+            if($date >= time()) {
+                $nextDate = $date;
+                break;
+            }
+        }
+        
         
         $games = Models\Games::all()->map(function($game) use($teams) {
             $homeScoreList = Models\ScoreList::GetFromGameStatic($game, 'home');
@@ -18,6 +30,7 @@ class Rozpis extends Base
                 'gameObj'       => $game,
                 'homeScoreList' => $homeScoreList,
                 'awayScoreList' => $awayScoreList,
+                'dayDate'       => mktime(0,0,0, date('m', $game->date), date('j', $game->date), date('Y', $game->date)),
                 'homeTeam'      => $teams[$game->hometeam],
                 'awayTeam'      => $teams[$game->awayteam],
                 'homeHistory'   => $teams[$game->hometeam]->GetHistory(),
@@ -25,10 +38,14 @@ class Rozpis extends Base
             ];
         });
         
+        
         return $response->write( $this->ci->twig->render('rozpis.tpl', [
             'navigationSwitch'  => 'rozpis',
             'games'             => $games,
-            'players'           => $players,
+            'players'           => $this->GetPlayers($season->id),
+            'season'            => $season,
+            'dates'             => $dates,
+            'nextDate'          => $nextDate
         ]));
    }
    
@@ -45,11 +62,11 @@ class Rozpis extends Base
    }
    
    // returns all players active this season
-   private function GetPlayers() {
+   private function GetPlayers($season_id) {
         $players            = [];
-        $playersCollection  = Models\Players::join('roster', function($join){
+        $playersCollection  = Models\Players::join('roster', function($join) use($season_id) {
             $join->on('roster.player_id', '=', 'players.id')
-                 ->where('roster.year', '=', Models\Roster::GetActualYear());
+                 ->where('roster.season_id', '=', $season_id);
         })->get();
         
         foreach($playersCollection as $player) {
