@@ -60,4 +60,22 @@ class Players extends Base
         
         return $tmp !== null ? $tmp->sum : 0;
     }
+    
+    
+    /**
+     * returns all players active this season
+     */
+    public static function GetPlayersBySeason($season_id) {
+        $players            = [];
+        $playersCollection  = static::join('roster', function($join) use($season_id) {
+            $join->on('roster.player_id', '=', 'players.id')
+                 ->where('roster.season_id', '=', $season_id);
+        })->get();
+        
+        foreach($playersCollection as $player) {
+            $players[$player->id] = $player;
+        }
+        
+        return $players;
+   }
 }

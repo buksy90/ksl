@@ -8,7 +8,7 @@ class Teams extends Base
 {
     public function showTeam($request, $response, $args) {
         $team           = Models\Teams::where('short', 'fun')->first();
-        $teams          = $this->GetTeams();
+        $teams          = Models\Teams::GetTeamsIndexedArray();
         
         return $response->write( $this->ci->twig->render('teams.tpl', [
             'navigationSwitch'      => 'timy',
@@ -18,14 +18,7 @@ class Teams extends Base
         ]));
    }
    
-  private function GetTeams() {
-       $teams = [];
-       foreach(Models\Teams::cursor() as $team) {
-            $teams[$team->id] = $team;
-        }
-        
-        return $teams;
-   }
+
    
    
    private function GetGames($teamId) {
