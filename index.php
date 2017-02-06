@@ -105,6 +105,7 @@ $container['twig']  = function($c) {
         [ 'route' => 'tabulka', 'text' => 'Tabuľky', 'navigationSwitch' => 'tabulka' ],
         [ 'route' => 'o-nas', 'text' => 'O nás', 'navigationSwitch' => 'o-nas' ],
         [ 'route' => 'ihrisko', 'text' => 'Ihriská', 'navigationSwitch' => 'ihrisko' ],
+        [ 'route' => 'timy', 'text' => 'Tímy', 'navigationSwitch' => 'timy' ],
     ]);
 
     return $env;
@@ -140,6 +141,7 @@ $app->post('/nova-sezona/generate', '\KSL\Controllers\NovaSezona:generate')->set
 $app->get('/nova-sezona/save', '\KSL\Controllers\NovaSezona:save')->setName('nova-sezona#save');
 $app->get('/ihrisko', '\KSL\Controllers\Ihrisko:showList')->setName('ihrisko');
 $app->get('/ihrisko/{link}', '\KSL\Controllers\Ihrisko:showPlayground')->setName('ihriskoByLink');
+$app->get('/teams', '\KSL\Controllers\Teams:showTeam')->setName('timy');
 
 /*
 $app->get('/hello[/{name}]', function ($request, $response, $args) {
