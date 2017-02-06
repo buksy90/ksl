@@ -68,6 +68,15 @@
 				  		{% endfor%}
 				  		
 				  		<li class="dropdown">
+				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tímy <span class="caret"></span></a>
+				          <ul class="dropdown-menu" role="menu">
+				          	{% for team in teamsNames %}
+				  				<li><a href="{{ router.pathFor('tim', { 'short': team.short }) }}">{{ team.name }}</a></li>
+				  			{% endfor%}
+				          </ul>
+				        </li>
+				  		
+				  		<li class="dropdown">
 				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
 				          <ul class="dropdown-menu" role="menu">
 				            <li><a href="{{ router.pathFor('nova-sezona') }}">Nová sezóna</a></li>

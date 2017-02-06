@@ -6,8 +6,13 @@ use \Illuminate\Database\Connection;
 
 class Teams extends Base
 {
+    public function show($request, $response, $args) {
+        throw new exception("TODO !!");
+    }
+    
     public function showTeam($request, $response, $args) {
-        $team           = Models\Teams::where('short', 'fun')->first();
+        $teamShort      = $args['short'];
+        $team           = Models\Teams::where('short', $teamShort)->first();
         $teams          = Models\Teams::GetTeamsIndexedArray();
         
         return $response->write( $this->ci->twig->render('teams.tpl', [

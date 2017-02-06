@@ -30,15 +30,21 @@
                         <strong class="col-xs-6 col-sm-5 bold">Kapitán:</strong>
                         <div class="col-xs-6 col-sm-7">
                             {% set captain = team.GetCaptain() %}
-                            {{ captain.name }}
-                            {{ captain.surname }}
+                            {% if captain != null %}
+                                {{ captain.name }}
+                                {{ captain.surname }}
+                            {% endif %}
                         </div>
                         <strong class="col-xs-6 col-sm-5 bold">Najlepší strelec:</strong>
                         <div class="col-xs-6 col-sm-7">
                             {% set shooter = team.GetBestShooter() %}
-                            {{ shooter.player.name }}
-                            {{ shooter.player.surname }},
-                            {{ shooter.score }}b
+                            {% if shooter %}
+                                {{ shooter.player.name }}
+                                {{ shooter.player.surname }},
+                                {{ shooter.score }}b
+                            {% else %}
+                                Nie je
+                            {% endif %}
                         </div>
                         <strong class="col-xs-6 col-sm-5 bold">Počet hráčov:</strong>
                         <div class="col-xs-6 col-sm-7">{{ team.GetPlayersCount() }}</div>

@@ -32,7 +32,8 @@ class Teams extends Base
      * Returns all time best shooter of team
      */
     public function GetBestShooter() {
-        $scoreList = ScoreList::select($this->getConnection()->raw('score_list.player_id, SUM(value) AS `sum`'))
+        $scoreList  = ScoreList::
+            select($this->getConnection()->raw('score_list.player_id, SUM(value) AS `sum`'))
             ->groupBy('score_list.player_id')
             ->join('roster', function($join){
                 $join->on('score_list.player_id', '=', 'roster.player_id');
@@ -42,12 +43,17 @@ class Teams extends Base
             ->orderBy('sum', 'desc')
             ->first();
             
-        $player = Players::find($scoreList->player_id);
+        $player     = is_object($scoreList)
+            ? Players::find($scoreList->player_id)
+            : null;
         
-        return [
-            'score'     => $scoreList->sum,
-            'player'    => $player
-        ];
+        
+        return is_object($player) == false
+            ? null
+            : [
+                'score'     => $scoreList->sum,
+                'player'    => $player
+            ];
     }
     
     
@@ -78,5 +84,12 @@ class Teams extends Base
         }
         
         return $teams;
+   }
+   
+   
+   public static function GetTeamsNames() {
+        return static::select('name', 'short')
+            ->orderBy('name', 'asc')
+            ->get();
    }
 }
