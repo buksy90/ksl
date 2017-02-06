@@ -18,7 +18,7 @@
             {% for game in games %}
                 {% if game.gameObj.getAttribute("won") != null %}
                 <div class="col-xs-12">
-                    <div class="panel panel-default panel-game2 isPlayed" data-date="{{ game.dayDate }}">
+                    <div class="panel panel-default panel-game2 isPlayed">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-9 col-sm-3 col-md-3 col-lg-12">
@@ -82,7 +82,7 @@
                 </div>
                 {% else %}
                 <div class="col-xs-12">
-                    <div class="panel panel-default panel-game2" data-date="{{ game.dayDate }}">
+                    <div class="panel panel-default panel-game2">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-4 panel-game--team">

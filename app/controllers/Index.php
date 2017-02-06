@@ -9,17 +9,6 @@ class Index extends Base
     public function show($request, $response, $args) {
         $season     = Models\Season::GetActual();
         $teams      = $this->GetTeams();
-        $dates      = Models\Games::GetListOfDates();
-        $nextDate   = null;
-        
-        
-        // Get next game time
-        foreach($dates as $date) {
-            if($date >= time()) {
-                $nextDate = $date;
-                break;
-            }
-        }
         
         $games = Models\Games::GetNextGames()->map(function($game) use($teams) {
             $homeScoreList = Models\ScoreList::GetFromGameStatic($game, 'home');
@@ -42,8 +31,6 @@ class Index extends Base
             'games'             => $games,
             'players'           => $this->GetPlayers($season->id),
             'season'            => $season,
-            'dates'             => $dates,
-            'nextDate'          => $nextDate
         ]));
    }
    
