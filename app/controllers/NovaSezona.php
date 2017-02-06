@@ -50,9 +50,16 @@ class NovaSezona extends Base
         // Generate schedule
         //
         $gamesList          = $this->GetListOfGames($teamsIDs);
-        $playingDates       = $this->GetPlayingDays($start, $weekDays, $exludedDays);
-        $schedule           = $this->GetSchedule($gamesList, $playgrounds, $playingDates, $teamsIDs, $startTime, $gameDuration, $pause, $simultaneous, $dayMax, $teamDayMax);
-        
+        $schedule           = [];
+        for($rounds = 0; $rounds < 2; ++$rounds) {
+            $playingDates       = $this->GetPlayingDays($start, $weekDays, $exludedDays);
+            $roundSchedule      = $this->GetSchedule($gamesList, $playgrounds, $playingDates, $teamsIDs, $startTime, $gameDuration, $pause, $simultaneous, $dayMax, $teamDayMax);
+            $schedule           = $schedule + $roundSchedule;
+            
+            $roundDays          = array_keys($roundSchedule);
+            $start              = end($roundDays) + 60 * 60 * 24;
+            $gamesList          = array_map([$this, 'SwapValues'], $gamesList);
+        }
 
 
         $teams          = Models\Teams::GetList();
@@ -67,7 +74,8 @@ class NovaSezona extends Base
             if(in_array($playground->id, $playgrounds)) $playgroundsNames[$playground->id] = $playground->name;
         }
             
-
+            
+        $_SESSION['schedule']   = $schedule;
         
 
         return $response->write( $this->ci->twig->render('new_season_check.twig', [
@@ -75,9 +83,50 @@ class NovaSezona extends Base
             'teams'                 => $teamsById,
             'playgroundsNames'      => $playgroundsNames,
             'schedule'              => $schedule,
-            'twigSchedule'          => $this->PrepareScheduleForTwig($schedule, $playgrounds, $teamsById)
+            'twigSchedule'          => $this->PrepareScheduleForTwig($schedule, $playgrounds, $teamsById),
+            'columns'               => count($playgrounds) < 2 ? 'col-sm-12 col-md-6' : 'col-xs-12',
+            'daysNames'             => ['Pondelok', 'Utorok', 'Streda', 'Štvrtok', 'Piatok', 'Sobota', 'Nedeľa'],
         ]));
     }
+   
+   
+   public function save($request, $response, $args) {
+       if(array_key_exists('schedule', $_SESION) && is_array($_SESSION['schedule'])) {
+            $schedule            = $_SESSION['schedule'];
+            unset($_SESSION['schedule']);
+       
+       
+           foreach($schedule as $timestamp => $playgrounds) {
+               foreach($playgrounds as $playgroundId => $scheduledGame) {
+                   list($awayTeam, $homeTeam) = $scheduledGame;
+                   $game                = new Models\Games();
+                   $game->hometeam      = $homeTeam;
+                   $game->awayteam      = $awayTeam;
+                   $game->date          = $timestamp;
+                   $game->playground_id = $playgroundId;
+                   
+                   $game->save();
+               }
+               
+           }
+       }
+       
+       
+       return $response->write( $this->ci->twig->render('season_saved.twig', [
+           'navigationSwitch'      => 'admin',
+        ]));
+   }
+   
+   
+   /**
+    * Swap first and second item in array
+    */
+   private function SwapValues($item) {
+       $first       = reset($item);
+       $second      = end($item);
+       
+       return [$second, $first];
+   }
    
    
     //
