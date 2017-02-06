@@ -6,6 +6,7 @@ ini_set('display_errors','On');
 // No need for more, and infinite cycles will be found easier
 set_time_limit(1);
 ini_set('memory_limit', '12M');
+session_start();
 
 /**
  * Step 1: Require the Slim Framework using Composer's autoloader
@@ -117,12 +118,13 @@ $container['twig']  = function($c) {
  * argument for `Slim::get`, `Slim::post`, `Slim::put`, `Slim::patch`, and `Slim::delete`
  * is an anonymous function.
  */
+ /*
 $app->get('/', function ($request, $response, $args) {
     return $response->write( $this->twig->render('layout.tpl', [
         'navigationSwitch' => null
     ]));
 })->setName('index');
-
+*/
 
 $app->get('/o-nas', function ($request, $response, $args) {
     return $response->write( $this->twig->render('o-nas.tpl', [
@@ -130,11 +132,12 @@ $app->get('/o-nas', function ($request, $response, $args) {
     ]));
 })->setName('o-nas');
 
-
+$app->get('/', '\KSL\Controllers\Index:show')->setName('index');
 $app->get('/rozpis', '\KSL\Controllers\Rozpis:show')->setName('rozpis');
 $app->get('/tabulka', '\KSL\Controllers\Tabulka:show')->setName('tabulka');
 $app->get('/nova-sezona', '\KSL\Controllers\NovaSezona:show')->setName('nova-sezona');
 $app->post('/nova-sezona/generate', '\KSL\Controllers\NovaSezona:generate')->setName('nova-sezona#generate');
+$app->get('/nova-sezona/save', '\KSL\Controllers\NovaSezona:save')->setName('nova-sezona#save');
 $app->get('/ihrisko', '\KSL\Controllers\Ihrisko:showList')->setName('ihrisko');
 $app->get('/ihrisko/{link}', '\KSL\Controllers\Ihrisko:showPlayground')->setName('ihriskoByLink');
 

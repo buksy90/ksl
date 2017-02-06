@@ -32,13 +32,42 @@ class Games extends Base
     public static function GetListOfDates() {
         $game       = new Self();
         $season     = Season::GetActual();
-        $query      = static::Select($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`)))'))
+        $query      = static::Select($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`))) AS `dayDate`'))
             ->Where('season_id', $season->id)
             ->GroupBy($game->getConnection()->raw('DATE(FROM_UNIXTIME(`date`))'))
             ->get();
         
-        return array_map(function($game){
-            return reset($game);
-        }, $query->toArray());
+        return $query->map(function($game){
+            return $game->dayDate;
+        });
+    }
+    
+    /**
+     * Get next when any match will be plated 
+    */
+    public static function GetNextDayDate() {
+        $game       = new Self();
+        $season     = Season::GetActual();
+        return static::Select($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`))) AS `dayDate`'))
+            ->Where('season_id', $season->id)
+            ->Where('date', '>=', time())
+            ->GroupBy($game->getConnection()->raw('DATE(FROM_UNIXTIME(`date`))'))
+            ->OrderBy('dayDate', 'asc')
+            ->first()
+            ->dayDate;
+    }
+    
+    /**
+     * Returns games that are going to be played next
+     */
+    public static function GetNextGames() {
+        $game       = new Self();
+        $season     = Season::GetActual();
+        $dayDate    = static::GetNextDayDate();
+        $q =  static::Where('season_id', $season->id)
+            ->Where($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`)))'), '=', $dayDate)
+            ->get();
+            
+            return $q;
     }
 }
