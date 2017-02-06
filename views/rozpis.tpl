@@ -250,6 +250,7 @@
 <style>
     .pagination > .active > a { color: #FFF; background-color: #2d80e3; }
 
+    .panel-game2 { position: relative; }
     .panel-game2:hover  { -webkit-box-shadow: 0 2px 5px 2px #A1A1A1; box-shadow: 0 2px 5px 2px #A1A1A1; }
     .panel-game2 .panel-game--date { display: block; font-size: 22px; }
     .panel-game2.isPlayed .panel-game--date { font-size: 14px; color: #AAA; }
@@ -303,7 +304,11 @@
         { display: block; }
         
         .panel-game2 .panel-game--score .separator { display: none; }
-        .panel-game2 .panel-game--date { display: none; }
+        .panel-game2 .panel-game--date { 
+            position: absolute;
+            right: 15px;
+            top: 25px;
+        }
         
         .panel-game2 .panel-game--team .panel-game--team-name,
         .panel-game2 .panel-game--team .panel-game--team-history

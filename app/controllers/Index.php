@@ -38,7 +38,7 @@ class Index extends Base
         });
         
         return $response->write( $this->ci->twig->render('index.tpl', [
-            'navigationSwitch'  => 'rozpis',
+            'navigationSwitch'  => '',
             'games'             => $games,
             'players'           => $this->GetPlayers($season->id),
             'season'            => $season,
