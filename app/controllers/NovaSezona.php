@@ -18,6 +18,7 @@ class NovaSezona extends Base
    
     // Post page to generate schedule
     public function generate($request, $response, $args) {
+        set_time_limit(7);
         $data            = $request->getParsedBody();
         
         
@@ -86,12 +87,13 @@ class NovaSezona extends Base
             'twigSchedule'          => $this->PrepareScheduleForTwig($schedule, $playgrounds, $teamsById),
             'columns'               => count($playgrounds) < 2 ? 'col-sm-12 col-md-6' : 'col-xs-12',
             'daysNames'             => ['Pondelok', 'Utorok', 'Streda', 'Štvrtok', 'Piatok', 'Sobota', 'Nedeľa'],
+            'postData'              => $data
         ]));
     }
    
    
    public function save($request, $response, $args) {
-       if(array_key_exists('schedule', $_SESION) && is_array($_SESSION['schedule'])) {
+       if(array_key_exists('schedule', $_SESSION) && is_array($_SESSION['schedule'])) {
             $schedule            = $_SESSION['schedule'];
             unset($_SESSION['schedule']);
        
@@ -144,6 +146,7 @@ class NovaSezona extends Base
        $oneYear     = $oneDay * 365;
        $ending      = $start + $oneYear;
        $playingDays = [];
+       $start       = mktime(0,0,0, date('m', $start), date('d', $start), date('y', $start));       // Make sure first day is at 00:00 time
     
        for($day = $start; $day <= $ending; $day += $oneDay) {
            // Is this a playing day?
@@ -275,11 +278,14 @@ class NovaSezona extends Base
         $teamsGamesCount                = $zeroedTimesIDs;                                      // Number of games each team already has in schedule
         $playgroundsCurrentGames        = [];                                                   // List of current games (at $time) [ playgroundId => [TeamId1, TeamId2], ... ]
         $currentDay                     = reset($playingDates);                                 // Get first playing day from list of game dates
-        $time                           = $currentDay + $startTime;                             // Count of games at current day
+        $time                           = $currentDay + $startTime;                             // Timestamp of first match this day
         $currentDayGamesCount           = 0;                                                    // Count of today's games
         
         // Debug variable to prevent infinite loops
         $temp = 500;
+        
+        // Debug day tryies
+        $dayTriesLeft       = 10;
         
         
         //
@@ -327,11 +333,58 @@ class NovaSezona extends Base
             }
             
             
-            // If no available game was found and assigned to schedule, try it next day :)
-            $currentDay                 = next($playingDates);
-            $time                       = $currentDay + $startTime;
-            $currentDayGamesCount       = 0;
-            $teamsDayGamesCount         = $zeroedTimesIDs;
+            
+            // If number of games of current day is less than number of possible matches for each day,
+            // lets try to erase current day games, and regenerate this day again
+            //
+            //
+            // TODO: In case of odd number of teams, currentDayGamesCount doesnt have to be same as dayMax
+            // and there may not be any games left for current day
+            if($currentDayGamesCount != $dayMax && --$dayTriesLeft) {
+                $currentDay                 = current($playingDates);
+                $time                       = $currentDay + $startTime;
+                $debugTempW1                = 20;
+                
+                while($currentDayGamesCount) {
+                    $currentDay             = current($playingDates);
+                    $dayStartTime           = $currentDay + $startTime;
+                    $reversedSchedule       = array_reverse($schedule, true);
+                    foreach($reversedSchedule as $timeIndex => $matches) {
+                        foreach($matches as $playground => $game) {
+                            // Delete matche
+                            unset($schedule[$timeIndex][$playground]);
+                            
+                            // Decrement counters
+                            $teamsDayGamesCount[$game[0]]--;
+                            $teamsDayGamesCount[$game[1]]--;
+                            $teamsGamesCount[$game[1]]--;
+                            $teamsGamesCount[$game[1]]--;
+                            $currentDayGamesCount--;
+                            
+                            $gamesList[]    = $game;
+                            
+                            //$time -= $gameDuration + $pause;
+                            $time = $timeIndex;
+                        }
+                        
+                        // If we deleted last match of the day, stop cycle
+                        if($time <= $dayStartTime) break;
+                    }
+                    
+                    if($debugTempW1-- < 0) throw new \Exception('Too many iterations');
+                }
+                
+                // at last, shuffle gamesList
+                shuffle($gamesList);
+            }
+            else {
+                // If no available game was found and assigned to schedule, try it next day :)
+                $currentDay                 = next($playingDates);
+                $time                       = $currentDay + $startTime;
+                $currentDayGamesCount       = 0;
+                $teamsDayGamesCount         = $zeroedTimesIDs;
+                $dayTriesLeft               = 10;
+            }
         }
         
         
