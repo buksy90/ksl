@@ -7,109 +7,198 @@
     <div class="row">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="page-header">
-                        <h2>Najbližšie zápasy</h2>
-                    </div>
-                </div>
-            </div>
-        
-            <div class="row">
-            {% for game in games %}
-                {% if game.gameObj.getAttribute("won") != null %}
-                <div class="col-xs-12">
-                    <div class="panel panel-default panel-game2 isPlayed">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-xs-9 col-sm-3 col-md-3 col-lg-12">
-                                    <div class="row">
-                                        <div class="col-md-12 col-lg-4 panel-game--team">
-                                            <span class="panel-game--team-name{%if game.gameObj.getAttribute("won") == 'home' %} hasWon{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ game.homeTeam.name }}">{{ game.homeTeam.short }}</span>
-                                            <span class="panel-game--team-history">{{ game.homeHistory.won }}-{{ game.homeHistory.lost }}</span>
-                                        </div>
-                                        <div class="visible-lg col-lg-4 text-center panel-game--result">
-                                            <span class="panel-game--score">
-                                                <span class="more">{{ game.gameObj.getAttribute("home_score") }}</span>
-                                                <span class="separator">:</span>
-                                                <span class="less">{{ game.gameObj.getAttribute("away_score") }}</span>
-                                            </span>
-                                            <span class="panel-game--date">{{ game.gameObj.date | date('d.m.Y H:i') }}</span>
-                                        </div>
-                                        <div class="col-md-12 col-lg-4 panel-game--team isRight">
-                                            <span class="panel-game--team-name{% if game.gameObj.getAttribute("won") == 'away' %} hasWon{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ game.awayTeam.name }}">{{ game.awayTeam.short }}</span>
-                                            <span class="panel-game--team-history">{{ game.awayHistory.won }}-{{ game.awayHistory.lost }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-sm-2 col-md-3 hidden-lg panel-game--result">
-                                    <span class="panel-game--score">
-                                        <span class="more">{{ game.gameObj.getAttribute("home_score") }}</span>
-                                        <span class="separator">:</span>
-                                        <span class="less">{{ game.gameObj.getAttribute("away_score") }}</span>
-                                    </span>
-                                    <span class="panel-game--date">{{ game.gameObj.date | date('d.m.Y H:i') }}</span>
-                                </div>
-                            
-                                <div class="hidden-xs col-sm-7 col-md-6 col-lg-12">
-                                    <div class="row">
-                                        <div class="col-lg-8">
-                                            <div class="shooters-list{% if game.gameObj.getAttribute("won") == 'home' %} hasWon{% endif %}">
-                                                {% for shooter in game.homeScoreList %}
-                                                <span class="shooters-list--shooter">
-                                                    <span class="shooters-list--name" data-toggle="tooltip" data-placement="top" title="{{ players[shooter.player_id].name }} {{ players[shooter.player_id].surname }}">{{ players[shooter.player_id].nick | default(players[shooter.player_id].surname) }}</span>
-                                                    <span class="shooters-list--points">{{ shooter.sum }}b</span>
-                                                </span>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="shooters-list isRight{% if game.gameObj.getAttribute("won") == 'away' %} hasWon{% endif %}">
-                                                {% for shooter in game.awayScoreList %}
-                                                <span class="shooters-list--shooter">
-                                                    <span class="shooters-list--name" data-toggle="tooltip" data-placement="top" title="{{ players[shooter.player_id].name }} {{ players[shooter.player_id].surname }}">{{ players[shooter.player_id].nick | default(players[shooter.player_id].surname) }}</span>
-                                                    <span class="shooters-list--points">{{ shooter.sum }}b</span>
-                                                </span>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% else %}
-                <div class="col-xs-12">
-                    <div class="panel panel-default panel-game2">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-4 panel-game--team">
-                                    <span class="panel-game--team-name" data-toggle="tooltip" data-placement="top" title="{{ game.homeTeam.name }}">{{ game.homeTeam.short }}</span>
-                                    <span class="panel-game--team-history">{{ game.homeHistory.won }}-{{ game.homeHistory.lost }}</span>
-                                </div>
-                                <div class="col-lg-4 text-center panel-game--date">{{ game.gameObj.date | date('l dS') }}<br>{{ game.gameObj.date | date('H:i') }}</div>
-                                <div class="col-lg-4 text-right panel-game--team">
-                                    <span class="panel-game--team-name" data-toggle="tooltip" data-placement="top" title="{{ game.awayTeam.name }}">{{ game.awayTeam.short }}</span>
-                                    <span class="panel-game--team-history">{{ game.awayHistory.won }}-{{ game.awayHistory.lost }}</span>
+                <div class="col-xs-12 col-sm-6 col-lg-8">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="page-header">
+                                    <h2>Najbližšie zápasy</h2>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    
+                        <div class="row">
+                        {% for game in games %}
+                            {% if game.gameObj.getAttribute("won") != null %}
+                            <div class="col-xs-12">
+                                <div class="panel panel-default panel-game2 isPlayed">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-9 col-sm-3 col-md-3 col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-lg-4 panel-game--team">
+                                                        <span class="panel-game--team-name{%if game.gameObj.getAttribute("won") == 'home' %} hasWon{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ game.homeTeam.name }}">{{ game.homeTeam.short }}</span>
+                                                        <span class="panel-game--team-history">{{ game.homeHistory.won }}-{{ game.homeHistory.lost }}</span>
+                                                    </div>
+                                                    <div class="visible-lg col-lg-4 text-center panel-game--result">
+                                                        <span class="panel-game--score">
+                                                            <span class="more">{{ game.gameObj.getAttribute("home_score") }}</span>
+                                                            <span class="separator">:</span>
+                                                            <span class="less">{{ game.gameObj.getAttribute("away_score") }}</span>
+                                                        </span>
+                                                        <span class="panel-game--date">{{ game.gameObj.date | date('d.m.Y H:i') }}</span>
+                                                    </div>
+                                                    <div class="col-md-12 col-lg-4 panel-game--team isRight">
+                                                        <span class="panel-game--team-name{% if game.gameObj.getAttribute("won") == 'away' %} hasWon{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ game.awayTeam.name }}">{{ game.awayTeam.short }}</span>
+                                                        <span class="panel-game--team-history">{{ game.awayHistory.won }}-{{ game.awayHistory.lost }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-xs-3 col-sm-2 col-md-3 hidden-lg panel-game--result">
+                                                <span class="panel-game--score">
+                                                    <span class="more">{{ game.gameObj.getAttribute("home_score") }}</span>
+                                                    <span class="separator">:</span>
+                                                    <span class="less">{{ game.gameObj.getAttribute("away_score") }}</span>
+                                                </span>
+                                                <span class="panel-game--date">{{ game.gameObj.date | date('d.m.Y H:i') }}</span>
+                                            </div>
+                                        
+                                            <div class="hidden-xs col-sm-7 col-md-6 col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <div class="shooters-list{% if game.gameObj.getAttribute("won") == 'home' %} hasWon{% endif %}">
+                                                            {% for shooter in game.homeScoreList %}
+                                                            <span class="shooters-list--shooter">
+                                                                <span class="shooters-list--name" data-toggle="tooltip" data-placement="top" title="{{ players[shooter.player_id].name }} {{ players[shooter.player_id].surname }}">{{ players[shooter.player_id].nick | default(players[shooter.player_id].surname) }}</span>
+                                                                <span class="shooters-list--points">{{ shooter.sum }}b</span>
+                                                            </span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="shooters-list isRight{% if game.gameObj.getAttribute("won") == 'away' %} hasWon{% endif %}">
+                                                            {% for shooter in game.awayScoreList %}
+                                                            <span class="shooters-list--shooter">
+                                                                <span class="shooters-list--name" data-toggle="tooltip" data-placement="top" title="{{ players[shooter.player_id].name }} {{ players[shooter.player_id].surname }}">{{ players[shooter.player_id].nick | default(players[shooter.player_id].surname) }}</span>
+                                                                <span class="shooters-list--points">{{ shooter.sum }}b</span>
+                                                            </span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="col-xs-12">
+                                <div class="panel panel-default panel-game2">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-4 panel-game--team">
+                                                <span class="panel-game--team-name" data-toggle="tooltip" data-placement="top" title="{{ game.homeTeam.name }}">{{ game.homeTeam.short }}</span>
+                                                <span class="panel-game--team-history">{{ game.homeHistory.won }}-{{ game.homeHistory.lost }}</span>
+                                            </div>
+                                            <div class="col-lg-4 text-center panel-game--date">{{ game.gameObj.date | date('l dS') }}<br>{{ game.gameObj.date | date('H:i') }}</div>
+                                            <div class="col-lg-4 text-right panel-game--team">
+                                                <span class="panel-game--team-name" data-toggle="tooltip" data-placement="top" title="{{ game.awayTeam.name }}">{{ game.awayTeam.short }}</span>
+                                                <span class="panel-game--team-history">{{ game.awayHistory.won }}-{{ game.awayHistory.lost }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="alert alert-dismissible alert-warning">
+                              <p>Žiadne ďalšie zápasy nie sú naplánované.</p>
+                            </div>
+                        {% endfor %}
+                        </div>
                 </div>
-                {% endif %}
-            {% else %}
-                <div class="alert alert-dismissible alert-warning">
-                  <p>Žiadne ďalšie zápasy nie sú naplánované.</p>
+                <div class="col-xs-12 col-sm-6 col-lg-4">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="page-header">
+                                    <h2>Predpoveď počasia</h2>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!--
+                        
+                        free vector icons that can be used
+                        http://4vector.com/free-vector/weather-icons-vector-19544 
+                        
+                        -->
+                        
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <ul class="nav nav-pills">
+                                  <li class="active"><a href="#saturday" data-toggle="tab" aria-expanded="false">Sobota</a></li>
+                                  <li><a href="#sunday" data-toggle="tab" aria-expanded="false">Nedeľa</a></li>
+                                </ul>
+                                
+                                <div id="weather" class="tab-content">
+                                  <div class="tab-pane fade" id="saturday">
+                                    <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+                                  </div>
+                                  <div class="tab-pane fade active in" id="sunday">
+                                    <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
-            {% endfor %}
             </div>
         </div>
     </div>
 </div>
 
 
+<section class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="page-header">
+                <h1>Novinky</h1>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <h3>Víťazom 21. ročníka KSL sa stalo DŽUNGELEE</h3>
+                <p>Po šiestich triumfoch na Amurskej ulici prepísali chlapci a dievčenská posila z družstva SMRŤ PRICHÁDZA Z DŽUNGELEE históriu a po 7 rokoch...</p>
+              </div>
+            </div>
+        </div>
+        
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <h3>DŽUNGELEE víťazom pohára 2016</h3>
+                <p>Družstvo SMRŤ PRICHÁDZA Z DŽUNGELEE získalo po 4 rokoch opäť Streetballový pohár. Po víťazstvach 100:78 nad #TYDAMBOJZ a 100:89 nad 4FUN...</p>
+              </div>
+            </div>
+        </div>
+        
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Streetballový pohár 2016</h3>
+                    <p>DružstvoUž túto nedeľu 21. augusta 2016 sa uskutoční 20. ročník Streetballového pohára. Tento rok sa záujem o túto trofej mierne zväčšil a tak si to medzi sebou rozdajú až 3 družstvá. K tradičnému účastnikovi družstvu 4FUN sa pridali aj chlapci z #TYDAMBOJZ. Trojku doplnia cestovatelia z DŽUNGELEE na čele zo svojím čestvo oženeným kapitánom Jozefom. Hrá sa každý s každým a veríme, že nás čaká príjemné streetballové nedeľňajšie popoludnie.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <ul class="pagination">
+              <li class="disabled"><a href="#">&laquo;</a></li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
     
     
 </div>
