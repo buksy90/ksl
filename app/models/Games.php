@@ -51,6 +51,9 @@ class Games extends Base
     public static function GetNextDayDate() {
         $game       = new Self();
         $season     = Season::GetActual();
+        
+        if($season instanceof Season === false) return false;
+        
         return static::Select($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`))) AS `dayDate`'))
             ->Where('season_id', $season->id)
             ->Where('date', '>=', time())
@@ -65,8 +68,11 @@ class Games extends Base
      */
     public static function GetNextGames() {
         $game       = new Self();
-        $season     = Season::GetActual();
         $dayDate    = static::GetNextDayDate();
+        $season     = Season::GetActual();
+        
+        if($season instanceof Season === false) return false;
+        
         $q =  static::Where('season_id', $season->id)
             ->Where($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`)))'), '=', $dayDate)
             ->get();

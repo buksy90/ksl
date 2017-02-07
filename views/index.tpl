@@ -99,6 +99,10 @@
                     </div>
                 </div>
                 {% endif %}
+            {% else %}
+                <div class="alert alert-dismissible alert-warning">
+                  <p>Žiadne ďalšie zápasy nie sú naplánované.</p>
+                </div>
             {% endfor %}
             </div>
         </div>

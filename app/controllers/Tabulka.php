@@ -65,9 +65,12 @@ class Tabulka extends Base
     // Args:
     // $only3pt - (bool) whether to count only 3pts made
     private function GetShooters($only3pt = null) {
-        $shooters = Models\Players::join('roster', function($join){
+        $season     = Models\Season::GetActual();
+        if($season instanceof Models\Season === false) return false;
+        
+        $shooters = Models\Players::join('roster', function($join) use($season) {
             $join->on('players.id', '=', 'roster.player_id');
-            $join->where('roster.season_id', '=', Models\Season::GetActual()->id);
+            $join->where('roster.season_id', '=', $season->id);
         })->get()->map(function($player) use($only3pt) {
             $team       = Models\Teams::first($player->attributes['team_id']);
             $games      = $player->GetGamesCount();

@@ -9,8 +9,12 @@ class Index extends Base
     public function show($request, $response, $args) {
         $season     = Models\Season::GetActual();
         $teams      = $this->GetTeams();
+        $players    = $season instanceof Models\Season ? $this->GetPlayers($season->id) : null;
         
-        $games = Models\Games::GetNextGames()->map(function($game) use($teams) {
+        $games      = Models\Games::GetNextGames();
+        $games      = $games === false 
+                ? null 
+                : $games->map(function($game) use($teams) {
             $homeScoreList = Models\ScoreList::GetFromGameStatic($game, 'home');
             $awayScoreList = Models\ScoreList::GetFromGameStatic($game, 'away');
     
@@ -29,7 +33,7 @@ class Index extends Base
         return $response->write( $this->ci->twig->render('index.tpl', [
             'navigationSwitch'  => '',
             'games'             => $games,
-            'players'           => $this->GetPlayers($season->id),
+            'players'           => $players,
             'season'            => $season,
         ]));
    }
