@@ -8,13 +8,14 @@ class Rozpis extends Base
 {
     public function show($request, $response, $args) {
         $season     = Models\Season::GetActual();
-        $teams      = $this->GetTeams();
+        $teams      = Models\Teams::GetTeamsIndexedArray();
         $dates      = Models\Games::GetListOfDates();
         $nextDate   = null;
+        $players    = ($season instanceof Models\Season) ? Models\Players::GetPlayersBySeason($season->id) : false;
         
         
         // Get next game time
-        foreach($dates as $date) {
+        if($dates !== false) foreach($dates as $date) {
             if($date >= time()) {
                 $nextDate = $date;
                 break;
@@ -42,37 +43,10 @@ class Rozpis extends Base
         return $response->write( $this->ci->twig->render('rozpis.tpl', [
             'navigationSwitch'  => 'rozpis',
             'games'             => $games,
-            'players'           => $this->GetPlayers($season->id),
+            'players'           => $players,
             'season'            => $season,
             'dates'             => $dates,
             'nextDate'          => $nextDate
         ]));
-   }
-   
-   
-   
-   
-   private function GetTeams() {
-       $teams = [];
-       foreach(Models\Teams::cursor() as $team) {
-            $teams[$team->id] = $team;
-        }
-        
-        return $teams;
-   }
-   
-   // returns all players active this season
-   private function GetPlayers($season_id) {
-        $players            = [];
-        $playersCollection  = Models\Players::join('roster', function($join) use($season_id) {
-            $join->on('roster.player_id', '=', 'players.id')
-                 ->where('roster.season_id', '=', $season_id);
-        })->get();
-        
-        foreach($playersCollection as $player) {
-            $players[$player->id] = $player;
-        }
-        
-        return $players;
    }
 }

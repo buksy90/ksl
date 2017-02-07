@@ -53,7 +53,7 @@
     {% for game in games %}
         {% if game.gameObj.getAttribute("won") != null %}
         <div class="col-xs-12">
-            <div class="panel panel-default panel-game2 isPlayed" data-date="{{ game.dayDate }}">
+            <div class="panel panel-default panel-game2 isPlayed hidden" data-date="{{ game.dayDate }}">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-9 col-sm-3 col-md-3 col-lg-12">
@@ -117,7 +117,7 @@
         </div>
         {% else %}
         <div class="col-xs-12">
-            <div class="panel panel-default panel-game2" data-date="{{ game.dayDate }}">
+            <div class="panel panel-default panel-game2 hidden" data-date="{{ game.dayDate }}">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-4 panel-game--team">
@@ -137,111 +137,6 @@
     {% endfor %}
     </div>
     
-    
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="panel panel-default panel-game2 isPlayed">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-9 col-sm-3 col-md-3 col-lg-12">
-                            <div class="row">
-                                <div class="col-md-12 col-lg-4 panel-game--team">
-                                    <span class="panel-game--team-name hasWon">Fun</span>
-                                    <span class="panel-game--team-history">3-1</span>
-                                </div>
-                                <div class="visible-lg col-lg-4 text-center panel-game--result">
-                                    <span class="panel-game--score">
-                                        <span class="more">98</span>
-                                        <span class="separator">:</span>
-                                        <span class="less">96</span>
-                                    </span>
-                                    <span class="panel-game--date">22.6 14:00</span>
-                                </div>
-                                <div class="col-md-12 col-lg-4 panel-game--team isRight">
-                                    <span class="panel-game--team-name">Blk</span>
-                                    <span class="panel-game--team-history">2-0</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-xs-3 col-sm-2 col-md-3 hidden-lg panel-game--result">
-                            <span class="panel-game--score">
-                                <span class="more">98</span>
-                                <span class="separator">:</span>
-                                <span class="less">96</span>
-                            </span>
-                            <span class="panel-game--date">22.6 14:00</span>
-                        </div>
-                    
-                        <div class="hidden-xs col-sm-7 col-md-6 col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <div class="shooters-list hasWon">
-                                        <span class="shooters-list--shooter">
-                                            <span class="shooters-list--name">Zachar</span><span class="shooters-list--points">34b</span>
-                                        </span>
-                                        <span class="shooters-list--shooter">
-                                            <span class="shooters-list--name">Krajňak</span><span class="shooters-list--points">27b</span>
-                                        </span>
-                                        <span class="shooters-list--shooter">
-                                            <span class="shooters-list--name">Ragan</span><span class="shooters-list--points">17b</span>
-                                        </span>
-                                        <span class="shooters-list--shooter">
-                                            <span class="shooters-list--name">Tušan</span><span class="shooters-list--points">8b</span>
-                                        </span>
-                                        <span class="shooters-list--shooter">
-                                            <span class="shooters-list--name">Korbel</span><span class="shooters-list--points">7b</span>
-                                        </span>
-                                        <span class="shooters-list--shooter">
-                                            <span class="shooters-list--name">Duda</span><span class="shooters-list--points">-2b</span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="shooters-list isRight">
-                                        <span class="shooters-list--shooter">
-                                            <span class="shooters-list--name">Korner</span><span class="shooters-list--points">34b</span>
-                                        </span>
-                                        <span class="shooters-list--shooter">
-                                            <span class="shooters-list--name">Kan</span><span class="shooters-list--points">27b</span>
-                                        </span>
-                                        <span class="shooters-list--shooter">
-                                            <span class="shooters-list--name">Dudovič</span><span class="shooters-list--points">17b</span>
-                                        </span>
-                                        <span class="shooters-list--shooter">
-                                            <span class="shooters-list--name">Piskor</span><span class="shooters-list--points">8b</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    
-        <div class="col-xs-12">
-            <div class="panel panel-default panel-game2">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-4 panel-game--team">
-                            <span class="panel-game--team-name">4 Fun</span>
-                            <span class="panel-game--team-history">3-1</span>
-                        </div>
-                        <div class="col-lg-4 text-center panel-game--date">Nedeľa 22th<br>14:00</div>
-                        <div class="col-lg-4 text-right panel-game--team">
-                            <span class="panel-game--team-name">Black street</span>
-                            <span class="panel-game--team-history">2-0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        
-    </div>
     
 </div>
 {% endblock %}

@@ -32,6 +32,9 @@ class Games extends Base
     public static function GetListOfDates() {
         $game       = new Self();
         $season     = Season::GetActual();
+        
+        if($season instanceof Season === false) return false;
+        
         $query      = static::Select($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`))) AS `dayDate`'))
             ->Where('season_id', $season->id)
             ->GroupBy($game->getConnection()->raw('DATE(FROM_UNIXTIME(`date`))'))
