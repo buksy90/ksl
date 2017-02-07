@@ -31,7 +31,7 @@ class Players extends Base
                 ->groupBy('roster.player_id')
                 ->join('roster', function($join){
                     $join->on('score_list.player_id', '=', 'roster.player_id');
-                    $join->on('roster.season_id', '=', Season::GetActual()->id);
+                    $join->where('roster.season_id', '=', Season::GetActual()->id);
                 })->first();
                 
                 return ($tmp !== null) ? $tmp->count : 0;
@@ -53,7 +53,7 @@ class Players extends Base
             ->groupBy('roster.player_id')
             ->join('roster', function($join){
                 $join->on('score_list.player_id', '=', 'roster.player_id');
-                $join->on('roster.season_id', '=', Season::GetActual()->id);
+                $join->where('roster.season_id', '=', Season::GetActual()->id);
             });
             
         $tmp = $query->first();
