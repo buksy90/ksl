@@ -132,10 +132,16 @@
                                 </ul>
                                 
                                 <div id="weather" class="tab-content">
-                                  <div class="tab-pane fade" id="saturday">
-                                    <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+                                  <div class="tab-pane fade active in" id="saturday">
+                                      <div class="row">
+                                          <div class="col-xs-8 col-xs-push-2 text-center">
+                                              <img class="img-responsive block-center" src="/images/weather/rain.png" alt="rain" style="filter: hue-rotate(360deg)">
+                                              <br>
+                                              Saturday, <strong>13°</strong>
+                                          </div>
+                                      </div>
                                   </div>
-                                  <div class="tab-pane fade active in" id="sunday">
+                                  <div class="tab-pane fade" id="sunday">
                                     <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
                                   </div>
                                 </div>
