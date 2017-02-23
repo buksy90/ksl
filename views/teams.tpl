@@ -62,23 +62,25 @@
 console.warn("TODO: next lines !");
 </script>
                         <strong class="col-xs-9 bold">Odohraté zápasy:</strong>
-                        <div class="col-xs-3">0</div>
+                        <div class="col-xs-3">{{ playedGamesCount }}</div>
                         <strong class="col-xs-9 bold">Výhry:</strong>
-                        <div class="col-xs-3">0</div>
+                        <div class="col-xs-3">{{ wonGamesCount }}</div>
                         <strong class="col-xs-9 bold">Prehry:</strong>
-                        <div class="col-xs-3">0</div>
+                        <div class="col-xs-3">{{ lostGamesCount }}</div>
+                        <strong class="col-xs-9 bold">Remízy:</strong>
+                        <div class="col-xs-3">{{ tiedGamesCount }}</div>
                         <strong class="col-xs-9 bold">Umiestnenie:</strong>
-                        <div class="col-xs-3">0</div>
+                        <div class="col-xs-3">{{ standing }}</div>
                         <strong class="col-xs-9 bold">Strelené body:</strong>
-                        <div class="col-xs-3">0</div>
+                        <div class="col-xs-3">{{ scoredPoints }}</div>
                         <strong class="col-xs-9 bold">Strelené body (priemer):</strong>
-                        <div class="col-xs-3">0</div>
+                        <div class="col-xs-3">{{ scoredPointsAvg }}</div>
                         <strong class="col-xs-9 bold">Inkasované body:</strong>
-                        <div class="col-xs-3">0</div>
+                        <div class="col-xs-3">{{ allowedPoints }}</div>
                         <strong class="col-xs-9 bold">Inkasované body (priemer):</strong>
-                        <div class="col-xs-3">0</div>
+                        <div class="col-xs-3">{{ allowedPointsAvg }}</div>
                         <strong class="col-xs-9 bold">Úspešnosť:</strong>
-                        <div class="col-xs-3">0%</div>
+                        <div class="col-xs-3">{{ successRate }}%</div>
                     </div>
                 </div>
             </div>
@@ -112,8 +114,42 @@ console.warn("TODO: next lines !");
                                         <span class="visible-xs">{{ game.date | date("d.m") }}</span>
                                         <span class="hidden-xs">{{ game.date | date("d.m l") }}</span>
                                     </td>
-                                    <td class="text-center">{{ teams[game.hometeam].short }}</td>
-                                    <td class="text-center">{{ teams[game.awayteam].short }}</td>
+                                    <td class="text-center {% if game.getAttribute('won') == 'home' %}text-success{% endif %}">
+                                        <span class="label 
+                                            {% if team.short == teams[game.hometeam].short %}
+                                                {% if game.getAttribute('won') == 'home' %}
+                                                    label-success
+                                                {% else %}
+                                                    label-primary
+                                                {% endif %}
+                                            {% else %}
+                                                label-default
+                                            {% endif %}">{{ teams[game.hometeam].short }}</span>
+                                    </td>
+                                    <td class="text-center {% if game.getAttribute('won') == 'away' %}text-success{% endif %}">
+                                        <span class="label
+                                            {% if team.short == teams[game.awayteam].short %}
+                                                {% if game.getAttribute('won') == 'away' %}
+                                                    label-success
+                                                {% else %}
+                                                    label-primary
+                                                {% endif %}
+                                            {% else %}
+                                                label-default
+                                            {% endif %}"">{{ teams[game.awayteam].short }}</span>
+                                    </td>
+                                    <!--
+                                    <td class="text-center {% if game.getAttribute('won') == 'home' %}text-success{% endif %}">
+                                        {% if team.short == teams[game.hometeam].short %}<strong>{% endif %}
+                                        {{ teams[game.hometeam].short }}
+                                        {% if team.short == teams[game.hometeam].short %}</strong>{% endif %}
+                                    </td>
+                                    <td class="text-center {% if game.getAttribute('won') == 'away' %}text-success{% endif %}">
+                                        {% if team.short == teams[game.awayteam].short %}<strong>{% endif %}
+                                        {{ teams[game.awayteam].short }}
+                                        {% if team.short == teams[game.awayteam].short %}</strong>{% endif %}
+                                    </td>
+                                    -->
                                     <td class="text-center">{{ game.getAttribute('home_score') }}:{{ game.getAttribute('away_score') }}</td>
                                 </tr>
                                 {% endfor %}
@@ -130,13 +166,23 @@ console.warn("TODO: next lines !");
                         <div class="panel-body">
                             <table class="table table-striped table-hover">
                                 <tr>
-                                    <th class="hidden-xs text-center">Poradie</th>
-                                    <th>Hráč</th>
-                                    <th class="hidden-xs">Tým</th>
-                                    <th class="text-center">Zápasy</th>
+                                    <th class="hidden-xs text-center">Meno</th>
+                                    <th class="hidden-xs text-center">Priezvisko</th>
+                                    <th class="hidden-xs text-center">Číslo</th>
+                                    <th class="hidden-xs text-center">Zápasy</th>
                                     <th class="text-center">Body</th>
-                                    <th class="text-center">Priemer</th>
+                                    <th class="text-center">Trojky</th>
                                 </tr>
+                                {% for player in players %}
+                                <tr>
+                                    <td class="hidden-xs text-center">{{ player.name }}</td>
+                                    <td class="hidden-xs text-center">{{ player.surname }}</td>
+                                    <td class="hidden-xs text-center">{{ player.jersey }}</td>
+                                    <td class="hidden-xs text-center">zapasy</td>
+                                    <td class="text-center">body</td>
+                                    <td class="text-center">trojky</td>
+                                </tr>
+                                {% endfor %}
                             </table>
                         </div>
                     </div>

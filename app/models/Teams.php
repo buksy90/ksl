@@ -18,6 +18,14 @@ class Teams extends Base
     }
     
     
+    public function GetStanding() {
+        //
+        // TODO: Finish this one !
+        //
+        return 0;
+    }
+    
+    
     public function GetPlayersCount() {
         return Roster::
             select($this->getConnection()->raw('COUNT(*) as `count`'))
@@ -39,6 +47,15 @@ class Teams extends Base
             ->get();
     }
     
+    
+    public function GetGames() {
+        return Games::where(function ($query) {
+                    $query->where('hometeam', $this->id)
+                        ->orWhere('awayteam', $this->id);
+                })->where('season_id', '=', $this->getConnection()->raw(Season::GetActual()->id))
+                ->orderBy('date', 'asc')
+                ->get();
+    }
     
     
     /**
