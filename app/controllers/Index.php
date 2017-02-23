@@ -7,6 +7,12 @@ use \Illuminate\Database\Connection;
 class Index extends Base
 {
     public function show($request, $response, $args) {
+        // This is here only for debug purposes
+        // Remove in production !!
+        //$weather = new Models\Weather();
+        //$weather->UpdateDB();
+        
+        
         $season     = Models\Season::GetActual();
         $teams      = $this->GetTeams();
         $players    = $season instanceof Models\Season ? $this->GetPlayers($season->id) : null;
