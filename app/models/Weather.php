@@ -1,4 +1,6 @@
 <?php
+// https://www.apixu.com/api-explorer.aspx
+// https://www.apixu.com/doc/forecast.aspx
 // https://www.apixu.com/my/#_=_
 namespace KSL\Models;
 use \Illuminate\Database\Connection;
