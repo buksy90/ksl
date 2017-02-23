@@ -28,6 +28,19 @@ class Teams extends Base
     }
     
     
+    public function GetPlayers() {
+        return Players::
+            select($this->getConnection()->raw('`players`.*'))
+            ->join('roster', function($join){
+                $join->on('players.id', '=', 'roster.player_id');
+                $join->where('roster.season_id', '=', $this->getConnection()->raw(Season::GetActual()->id));
+                $join->where('roster.team_id', '=', $this->id);
+            })
+            ->get();
+    }
+    
+    
+    
     /**
      * Returns all time best shooter of team
      */

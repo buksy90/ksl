@@ -11,6 +11,13 @@ class Games extends Base
     public $timestamps = false;
     
     
+    public function GetHomeTeam() {
+        return Teams::find($this->hometeam);
+    }
+    
+    public function GetAwayTeam() {
+        return Teams::find($this->awayteam);
+    }
     
     public function scopePlayedBy($query, $teamId) {
         return $query->where('hometeam', $teamId)->orWhere('awayTeam', $teamId);

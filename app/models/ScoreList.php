@@ -14,6 +14,39 @@ class ScoreList extends Base
     
     
     
+    public static function GenerateRandomPoints() {
+        ScoreList::Truncate();
+
+        $games = Games::take(3)->get();
+        foreach($games as $game) {
+            $home = $game->GetHomeTeam();
+            $away = $game->GetAwayTeam();
+            
+            $homePlayers = $home->GetPlayers();
+            $awayPlayers = $away->GetPlayers();
+            
+            for($i = 0; $i < 15; $i++) {
+                $score = new ScoreList();
+                $score->game_id = $game->id;
+                $score->player_id = $homePlayers->Get(0)->id;
+                $score->team_id = $home->id;
+                $score->second = $i;
+                $score->value = rand(0, 1) > 0 ? '2pt' : '3pt';
+                $score->Save();
+                
+                $score = new ScoreList();
+                $score->game_id = $game->id;
+                $score->player_id = $awayPlayers->Get(0)->id;
+                $score->team_id = $away->id;
+                $score->second = $i;
+                $score->value = rand(0, 1) > 0 ? '2pt' : '3pt';
+                $score->Save();
+            }
+            
+        }
+    }
+    
+    
     
     
     //
