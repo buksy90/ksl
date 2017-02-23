@@ -25,24 +25,41 @@ class ScoreList extends Base
             $homePlayers = $home->GetPlayers();
             $awayPlayers = $away->GetPlayers();
             
-            for($i = 0; $i < 15; $i++) {
+            $scoreHome = 0;
+            $scoreAway = 0;
+            
+            $iterations = rand(10, 30);
+            for($i = 0; $i < $iterations; $i++) {
+                $valueHome = rand(0, 1) > 0 ? 2 : 3;
                 $score = new ScoreList();
                 $score->game_id = $game->id;
-                $score->player_id = $homePlayers->Get(0)->id;
+                $score->player_id = $homePlayers->Get(rand(0, $homePlayers->count()-1))->id;
                 $score->team_id = $home->id;
                 $score->second = $i;
-                $score->value = rand(0, 1) > 0 ? '2pt' : '3pt';
+                $score->value = $valueHome . 'pt';
                 $score->Save();
-                
-                $score = new ScoreList();
-                $score->game_id = $game->id;
-                $score->player_id = $awayPlayers->Get(0)->id;
-                $score->team_id = $away->id;
-                $score->second = $i;
-                $score->value = rand(0, 1) > 0 ? '2pt' : '3pt';
-                $score->Save();
+                $scoreHome += $valueHome;
             }
             
+            $iterations = rand(10, 30);
+            for($i = 0; $i < $iterations; $i++) {
+                $valueAway = rand(0, 1) > 0 ? 2 : 3;
+                $score = new ScoreList();
+                $score->game_id = $game->id;
+                $score->player_id = $awayPlayers->Get(rand(0, $awayPlayers->count()-1))->id;
+                $score->team_id = $away->id;
+                $score->second = $i;
+                $score->value = $valueAway . 'pt';
+                $score->Save();
+                $scoreAway += $valueAway;
+            }
+            
+            $game->home_score = $scoreHome;
+            $game->away_score = $scoreAway;
+            $game->won = $scoreHome == $scoreAway 
+                ? 'tie'
+                : (($scoreHome > $scoreAway) ? 'home' : 'away');
+            $game->Save();
         }
     }
     
