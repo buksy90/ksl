@@ -23,7 +23,7 @@ class Teams extends Base
     }
     
     // Get standings of all teams
-    public static function GetStandings($teamId = null, $modelInstance = null) {
+    public static function GetStandings($teamId = null, Models\Base $modelInstance = null) {
         if($modelInstance === null) $modelInstance = new Static();
         
         $sql  = [

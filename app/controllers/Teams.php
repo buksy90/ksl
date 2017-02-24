@@ -59,10 +59,11 @@ class Teams extends Base
             'scoredPointsAvg'       => $playedGames->count() > 0 ? array_sum($scoredPoints) / $playedGames->count() : 0,
             'allowedPoints'         => array_sum($allowedPoints),
             'allowedPointsAvg'      => $playedGames->count() > 0 ? array_sum($allowedPoints) / $playedGames->count() : 0,
-            'successRate'           => $wonGames->count() > 0 ? round(($playedGames->count() / $wonGames->count()) * 10) : 0,
+            'successRate'           => $wonGames->count() > 0 ? round(($wonGames->count()/$playedGames->count()) * 100) : 0,
+            'pointsAlt'             => 'Počet strelených bodov',
+            'points3ptAlt'          => 'Počet premenených trojkových pokusov'
         ]));
    }
-   
 
    
    

@@ -41,29 +41,38 @@ class Players extends Base
     //
     // Get sum of points scored by $this player this season
     //
-    public function GetPointsSum($only3pt = null) {
+    // Arguments:
+    // $only3pt - should only 3pts be considered? 
+    //          If true, returned sum represents number of made 3pt shots, 
+    //          if false [default], returned number represents number of made points (from 2pt & 3pt shots)
+    // $allSeasons - should points from all seasons be considered? If false [default] only active season is considered
+    public function GetPointsSum($only3pt = null, $allSeasons = null) {
         
-        $query =  ScoreList::select($this->getConnection()->raw('sum(`score_list`.`value`) as "sum"'))
-                ->where('score_list'.'.player_id', $this->getConnection()->raw('"'.$this->id.'"'));
+        if($only3pt === true) {
+            $query = ScoreList::select($this->getConnection()->raw('sum(`score_list`.`value`="3pt") as "sum"'));
+            $query->where('score_list.value', '3pt');
+        }
+        else $query = ScoreList::select($this->getConnection()->raw('sum(`score_list`.`value`="2pt")*2 + sum(`score_list`.`value`="3pt")*3 as "sum"'));
+        
+        $query->where('score_list'.'.player_id', $this->id);
                 
-        if($only3pt === true) $query->where('score_list.value', $this->getConnection()->raw('"3"'));
                 
-                
-        $query->groupBy('game_id')
-            ->groupBy('roster.player_id')
+        if($allSeasons !== true) {
+            $query->groupBy('score_list.player_id')
             ->join('roster', function($join){
                 $join->on('score_list.player_id', '=', 'roster.player_id');
                 $join->where('roster.season_id', '=', Season::GetActual()->id);
             });
+        }
             
-        $tmp = $query->first();
-        
-        return $tmp !== null ? $tmp->sum : 0;
+            
+        $fetched = $query->first();
+        return $fetched !== null ? $fetched->sum : 0;
     }
     
     
     /**
-     * returns all players active this season
+     * returns all players active specific season
      */
     public static function GetPlayersBySeason($season_id) {
         $players            = [];

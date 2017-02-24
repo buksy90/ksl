@@ -87,7 +87,10 @@
             <ul class="nav nav-pills">
               <li class="active"><a href="#games" data-toggle="tab" aria-expanded="false">Zápasy</a></li>
               <li><a href="#players" data-toggle="tab" aria-expanded="true">Hráči</a></li>
+              <!--
+              This might once be implemented :)
               <li><a href="#history-standings" data-toggle="tab" aria-expanded="true">Umiestnenie</a></li>
+              -->
             </ul>
             
             <br>
@@ -173,17 +176,17 @@
                                     <th class="hidden-xs text-center">Priezvisko</th>
                                     <th class="hidden-xs text-center">Číslo</th>
                                     <th class="hidden-xs text-center">Zápasy</th>
-                                    <th class="text-center">Body</th>
-                                    <th class="text-center">Trojky</th>
+                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="{{ pointsAlt }}" data-original-title="{{ pointsAlt }}">Body*</th>
+                                    <th class="text-center" data-toggle="tooltip" data-placement="top" title="{{ points3ptAlt }}" data-original-title="{{ points3ptAlt }}">Trojky*</th>
                                 </tr>
                                 {% for player in players %}
                                 <tr>
                                     <td class="hidden-xs text-center">{{ player.name }}</td>
                                     <td class="hidden-xs text-center">{{ player.surname }}</td>
                                     <td class="hidden-xs text-center">{{ player.jersey }}</td>
-                                    <td class="hidden-xs text-center">zapasy</td>
-                                    <td class="text-center">body</td>
-                                    <td class="text-center">trojky</td>
+                                    <td class="hidden-xs text-center">{{ player.GetGamesCount() }}</td>
+                                    <td class="text-center">{{ player.GetPointsSum() }}</td>
+                                    <td class="text-center">{{ player.GetPointsSum(true) }}</td>
                                 </tr>
                                 {% endfor %}
                             </table>
