@@ -14,10 +14,10 @@ class ScoreList extends Base
     
     
     
-    public static function GenerateRandomPoints() {
+    public static function GenerateRandomPoints($gamesCount) {
         ScoreList::Truncate();
 
-        $games = Games::take(3)->get();
+        $games = Games::take($gamesCount)->get();
         foreach($games as $game) {
             $home = $game->GetHomeTeam();
             $away = $game->GetAwayTeam();
