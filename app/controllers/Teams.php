@@ -36,6 +36,12 @@ class Teams extends Base
                 ? (int) $game->home_score
                 : (int) $game->away_score;
         })->toArray();
+        
+        
+        $standings = Models\Teams::GetStandings();
+        for($standing = 1; $standing <= count($standings); $standing++) {
+            if($standings[$standing-1]->id == $team->id) break;
+        }
 
         
         return $response->write( $this->ci->twig->render('teams.tpl', [
@@ -48,7 +54,7 @@ class Teams extends Base
             'wonGamesCount'         => $wonGames->count(),
             'lostGamesCount'        => $lostGames->count(),
             'tiedGamesCount'        => $playedGames->count() - ( $wonGames->count() + $lostGames->count()),
-            'standing'              => $team->GetStanding(),
+            'standing'              => $standing,
             'scoredPoints'          => array_sum($scoredPoints),
             'scoredPointsAvg'       => $playedGames->count() > 0 ? array_sum($scoredPoints) / $playedGames->count() : 0,
             'allowedPoints'         => array_sum($allowedPoints),

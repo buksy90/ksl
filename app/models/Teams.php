@@ -17,12 +17,39 @@ class Teams extends Base
         return Players::find($this->captain_id);
     }
     
-    
+    // Get standing of current team (instance)
     public function GetStanding() {
-        //
-        // TODO: Finish this one !
-        //
-        return 0;
+        return static::GetStandings($this->id, $this);
+    }
+    
+    // Get standings of all teams
+    public static function GetStandings($teamId = null, $modelInstance = null) {
+        if($modelInstance === null) $modelInstance = new Static();
+        
+        $sql  = [
+        '
+            SELECT 
+              t1.*,
+              count(t2.id) as `played_games`,
+              sum(t2.won="home" and t2.hometeam=t1.id) as `won_home`,
+              sum(t2.won="away" and t2.awayteam=t1.id) as `won_away`,
+              (sum(t2.won="home" and t2.hometeam=t1.id)+sum(t2.won="away" and t2.awayteam=t1.id))*3 + sum(t2.won="tie") as `points`
+            FROM `teams` t1
+            JOIN games t2 ON (t1.id = t2.hometeam OR t1.id = t2.awayteam) AND t2.won IS NOT NULL ',
+            '',
+            'GROUP BY t1.id
+            ORDER BY `points` DESC '
+        ];
+        
+        
+        if($teamId !== null && is_numeric($teamId)) {
+            $sql[1] = ' WHERE t1.id = ? ';
+            
+            $result = $modelInstance->getConnection()->select(join($sql), [$teamId]);
+            if(is_array($result) && count($result) === 1) return $result[0];
+            else return $result;
+        }
+        else return $modelInstance->getConnection()->select(join($sql));
     }
     
     

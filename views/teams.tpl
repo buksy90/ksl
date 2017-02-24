@@ -58,9 +58,6 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-<script>
-console.warn("TODO: next lines !");
-</script>
                         <strong class="col-xs-9 bold">Odohraté zápasy:</strong>
                         <div class="col-xs-3">{{ playedGamesCount }}</div>
                         <strong class="col-xs-9 bold">Výhry:</strong>
@@ -124,7 +121,10 @@ console.warn("TODO: next lines !");
                                                 {% endif %}
                                             {% else %}
                                                 label-default
-                                            {% endif %}">{{ teams[game.hometeam].short }}</span>
+                                            {% endif %}"
+                                            data-toggle="tooltip" data-placement="top" title="{{ teams[game.hometeam].name }}" data-original-title="{{ teams[game.hometeam].name }}">
+                                                {{ teams[game.hometeam].short }}
+                                            </span>
                                     </td>
                                     <td class="text-center {% if game.getAttribute('won') == 'away' %}text-success{% endif %}">
                                         <span class="label
@@ -136,7 +136,10 @@ console.warn("TODO: next lines !");
                                                 {% endif %}
                                             {% else %}
                                                 label-default
-                                            {% endif %}"">{{ teams[game.awayteam].short }}</span>
+                                            {% endif %}"
+                                            data-toggle="tooltip" data-placement="top" title="{{ teams[game.awayteam].name }}" data-original-title="{{ teams[game.awayteam].name }}">
+                                                {{ teams[game.awayteam].short }}
+                                            </span>
                                     </td>
                                     <!--
                                     <td class="text-center {% if game.getAttribute('won') == 'home' %}text-success{% endif %}">
@@ -214,7 +217,7 @@ console.warn("TODO: next lines !");
 <script>
 /*global $*/
 $(function(){
-    $('#2pt-players .tooltip-target').tooltip({container: 'body'});
+    $('[data-toggle="tooltip"]').tooltip({container: 'body'});
     
     
     
