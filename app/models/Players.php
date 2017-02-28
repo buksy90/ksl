@@ -20,21 +20,59 @@ class Players extends Base
     */
     
     
+    //
+    // Generate seo for each player in database that has seo set to null
+    //
+    public static function GenerateSEOGlobally() {
+        $players = self::get();
+        
+        foreach($players as $player) {
+            if($player->seo != null) continue;
+            
+            $player->GenerateSEO();
+        }
+    }
+    
+    
+    //
+    // Generate seo column for player
+    // seo name is geenrated from nick (if set), otherwise from name
+    //
+    public function GenerateSEO() {
+        $seo      = iconv('UTF-8', 'ASCII//TRANSLIT', $this->nick != null 
+            ? $this->nick
+            : $this->name.'_'.$this->surname);
+            
+        $this->seo = strtolower($seo);
+        $this->save();
+        
+        return $seo;
+    }
+    
+    
     
     //
     // Get count of games played by $this player this (Roster::GetActualYear) season
     //
     public function GetGamesCount() {
-          $tmp =  ScoreList::select($this->getConnection()->raw('count(DISTINCT `score_list`.`player_id`) as count'))
-                ->where('score_list.player_id', $this->getConnection()->raw('"'.$this->id.'"'))
-                ->groupBy('game_id')
-                ->groupBy('roster.player_id')
-                ->join('roster', function($join){
-                    $join->on('score_list.player_id', '=', 'roster.player_id');
-                    $join->where('roster.season_id', '=', Season::GetActual()->id);
-                })->first();
-                
-                return ($tmp !== null) ? $tmp->count : 0;
+        $modelInstance = new Static();
+        
+        $sql = '
+            SELECT 
+                COUNT( * ) AS `count`
+            FROM 
+            (
+                SELECT score_list.id
+                FROM  `score_list` 
+                INNER JOIN  `roster` ON  `score_list`.`player_id` =  `roster`.`player_id` AND  `roster`.`season_id` =2
+                WHERE  `score_list`.`player_id` =31
+                GROUP BY  `score_list`.`game_id`
+            ) t
+            ';
+        
+        
+         $result = $modelInstance->getConnection()->select($sql)[0];
+         return $result->count;
     }
     
     

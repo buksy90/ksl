@@ -45,13 +45,13 @@
                                 {% for team in teams %}
                                 <tr>
                                     <td class="hidden-xs text-center">{{ loop.index }}</td>
-                                    <td>{{ team.teamObj.name }}</td>
-                                    <td class="hidden-xs hidden-sm text-center" title="Skóre">{{ team.scored }}:{{ team.received }}</td>
-                                    <td class="text-center">{{ team.games }}</td>
-                                    <td class="text-center">{{ team.won }}</td>
-                                    <td class="text-center">{{ team.lost }}</td>
+                                    <td><a href="/teams/{{ team.short }}">{{ team.name }}</a></td>
+                                    <td class="hidden-xs hidden-sm text-center" title="Skóre">{{ team.points_scored }}:{{ team.points_allowed }}</td>
+                                    <td class="text-center">{{ team.games_played }}</td>
+                                    <td class="text-center">{{ team.games_won }}</td>
+                                    <td class="text-center">{{ team.games_lost }}</td>
                                     <td class="text-center">{{ team.points}}</td>
-                                    <td class="hidden-xs text-center" title="Úspešnosť">{{ team.success }}%</td>
+                                    <td class="hidden-xs text-center" title="Úspešnosť">{{ team.success_rate | round }}%</td>
                                 </tr>
                                 {% endfor %}
                             </table>
@@ -79,8 +79,14 @@
                                 {% for player in shooters %}
                                 <tr>
                                     <td class="hidden-xs text-center">{{ loop.index }}</td>
-                                    <td><span class="tooltip-target" data-toggle="tooltip" data-placement="top" data-original-title="{{ player.playerObj.nick }}">{{ player.playerObj.name }} {{ player.playerObj.surname }}</span></td>
-                                    <td class="hidden-xs">{{ player.team }}</td>
+                                    <td>
+                                        <span class="tooltip-target" data-toggle="tooltip" data-placement="top" data-original-title="{{ player.playerObj.nick }}">
+                                            <a href="/players/{{ player.playerObj.seo }}">
+                                                {{ player.playerObj.name }} {{ player.playerObj.surname }}
+                                            </a>
+                                        </span>
+                                    </td>
+                                    <td class="hidden-xs"><a href="/teams/{{ player.team.short }}">{{ player.team.name }}</a></td>
                                     <td class="text-center">{{ player.games }}</td>
                                     <td class="text-center">{{ player.points }}</td>
                                     <td class="text-center">{{ player.avg }}</td>
@@ -104,15 +110,21 @@
                                     <th>Hráč</th>
                                     <th class="hidden-xs">Tým</th>
                                     <th class="text-center">Zápasy</th>
-                                    <th class="text-center">Body</th>
+                                    <th class="text-center">Premenené pokusy</th>
                                     <th class="text-center">Priemer</th>
                                 </tr>
                                 
                                 {% for player in shooters3pt %}
                                 <tr>
                                     <td class="hidden-xs text-center">{{ loop.index }}</td>
-                                    <td><span class="tooltip-target" data-toggle="tooltip" data-placement="top" data-original-title="{{ player.playerObj.nick }}">{{ player.playerObj.name }} {{ player.playerObj.surname }}</span></td>
-                                    <td class="hidden-xs">{{ player.team }}</td>
+                                    <td>
+                                        <span class="tooltip-target" data-toggle="tooltip" data-placement="top" data-original-title="{{ player.playerObj.nick }}">
+                                            <a href="/players/{{ player.playerObj.seo }}">
+                                                {{ player.playerObj.name }} {{ player.playerObj.surname }}
+                                            </a>
+                                        </span>
+                                    </td>
+                                    <td class="hidden-xs"><a href="/teams/{{ player.team.short }}">{{ player.team.name }}</a></td>
                                     <td class="text-center">{{ player.games }}</td>
                                     <td class="text-center">{{ player.points }}</td>
                                     <td class="text-center">{{ player.avg }}</td>

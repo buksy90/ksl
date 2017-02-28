@@ -26,24 +26,32 @@ class Teams extends Base
     public static function GetStandings($teamId = null, Models\Base $modelInstance = null) {
         if($modelInstance === null) $modelInstance = new Static();
         
-        $sql  = [
-        '
+        //
+        // Sorting should be updated to order by direct matches in case of same points
+        //
+        
+        $sql = ['
             SELECT 
-              t1.*,
-              count(t2.id) as `played_games`,
-              sum(t2.won="home" and t2.hometeam=t1.id) as `won_home`,
-              sum(t2.won="away" and t2.awayteam=t1.id) as `won_away`,
-              (sum(t2.won="home" and t2.hometeam=t1.id)+sum(t2.won="away" and t2.awayteam=t1.id))*3 + sum(t2.won="tie") as `points`
-            FROM `teams` t1
-            JOIN games t2 ON (t1.id = t2.hometeam OR t1.id = t2.awayteam) AND t2.won IS NOT NULL ',
+                tt.*
+                ,(SELECT COUNT(*) FROM games tg WHERE (tt.id = tg.hometeam AND tg.won = "home") OR (tt.id = tg.awayteam AND tg.won = "away")) as `games_won`
+				,(SELECT COUNT(*) FROM games tg WHERE (tt.id = tg.hometeam AND tg.won = "away") OR (tt.id = tg.awayteam AND tg.won = "home")) as `games_lost`
+				,(SELECT COUNT(*) FROM games tg WHERE (tt.id = tg.hometeam OR tt.id = tg.awayteam) AND tg.won = "tied") as `games_tied`
+				,(SELECT COUNT(*) FROM games tg WHERE (tt.id = tg.hometeam OR tt.id = tg.awayteam) AND tg.won IS NOT NULL) as `games_played`
+				,(SELECT COALESCE(SUM(tg.home_score), 0) FROM games tg WHERE tt.id = tg.hometeam AND tg.won IS NOT NULL) + (SELECT COALESCE(SUM(tg.away_score), 0) FROM games tg WHERE tt.id = tg.awayteam AND tg.won IS NOT NULL) as `points_scored`
+				,(SELECT COALESCE(SUM(tg.home_score), 0) FROM games tg WHERE tt.id = tg.awayteam AND tg.won IS NOT NULL) + (SELECT COALESCE(SUM(tg.away_score), 0) FROM games tg WHERE tt.id = tg.hometeam AND tg.won IS NOT NULL) as `points_allowed`
+				,(SELECT `games_won`*3 + `games_tied`) AS `points`
+				,(SELECT `games_won`/`games_played` * 100) AS `success_rate`
+            FROM
+                teams tt
+            ',
             '',
-            'GROUP BY t1.id
-            ORDER BY `points` DESC '
-        ];
+            '
+			ORDER BY `points` DESC, `games_played` ASC
+        '];
         
         
         if($teamId !== null && is_numeric($teamId)) {
-            $sql[1] = ' WHERE t1.id = ? ';
+            $sql[1] = ' WHERE tt.id = ? ';
             
             $result = $modelInstance->getConnection()->select(join($sql), [$teamId]);
             if(is_array($result) && count($result) === 1) return $result[0];
