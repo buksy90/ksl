@@ -103,7 +103,7 @@ $container['twig']  = function($c) {
         [ 'route' => 'index', 'text' => 'Úvod', 'navigationSwitch' => null ],
         [ 'route' => 'rozpis', 'text' => 'Rozpis', 'navigationSwitch' => 'rozpis' ],
         [ 'route' => 'tabulka', 'text' => 'Tabuľky', 'navigationSwitch' => 'tabulka' ],
-        [ 'route' => 'o-nas', 'text' => 'O nás', 'navigationSwitch' => 'o-nas' ],
+        //[ 'route' => 'o-nas', 'text' => 'O nás', 'navigationSwitch' => 'o-nas' ],
         [ 'route' => 'ihrisko', 'text' => 'Ihriská', 'navigationSwitch' => 'ihrisko' ],
     ]);
 
@@ -129,11 +129,21 @@ $app->get('/', function ($request, $response, $args) {
 })->setName('index');
 */
 
-$app->get('/o-nas', function ($request, $response, $args) {
+$app->get('/liga/o-nas', function ($request, $response, $args) {
     return $response->write( $this->twig->render('o-nas.tpl', [
-        'navigationSwitch' => 'o-nas'
+        'navigationSwitch' => 'liga'
     ]));
 })->setName('o-nas');
+$app->get('/liga/pravidla', function ($request, $response, $args) {
+    return $response->write( $this->twig->render('pravidla.tpl', [
+        'navigationSwitch' => 'liga'
+    ]));
+})->setName('pravidla');
+$app->get('/liga/pokuty-poplatky', function ($request, $response, $args) {
+    return $response->write( $this->twig->render('pokuty_poplatky.tpl', [
+        'navigationSwitch' => 'liga'
+    ]));
+})->setName('pokuty-poplatky');
 
 $app->get('/', '\KSL\Controllers\Index:show')->setName('index');
 $app->get('/rozpis', '\KSL\Controllers\Rozpis:show')->setName('rozpis');

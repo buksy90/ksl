@@ -68,6 +68,15 @@
 				  		{% endfor%}
 				  		
 				  		<li class="dropdown">
+				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Liga <span class="caret"></span></a>
+				          <ul class="dropdown-menu" role="menu">
+				  				<li><a href="{{ router.pathFor('o-nas') }}">O nás</a></li>
+				  				<li><a href="{{ router.pathFor('pravidla') }}">Pravidla</a></li>
+				  				<li><a href="{{ router.pathFor('pokuty-poplatky') }}">Pokuty a poplatky</a></li>
+				          </ul>
+				        </li>
+				  		
+				  		<li class="dropdown">
 				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tímy <span class="caret"></span></a>
 				          <ul class="dropdown-menu" role="menu">
 				          	{% for team in teamsNames %}
