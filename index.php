@@ -1,11 +1,4 @@
 <?php
-error_reporting(E_ALL); 
-ini_set('display_errors','On');
-
-// DEBUG SETTINGS
-// No need for more, and infinite cycles will be found easier
-set_time_limit(1);
-ini_set('memory_limit', '12M');
 session_start();
 
 /**
@@ -15,6 +8,7 @@ session_start();
  * PSR-4 autoloader.
  */
 define('DIR_ROOT', __DIR__);
+require DIR_ROOT.'/app/config.php';
 require DIR_ROOT.'/vendor/autoload.php';
 
 use \Illuminate\Database\Connection;
@@ -22,17 +16,6 @@ use \KSL\Models;
 use \KSL\Controllers;
 
 
-$config['displayErrorDetails'] = true;
-$config['addContentLengthHeader'] = false;
-
-$config['db']['driver']         = 'mysql';
-$config['db']['host']           = getenv('IP');
-$config['db']['username']       = getenv('C9_USER');
-$config['db']['password']       = '';
-$config['db']['database']       = 'c9';
-$config['db']['collation']      = 'utf8_general_ci';
-$config['db']['charset']        = 'utf8';
-$config['db']['port']           = 3306;
 
 $capsule = new \Illuminate\Database\Capsule\Manager;
 $capsule->addConnection($config['db']);
