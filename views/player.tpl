@@ -29,15 +29,23 @@
                     </div>
                     <div class="row">
                         <strong class="col-xs-7 bold">Tím:</strong>
-                        <div class="col-xs-5">{{ team.name }}</div>
+                        <div class="col-xs-5">
+                            <a href="/teams/{{ team.short }}">{{ team.name }}</a>
+                        </div>
+                        {% if player.nick %}
+                            <strong class="col-xs-7 bold">Prezývka:</strong>
+                            <div class="col-xs-5">{{ player.nick }}</div>
+                        {% endif %}
                         <strong class="col-xs-7 bold">Číslo dresu:</strong>
                         <div class="col-xs-5">{{ player.jersey }}</div>
                         <strong class="col-xs-7 bold">Facebook:</strong>
                         <div class="col-xs-5">
                             <a href="http://facebook.com">Facebook</a>
                         </div>
-                        <strong class="col-xs-7 bold">Počet strelených bodov:</strong>
-                        <div class="col-xs-5">x</div>
+                        <strong class="col-xs-7 bold">Vek:</strong>
+                        <div class="col-xs-5">{{ player.birthdate }}</div>
+                        <strong class="col-xs-7 bold">Kategória:</strong>
+                        <div class="col-xs-5">{{ player.category }}</div>
                     </div>
                 </div>
             </div>
