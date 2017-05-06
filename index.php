@@ -155,6 +155,7 @@ $app->get('/ihrisko', '\KSL\Controllers\Ihrisko:showList')->setName('ihrisko');
 $app->get('/ihrisko/{link}', '\KSL\Controllers\Ihrisko:showPlayground')->setName('ihriskoByLink');
 $app->get('/teams', '\KSL\Controllers\Teams:show')->setName('timy');
 $app->get('/teams/{short}', '\KSL\Controllers\Teams:showTeam')->setName('tim');
+$app->get('/players/{seo}', '\KSL\Controllers\Players:showPlayer')->setName('player');
 
 /*
 $app->get('/hello[/{name}]', function ($request, $response, $args) {

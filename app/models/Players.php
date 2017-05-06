@@ -20,6 +20,18 @@ class Players extends Base
     */
     
     
+    public function GetTeam() {
+        $team_id = Roster::
+            select($this->getConnection()->raw('`team_id`'))
+            ->where('season_id', '=', $this->getConnection()->raw(Season::GetActual()->id))
+            ->where('player_id', '=',  $this->getConnection()->raw($this->id))
+            ->first()
+            ->team_id;
+            
+        return Teams::find($team_id);
+    }
+    
+    
     //
     // Generate seo for each player in database that has seo set to null
     //
