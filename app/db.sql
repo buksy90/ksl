@@ -160,3 +160,16 @@ CREATE TABLE IF NOT EXISTS `weather` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `date` (`date`,`hour`,`type`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=673 ;
+
+-- --------------------------------------------------------
+
+
+DROP TABLE IF EXISTS `game_roster`;
+CREATE TABLE `game_roster` (
+  `player_id` int(11) unsigned NOT NULL,
+  `game_id` int(10) unsigned NOT NULL,
+  UNIQUE KEY `unique` (`player_id`,`game_id`),
+  KEY `fk_game_roster_2_idx` (`game_id`),
+  CONSTRAINT `fk_game_roster_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_game_roster_2` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
