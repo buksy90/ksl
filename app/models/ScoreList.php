@@ -12,6 +12,19 @@ class ScoreList extends Base
     //protected $primaryKey = 'id'; // Not necessary as this is default
     public $timestamps = false;
     
+
+    public static function ClearList() {
+        GameRoster::Truncate();
+        ScoreList::Truncate();
+
+        $games = Game::all();
+        foreach($games as $game) {
+            $game->home_score = NULL;
+            $game->away_score = NULL;
+            $game->won = NULL;
+            $game->Save();
+        }
+    }
     
     
     public static function GenerateRandomPoints($gamesCount) {
@@ -24,6 +37,9 @@ class ScoreList extends Base
             
             $homePlayers = $home->GetPlayers();
             $awayPlayers = $away->GetPlayers();
+
+            $playingHomePlayers = [];
+            $playingAwayPlayers = [];
             
             $scoreHome = 0;
             $scoreAway = 0;
@@ -38,7 +54,17 @@ class ScoreList extends Base
                 $score->second = $i;
                 $score->value = $valueHome . 'pt';
                 $score->Save();
+
                 $scoreHome += $valueHome;
+                $playingHomePlayers[$score->player_id] = true;
+            }
+
+
+            foreach(array_keys($playingHomePlayers) as $playerId) {
+                $entry = new GameRoster();
+                $entry->player_id = $playerId;
+                $entry->game_id = $game->id;
+                $entry->Save();
             }
             
             $iterations = rand(10, 30);
@@ -51,8 +77,19 @@ class ScoreList extends Base
                 $score->second = $i;
                 $score->value = $valueAway . 'pt';
                 $score->Save();
+
                 $scoreAway += $valueAway;
+                $playingAwayPlayers[$score->player_id] = true;
             }
+
+
+            foreach(array_keys($playingAwayPlayers) as $playerId) {
+                $entry = new GameRoster();
+                $entry->player_id = $playerId;
+                $entry->game_id = $game->id;
+                $entry->Save();
+            }
+
             
             $game->home_score = $scoreHome;
             $game->away_score = $scoreAway;
