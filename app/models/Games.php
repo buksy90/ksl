@@ -56,6 +56,14 @@ class Games extends Base
      * Get next when any match will be plated 
     */
     public static function GetNextDayDate() {
+        return static::GetNextXDayDate(0);
+    }
+    
+    
+    /**
+     * 
+     */
+    public static function GetNextXDayDate($x) {
         $game       = new Self();
         $season     = Season::GetActual();
         
@@ -66,9 +74,12 @@ class Games extends Base
             ->Where('date', '>=', time())
             ->GroupBy($game->getConnection()->raw('DATE(FROM_UNIXTIME(`date`))'))
             ->OrderBy('dayDate', 'asc')
+            ->skip($x-1)
             ->first()
             ->dayDate;
     }
+    
+    
     
     /**
      * Returns games that are going to be played next

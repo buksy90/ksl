@@ -11,6 +11,22 @@ class Weather extends Base
     public $timestamps  = false;
     
     
+    /**
+     * @param string $timestamp - expects date in string format (i.e. yyy-mm-dd)
+     */
+    public function GetWeatherForDate($timestamp) {
+        $weather    = [ 'timestamp' => $timestamp ];
+        $data       = static::Where('date', $timestamp)->get();
+        
+        foreach($data as $weatherItem) {
+            $weather[$weatherItem->type][$weatherItem->hour] = $weatherItem->value;
+        }
+
+        return $weather;
+    }
+    
+    
+    
     //
     // Truncate Weather table, download new forecast and fill table
     //

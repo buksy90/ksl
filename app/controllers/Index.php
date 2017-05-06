@@ -9,8 +9,19 @@ class Index extends Base
     public function show($request, $response, $args) {
         // This is here only for debug purposes
         // Remove in production !!
-        //$weather = new Models\Weather();
+        $weatherModel = new Models\Weather();
         //$weather->UpdateDB();
+        $nextDays   = [
+            Models\Games::GetNextXDayDate(0),
+            Models\Games::GetNextXDayDate(1),
+            date(),
+            strtotime('+1 day')
+        ];
+        $weather    = array_map(function($timestamp) use($weatherModel) {
+            return $weatherModel->GetWeatherForDate($timestamp);
+        }, $nextDays);
+
+        $weather    = array_filter($weather, function($item){ return is_array($item) && count($item); });
         
         
         $season     = Models\Season::GetActual();
@@ -41,6 +52,7 @@ class Index extends Base
             'games'             => $games,
             'players'           => $players,
             'season'            => $season,
+            'weather'           => array_values($weather)
         ]));
    }
    

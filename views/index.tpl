@@ -127,23 +127,23 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <ul class="nav nav-pills">
-                                  <li class="active"><a href="#saturday" data-toggle="tab" aria-expanded="false">Sobota</a></li>
-                                  <li><a href="#sunday" data-toggle="tab" aria-expanded="false">Nedeľa</a></li>
+                                    {% for i in 0..1 %}
+                                    <li class="{% if loop.first %}active{% endif %}"><a href="#d{{ weather[i].timestamp }}" data-toggle="tab" aria-expanded="false">{{ weather[i].timestamp|date('d.m.Y l') }}</a></li>
+                                    {% endfor %}
                                 </ul>
                                 
                                 <div id="weather" class="tab-content">
-                                  <div class="tab-pane fade active in" id="saturday">
-                                      <div class="row">
-                                          <div class="col-xs-8 col-xs-push-2 text-center">
-                                              <img class="img-responsive block-center" src="/images/weather/rain.png" alt="rain" style="filter: hue-rotate(360deg)">
-                                              <br>
-                                              Saturday, <strong>13°</strong>
+                                    {% for i in 0..1 %}
+                                        <div class="tab-pane fade {% if loop.first %}active in{% endif %}" id="d{{ weather[i].timestamp }}">
+                                          <div class="row">
+                                              <div class="col-xs-8 col-xs-push-2 text-center">
+                                                  <img class="img-responsive block-center" src="/images/weather/rain.png" alt="rain" style="filter: hue-rotate(360deg)">
+                                                  <br>
+                                                  {{ weather[i].timestamp|date('d.m.Y l') }}, <strong>{# {{ array_sum(weather[i].temperatur)}} #}X°</strong>
+                                              </div>
                                           </div>
-                                      </div>
-                                  </div>
-                                  <div class="tab-pane fade" id="sunday">
-                                    <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
-                                  </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
