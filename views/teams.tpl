@@ -71,11 +71,11 @@
                         <strong class="col-xs-9 bold">Strelené body:</strong>
                         <div class="col-xs-3">{{ scoredPoints }}</div>
                         <strong class="col-xs-9 bold">Strelené body (priemer):</strong>
-                        <div class="col-xs-3">{{ scoredPointsAvg }}</div>
+                        <div class="col-xs-3">{{ scoredPointsAvg | number_format(1) }}</div>
                         <strong class="col-xs-9 bold">Inkasované body:</strong>
                         <div class="col-xs-3">{{ allowedPoints }}</div>
                         <strong class="col-xs-9 bold">Inkasované body (priemer):</strong>
-                        <div class="col-xs-3">{{ allowedPointsAvg }}</div>
+                        <div class="col-xs-3">{{ allowedPointsAvg | number_format(1) }}</div>
                         <strong class="col-xs-9 bold">Úspešnosť:</strong>
                         <div class="col-xs-3">{{ successRate }}%</div>
                     </div>
