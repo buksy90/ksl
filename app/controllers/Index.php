@@ -7,6 +7,9 @@ use \Illuminate\Database\Connection;
 class Index extends Base
 {
     public function show($request, $response, $args) {
+        //Models\ScoreList::ClearList();
+        //Models\ScoreList::GenerateRandomPoints(8);
+
         // This is here only for debug purposes
         // Remove in production !!
         $weatherModel = new Models\Weather();
