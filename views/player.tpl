@@ -67,7 +67,7 @@
                             <table class="table table-striped table-hover">
                                 <tr>
                                     <th>Počet odohratých zápasov</th>
-                                    <td>x</td>
+                                    <td>{{ gamesPlayedCount }}</td>
                                 </tr>
                                 <tr>
                                     <th>Počet strelených bodov</th>

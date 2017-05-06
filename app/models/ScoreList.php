@@ -17,7 +17,7 @@ class ScoreList extends Base
         GameRoster::Truncate();
         ScoreList::Truncate();
 
-        $games = Game::all();
+        $games = Games::all();
         foreach($games as $game) {
             $game->home_score = NULL;
             $game->away_score = NULL;
