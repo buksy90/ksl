@@ -8,8 +8,9 @@ session_start();
  * PSR-4 autoloader.
  */
 define('DIR_ROOT', __DIR__.'/..');
-require DIR_ROOT.'/app/config.php';
+require DIR_ROOT.'/KSL/config.php';
 require DIR_ROOT.'/vendor/autoload.php';
+
 
 use \Illuminate\Database\Connection;
 use \KSL\Models;
@@ -23,24 +24,6 @@ $capsule->addConnection($config['db']);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-
-
-spl_autoload_register(function ($classname) {
-    if(substr($classname, 0, 11) === 'KSL\Models\\')
-        require_once(DIR_ROOT . '/app/models/' . substr($classname, 11) . ".php");
-        
-    return false;
-});
-
-
-spl_autoload_register(function ($classname) {
-    if(substr($classname, 0, 16) === 'KSL\Controllers\\') {
-        require_once(DIR_ROOT . '/app/controllers/' . substr($classname, 16) . ".php");
-    }
-        
-        
-    return false;
-});
 
 
 /**
