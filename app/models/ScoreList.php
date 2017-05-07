@@ -52,7 +52,7 @@ class ScoreList extends Base
                 $score->player_id = $homePlayers->Get(rand(0, $homePlayers->count()-1))->id;
                 $score->team_id = $home->id;
                 $score->second = $i;
-                $score->value = $valueHome . 'pt';
+                $score->value = $valueHome;
                 $score->Save();
 
                 $scoreHome += $valueHome;
@@ -66,7 +66,7 @@ class ScoreList extends Base
                 $entry->game_id = $game->id;
                 $entry->Save();
             }
-            
+           
             $iterations = rand(10, 30);
             for($i = 0; $i < $iterations; $i++) {
                 $valueAway = rand(0, 1) > 0 ? 2 : 3;
@@ -75,7 +75,7 @@ class ScoreList extends Base
                 $score->player_id = $awayPlayers->Get(rand(0, $awayPlayers->count()-1))->id;
                 $score->team_id = $away->id;
                 $score->second = $i;
-                $score->value = $valueAway . 'pt';
+                $score->value = $valueAway;
                 $score->Save();
 
                 $scoreAway += $valueAway;
@@ -131,5 +131,18 @@ class ScoreList extends Base
         ->get();
                 
         return $scoreList;
+    }
+
+
+    public static function GetPointsOfPlayer($playerId, $season = null) {
+        $instance = new Static();
+
+        if($season === null) {
+            return Static::Select($instance->getConnection()->raw('SUM(`value`) AS `sum`'))
+                ->Where('player_id', $playerId)
+                ->first()
+                ->sum;
+        }
+        else throw "Not implemented";
     }
 }

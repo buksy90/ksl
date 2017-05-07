@@ -19,12 +19,12 @@
         <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{ { team.short }}</h3>
+                    <h3 class="panel-title">BIO</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12">
-                            <img src="https://vecto.rs/600/vector-of-hawaiian-tourist-person-carrying-a-bag-coloring-page-outlined-art-by-leo-blanchette-12875.jpg" class="img-responsive">
+                            <img src="{{ image }}" class="img-responsive">
                         </div>
                     </div>
                     <div class="row">
@@ -46,6 +46,10 @@
                         <div class="col-xs-5">{{ player.birthdate }}</div>
                         <strong class="col-xs-7 bold">Kategória:</strong>
                         <div class="col-xs-5">{{ player.category }}</div>
+                        <strong class="col-xs-7 bold">Rank:</strong>
+                        <div class="col-xs-5">{{ playerRank }}</div>
+                        <strong class="col-xs-7 bold">Overall:</strong>
+                        <div class="col-xs-5">{{ playerOverall }}</div>
                     </div>
                 </div>
             </div>
@@ -70,8 +74,24 @@
                                     <td>{{ gamesPlayedCount }}</td>
                                 </tr>
                                 <tr>
+                                    <th>Počet vyhratých zápasov</th>
+                                    <td>{{ gamesWonCount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Počet prehratých zápasov</th>
+                                    <td>{{ gamesLostCount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Zápasová úspešnosť</th>
+                                    <td>{{ gamesSuccessRate }}</td>
+                                </tr>
+                                <tr>
                                     <th>Počet strelených bodov</th>
-                                    <td>x</td>
+                                    <td>{{ scoredPoints }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Počet premenených trojkových pokusov</th>
+                                    <td>{{ threePointsMade }}</td>
                                 </tr>
                             </table>
                         </div>

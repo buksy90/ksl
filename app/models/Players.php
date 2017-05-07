@@ -99,10 +99,10 @@ class Players extends Base
     public function GetPointsSum($only3pt = null, $allSeasons = null) {
         
         if($only3pt === true) {
-            $query = ScoreList::select($this->getConnection()->raw('sum(`score_list`.`value`="3pt") as "sum"'));
-            $query->where('score_list.value', '3pt');
+            $query = ScoreList::select($this->getConnection()->raw('sum(`score_list`.`value`="3") as "sum"'));
+            $query->where('score_list.value', '3');
         }
-        else $query = ScoreList::select($this->getConnection()->raw('sum(`score_list`.`value`="2pt")*2 + sum(`score_list`.`value`="3pt")*3 as "sum"'));
+        else $query = ScoreList::select($this->getConnection()->raw('sum(`score_list`.`value`) as "sum"'));
         
         $query->where('score_list'.'.player_id', $this->id);
                 
@@ -136,5 +136,29 @@ class Players extends Base
         }
         
         return $players;
+   }
+
+
+   public function GetRank() {
+       $pointsScored = $this->GetPointsSum(false, true);
+
+
+       $betterPlayersSql = '
+            SELECT COUNT(*) AS `count` FROM
+            (
+                SELECT SUM(value) as `sum`, t1.* FROM ksl.score_list t1 GROUP BY player_id 
+                HAVING `sum` > '.(int)$pointsScored.'
+                ORDER BY `sum` DESC
+            ) td1
+            ';
+        
+        $betterPlayersCount = $this->getConnection()->select($betterPlayersSql)[0]->count;
+
+        return $betterPlayersCount + 1;
+   }
+
+
+   public function GetOverall() {
+       return 100 - $this->GetRank();
    }
 }
