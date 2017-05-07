@@ -1,4 +1,4 @@
 app/config.php
-vendor/
+vendor
 .idea
 .vscode
