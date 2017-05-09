@@ -17,7 +17,7 @@ class Index extends Base
         $nextDays   = [
             Models\Games::GetNextXDayDate(0),
             Models\Games::GetNextXDayDate(1),
-            date(),
+            time(),
             strtotime('+1 day')
         ];
         $weather    = array_map(function($timestamp) use($weatherModel) {
