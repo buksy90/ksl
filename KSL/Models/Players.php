@@ -55,7 +55,7 @@ class Players extends Base
             ? $this->nick
             : $this->name.'_'.$this->surname);
             
-        $this->seo = strtolower($seo);
+        $this->seo = strtolower(str_replace(' ', '_', $seo));
         $this->save();
         
         return $seo;
@@ -76,12 +76,11 @@ class Players extends Base
             (
                 SELECT score_list.id
                 FROM  `score_list` 
-                INNER JOIN  `roster` ON  `score_list`.`player_id` =  `roster`.`player_id` AND  `roster`.`season_id` =2
-                WHERE  `score_list`.`player_id` =31
+                INNER JOIN  `roster` ON  `score_list`.`player_id` =  `roster`.`player_id` AND  `roster`.`season_id` = '.Season::GetActual()->id.'
+                WHERE  `score_list`.`player_id` = "'.(int)$this->id.'"
                 GROUP BY  `score_list`.`game_id`
             ) t
             ';
-        
         
          $result = $modelInstance->getConnection()->select($sql)[0];
          return $result->count;
@@ -146,7 +145,7 @@ class Players extends Base
        $betterPlayersSql = '
             SELECT COUNT(*) AS `count` FROM
             (
-                SELECT SUM(value) as `sum`, t1.* FROM ksl.score_list t1 GROUP BY player_id 
+                SELECT SUM(value) as `sum`, t1.* FROM score_list t1 GROUP BY player_id 
                 HAVING `sum` > '.(int)$pointsScored.'
                 ORDER BY `sum` DESC
             ) td1

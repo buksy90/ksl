@@ -9,18 +9,15 @@ class Roster extends Base
     protected $table = 'roster';
     //protected $primaryKey = 'id'; // Not necessary as this is default
     public $timestamps = false;
-    
-    public static function GetActualYear() {
-        return date('Y');
-    }
-    
+        
+
     public function scopeThisYear($query) {
-        throw new Exception("deprecated scopeThisYear() called");
+        throw new \Exception("deprecated scopeThisYear() called");
         return $query->where('year', date('Y'));
     }
     
     public function scopeYear($query, $year) {
-        throw new Exception("deprecated scopeYear() called");
+        throw new \Exception("deprecated scopeYear() called");
         return $query->where('year', (int) $year);
     }
 }

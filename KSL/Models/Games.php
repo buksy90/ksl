@@ -19,9 +19,11 @@ class Games extends Base
         return Teams::find($this->awayteam);
     }
     
+    /*
     public function scopePlayedBy($query, $teamId) {
         return $query->where('hometeam', $teamId)->orWhere('awayTeam', $teamId);
     }
+    */
     
     public function scopeWonBy($query, $teamId) {
         return $query->where([['hometeam', $teamId], ['won', 'home']])->orWhere([['awayTeam', $teamId], ['won', 'away']]);
@@ -36,6 +38,9 @@ class Games extends Base
         return static::Where('playground_id', $playgroundId)->Where('date', '>=', time())->take($limit)->get();
     }
     
+    /**
+    * Returns array of games dates
+    */
     public static function GetListOfDates() {
         $game       = new Self();
         $season     = Season::GetActual();
@@ -53,7 +58,8 @@ class Games extends Base
     }
     
     /**
-     * Get next when any match will be plated 
+     * Get next date when any match will be played
+     * @return int
     */
     public static function GetNextDayDate() {
         return static::GetNextXDayDate(0);
@@ -61,7 +67,8 @@ class Games extends Base
     
     
     /**
-     * 
+     * Get next playing date after next X playing dates
+     * @return int
      */
     public static function GetNextXDayDate($x) {
         $game       = new Self();
@@ -69,14 +76,17 @@ class Games extends Base
         
         if($season instanceof Season === false) return false;
         
-        return static::Select($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`))) AS `dayDate`'))
+        $result = static::Select($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`))) AS `dayDate`'))
             ->Where('season_id', $season->id)
             ->Where('date', '>=', time())
             ->GroupBy($game->getConnection()->raw('DATE(FROM_UNIXTIME(`date`))'))
             ->OrderBy('dayDate', 'asc')
             ->skip($x-1)
-            ->first()
-            ->dayDate;
+            ->first();
+
+        return is_object($result)
+            ? $result->dayDate
+            : null;
     }
     
     

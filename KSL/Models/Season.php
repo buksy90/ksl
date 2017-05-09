@@ -9,6 +9,14 @@ class Season extends Base
     protected $table = 'season';
     
     public static function GetActual() {
-        return static::where('active', '1')->first();
+        $season = Static::find(['active' => 1]);
+
+        if($season->count() === 1) return $season->first();
+        else return null;
+    }
+
+
+    public static function GetActualYear() {
+        return date('Y');
     }
 }

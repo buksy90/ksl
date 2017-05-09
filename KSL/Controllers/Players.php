@@ -14,7 +14,7 @@ class Players extends Base
         $seo                = $args['seo'];
         $player             = Models\Players::where('seo', $seo)->first();
         $team               = $player->GetTeam();
-        $gamesPlayedCount   = Models\GameRoster::GetPlayerGames($player->id);
+        $gamesPlayedCount   = Models\GameRoster::GetPlayerGamesCount($player->id);
         $playerRank         = $player->GetRank();
         $playerOverall      = $player->GetOverall();
         $images             = [

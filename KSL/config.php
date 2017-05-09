@@ -10,9 +10,9 @@ $config['addContentLengthHeader'] = false;
 
 $config['db']['driver']         = 'mysql';
 $config['db']['host']           = 'localhost';
-$config['db']['username']       = 'ksl';
-$config['db']['password']       = 'ksl';
-$config['db']['database']       = 'ksl';
+$config['db']['username']       = 'ksl_test';
+$config['db']['password']       = 'ksl_test';
+$config['db']['database']       = 'ksl_test';
 $config['db']['collation']      = 'utf8_general_ci';
 $config['db']['charset']        = 'utf8';
 $config['db']['port']           = 3306;
