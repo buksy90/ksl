@@ -42,17 +42,21 @@ CREATE TABLE IF NOT EXISTS `games` (
 --
 
 DROP TABLE IF EXISTS `players`;
-CREATE TABLE IF NOT EXISTS `players` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE `players` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(16) NOT NULL,
   `surname` varchar(32) NOT NULL,
+  `seo` varchar(32) NOT NULL,
   `nick` varchar(16) NOT NULL,
   `birthdate` int(10) unsigned NOT NULL,
   `jersey` tinyint(3) unsigned NOT NULL,
   `category` enum('A','B') NOT NULL,
   `facebook` varchar(64) NOT NULL,
+  `height` smallint(6) DEFAULT NULL,
+  `weight` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=76 ;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 
