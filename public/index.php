@@ -48,92 +48,10 @@ $container['connection'] = function($c) use ($capsule) {
 };
 
 
-
-//
-// Set up twig
-//
-$container['twig']  = function($c) {
-    $loader         = new Twig_Loader_Filesystem(DIR_ROOT.'/views');
-    $env            = new Twig_Environment($loader, array(
-        //'cache' => '/cache'
-        'debug'                 => true,
-        'strict_variables'      => true
-    ));
-    
-    $env->addExtension(new Twig_Extension_Debug());
-    
-    $env->addGlobal('router', $c['router']);
-    $env->addGlobal('navigation', null);
-    
-    $env->addGlobal('navigation', [
-        [ 'route' => 'index', 'text' => 'Úvod', 'navigationSwitch' => null ],
-        [ 'route' => 'rozpis', 'text' => 'Rozpis', 'navigationSwitch' => 'rozpis' ],
-        [ 'route' => 'tabulka', 'text' => 'Tabuľky', 'navigationSwitch' => 'tabulka' ],
-        //[ 'route' => 'o-nas', 'text' => 'O nás', 'navigationSwitch' => 'o-nas' ],
-        [ 'route' => 'playground', 'text' => 'Ihriská', 'navigationSwitch' => 'playground' ],
-    ]);
+$container['twig']  = \KSL\Templates::getTwig($app->getContainer());
 
 
-    $env->addGlobal('teamsNames', Models\Teams::GetTeamsNames());
+\KSL\Routes::set($app);
 
-    return $env;
-};
 
-/**
- * Step 3: Define the Slim application routes
- *
- * Here we define several Slim application routes that respond
- * to appropriate HTTP request methods. In this example, the second
- * argument for `Slim::get`, `Slim::post`, `Slim::put`, `Slim::patch`, and `Slim::delete`
- * is an anonymous function.
- */
- /*
-$app->get('/', function ($request, $response, $args) {
-    return $response->write( $this->twig->render('layout.tpl', [
-        'navigationSwitch' => null
-    ]));
-})->setName('index');
-*/
-
-$app->get('/liga/o-nas', function ($request, $response, $args) {
-    return $response->write( $this->twig->render('o-nas.tpl', [
-        'navigationSwitch' => 'liga'
-    ]));
-})->setName('o-nas');
-$app->get('/liga/pravidla', function ($request, $response, $args) {
-    return $response->write( $this->twig->render('pravidla.tpl', [
-        'navigationSwitch' => 'liga'
-    ]));
-})->setName('pravidla');
-$app->get('/liga/pokuty-poplatky', function ($request, $response, $args) {
-    return $response->write( $this->twig->render('pokuty_poplatky.tpl', [
-        'navigationSwitch' => 'liga'
-    ]));
-})->setName('pokuty-poplatky');
-
-$app->get('/', '\KSL\Controllers\Index:show')->setName('index');
-$app->get('/rozpis', '\KSL\Controllers\Rozpis:show')->setName('rozpis');
-$app->get('/tabulka', '\KSL\Controllers\Tabulka:show')->setName('tabulka');
-$app->get('/nova-sezona', '\KSL\Controllers\NovaSezona:show')->setName('nova-sezona');
-$app->post('/nova-sezona/generate', '\KSL\Controllers\NovaSezona:generate')->setName('nova-sezona#generate');
-$app->get('/nova-sezona/save', '\KSL\Controllers\NovaSezona:save')->setName('nova-sezona#save');
-$app->get('/playground', '\KSL\Controllers\Playground:showList')->setName('playground');
-$app->get('/playground/{link}', '\KSL\Controllers\Playground:showPlayground')->setName('playgroundByLink');
-$app->get('/teams', '\KSL\Controllers\Teams:show')->setName('timy');
-$app->get('/teams/{short}', '\KSL\Controllers\Teams:showTeam')->setName('tim');
-$app->get('/players/{seo}', '\KSL\Controllers\Players:showPlayer')->setName('player');
-
-/*
-$app->get('/hello[/{name}]', function ($request, $response, $args) {
-    $response->write("Hello, " . $args['name']);
-    return $response;
-})->setArgument('name', 'World!');
-*/
-
-/**
- * Step 4: Run the Slim application
- *
- * This method should be called last. This executes the Slim application
- * and returns the HTTP response to the HTTP client.
- */
 $app->run();
