@@ -21,7 +21,7 @@
                     <table class="table table-striped table-hover">
                         {% for playground in playgrounds %}
                         <tr>
-                            <td><a href="{{ router.pathFor('ihriskoByLink', {'link': playground.link}) }}">{{ playground.name }}</a></td>
+                            <td><a href="{{ router.pathFor('playgroundByLink', {'link': playground.link}) }}">{{ playground.name }}</a></td>
                             <td class="text-center">{{ playground.address}}</td>
                             <td class="text-center">{{ playground.district}}</td>
                         </tr>

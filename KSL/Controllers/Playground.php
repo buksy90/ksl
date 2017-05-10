@@ -4,13 +4,13 @@ namespace KSL\Controllers;
 use \KSL\Models;
 use \Illuminate\Database\Connection;
 
-class Ihrisko extends Base
+class Playground extends Base
 {
     public function showList($request, $response, $args) {
         $playgrounds          = Models\Playground::GetList();
         
-        return $response->write( $this->ci->twig->render('ihriska_list.tpl', [
-            'navigationSwitch'      => 'ihrisko',
+        return $response->write( $this->ci->twig->render('playgrounds_list.tpl', [
+            'navigationSwitch'      => 'playground',
             'playgrounds'           => $playgrounds,
         ]));
    }
@@ -32,8 +32,8 @@ class Ihrisko extends Base
         });
 
         
-        return $response->write( $this->ci->twig->render('ihrisko.tpl', [
-            'navigationSwitch'      => 'ihrisko',
+        return $response->write( $this->ci->twig->render('playground.tpl', [
+            'navigationSwitch'      => 'playground',
             'playground'            => $playground,
             'games'                 => $games
         ]));

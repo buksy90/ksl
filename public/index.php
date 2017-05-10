@@ -70,7 +70,7 @@ $container['twig']  = function($c) {
         [ 'route' => 'rozpis', 'text' => 'Rozpis', 'navigationSwitch' => 'rozpis' ],
         [ 'route' => 'tabulka', 'text' => 'Tabuľky', 'navigationSwitch' => 'tabulka' ],
         //[ 'route' => 'o-nas', 'text' => 'O nás', 'navigationSwitch' => 'o-nas' ],
-        [ 'route' => 'ihrisko', 'text' => 'Ihriská', 'navigationSwitch' => 'ihrisko' ],
+        [ 'route' => 'playground', 'text' => 'Ihriská', 'navigationSwitch' => 'playground' ],
     ]);
 
 
@@ -117,8 +117,8 @@ $app->get('/tabulka', '\KSL\Controllers\Tabulka:show')->setName('tabulka');
 $app->get('/nova-sezona', '\KSL\Controllers\NovaSezona:show')->setName('nova-sezona');
 $app->post('/nova-sezona/generate', '\KSL\Controllers\NovaSezona:generate')->setName('nova-sezona#generate');
 $app->get('/nova-sezona/save', '\KSL\Controllers\NovaSezona:save')->setName('nova-sezona#save');
-$app->get('/ihrisko', '\KSL\Controllers\Ihrisko:showList')->setName('ihrisko');
-$app->get('/ihrisko/{link}', '\KSL\Controllers\Ihrisko:showPlayground')->setName('ihriskoByLink');
+$app->get('/playground', '\KSL\Controllers\Playground:showList')->setName('playground');
+$app->get('/playground/{link}', '\KSL\Controllers\Playground:showPlayground')->setName('playgroundByLink');
 $app->get('/teams', '\KSL\Controllers\Teams:show')->setName('timy');
 $app->get('/teams/{short}', '\KSL\Controllers\Teams:showTeam')->setName('tim');
 $app->get('/players/{seo}', '\KSL\Controllers\Players:showPlayer')->setName('player');
