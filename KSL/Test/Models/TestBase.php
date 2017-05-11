@@ -2,9 +2,8 @@
 
 namespace KSL\Test\Models;
 
-define('DIR_ROOT', __DIR__.'/../../..');
 
-class TestBase extends \PHPUnit_Framework_TestCase {
+class TestBase extends \KSL\Test\TestBase {
     private static $isSetUp = false;
 
     public static function setUpBeforeClass()

@@ -2,27 +2,31 @@
 
 namespace KSL\Test\Controllers;
 
-use KSL\Controllers\Playground;
+class PlaygroundTest extends TestBaseControllers {
 
-class PlaygroundTest extends TestBase {
-     public function testShowList() {
-        $environment = \Slim\Http\Environment::mock([
-            'REQUEST_METHOD' => 'GET',
-            'REQUEST_URI' => '/playground'
-        ]);
+    public function testShowPlayground() {     
+        $playground     = \KSL\Models\Playground::first();
+        $response       = $this->getRouteResponse('/playground/'.$playground->link);
+        $this->assertSame($response->getStatusCode(), 200);
+    }
 
-        $request    = \Slim\Http\Request::createFromEnvironment($environment);
-        $response   = new \Slim\Http\Response();
 
-        $playground = new Playground($this->app->getContainer());
-/*
-        $playground = $this->getMockBuilder(Playground::class)
-            ->setMethods(['all'])
-            ->disableOriginalConstructor()
-            ->getMock();
-*/
+    public function testShowPlaygroundThatDoesntExist() {   
+        $response = $this->getRouteResponse('/playground/fakeThatDoesntExist');
+        $this->assertSame($response->getStatusCode(), 404);
+    }
 
-        $response   = $playground->showList($request, $response, []);
-        //$this->assertSame((string)$response->getBody(), '{"foo":"bar"}');
-   }
+
+    public function testGetPlayground() {
+        $playground = \KSL\Models\Playground::first();
+        $controller = new \KSL\Controllers\Playground($this->app->getContainer());
+        $config     = $controller->getPlayground($playground);
+
+        $this->assertTrue($config->isValid());
+        $this->assertEquals('playground.tpl', $config->file);
+        $this->assertEquals($playground, $config->variables['playground']);
+        $this->assertEquals(1, count($config->variables['games']));
+    }
+
+   
 }

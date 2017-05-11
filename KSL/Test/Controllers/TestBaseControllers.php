@@ -2,9 +2,7 @@
 
 namespace KSL\Test\Controllers;
 
-define('DIR_ROOT', __DIR__.'/../../..');
-
-class TestBase extends \PHPUnit_Framework_TestCase {
+class TestBaseControllers extends \KSL\Test\TestBase {
     private static $isSetUp = false;
     protected $app = null;
 
@@ -42,4 +40,14 @@ class TestBase extends \PHPUnit_Framework_TestCase {
         $this->app = $app;
     }
 
+    protected function getRouteResponse($route) {
+        $environment    = \Slim\Http\Environment::mock([
+            'REQUEST_METHOD' => 'GET',
+            'REQUEST_URI' => $route
+        ]);
+
+        $request    = \Slim\Http\Request::createFromEnvironment($environment);
+        $this->app->getContainer()['request'] = $request;
+        return $this->app->run(true);
+    }
 }
