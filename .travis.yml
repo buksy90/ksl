@@ -9,5 +9,5 @@ install: composer install
 services: mysql
 before_install:
   - mysql -e 'CREATE DATABASE ksl;'
-  - mysql < data/structure.sql
-  - mysql < data/data_test.sql
+  - mysql -e < data/structure.sql
+  - mysql -e < data/data_test.sql
