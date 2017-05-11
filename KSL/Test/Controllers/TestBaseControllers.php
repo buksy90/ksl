@@ -3,23 +3,7 @@
 namespace KSL\Test\Controllers;
 
 class TestBaseControllers extends \KSL\Test\TestBase {
-    private static $isSetUp = false;
     protected $app = null;
-
-    public static function setUpBeforeClass()
-    {
-        parent::setUpBeforeClass();
-
-        if(Self::$isSetUp === false) {
-            require DIR_ROOT.'/KSL/config_test_env.php';
-
-            $capsule = new \Illuminate\Database\Capsule\Manager;
-            $capsule->addConnection($config['db']);
-
-            $capsule->setAsGlobal();
-            $capsule->bootEloquent();
-        }
-    }
 
     public function setUp() {
         parent::setUp();
