@@ -14,11 +14,16 @@ class TestBase extends \PHPUnit_Framework_TestCase {
             if(getenv('TRAVIS') === true) require DIR_ROOT.'/KSL/config_travis_env.php';
             else require DIR_ROOT.'/KSL/config_test_env.php';
 
+            var_dump(getenv('TRAVIS'));
+            var_dump($config);
+
             $capsule = new \Illuminate\Database\Capsule\Manager;
             $capsule->addConnection($config['db']);
 
             $capsule->setAsGlobal();
             $capsule->bootEloquent();
+
+            self::$isSetUp = true;
         }
     }
 }
