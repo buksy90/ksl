@@ -1,4 +1,5 @@
 app/config.php
 vendor
+data/data_production.sql
 .idea
 .vscode
