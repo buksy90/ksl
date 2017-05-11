@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors','On');
 
 set_time_limit(1);
-ini_set('memory_limit', '12M');
+//ini_set('memory_limit', '12M');
 
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
