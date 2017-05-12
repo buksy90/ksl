@@ -1,4 +1,4 @@
-app/config.php
+KSL/config.php
 vendor
 data/data_production.sql
 .idea
