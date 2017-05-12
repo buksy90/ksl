@@ -5,6 +5,7 @@ define('DIR_ROOT', __DIR__.'/../..');
 
 class TestBase extends \PHPUnit_Framework_TestCase {
     private static $isSetUp = false;
+    protected static $config = null;
 
     public static function setUpBeforeClass()
     {
@@ -14,8 +15,7 @@ class TestBase extends \PHPUnit_Framework_TestCase {
             if(getenv('TRAVIS') == true) require DIR_ROOT.'/KSL/config_travis_env.php';
             else require DIR_ROOT.'/KSL/config_test_env.php';
 
-            var_dump(getenv('TRAVIS'));
-            var_dump($config);
+            self::$config = $config;
 
             $capsule = new \Illuminate\Database\Capsule\Manager;
             $capsule->addConnection($config['db']);

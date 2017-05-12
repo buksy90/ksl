@@ -11,11 +11,7 @@ class TestBaseControllers extends \KSL\Test\TestBase {
     }
 
     private function setUpSlim() {
-        require DIR_ROOT.'/KSL/config_test_env.php';
-
-        //$container = new \Slim\Container;
-        //$app = new \Slim\App($container);
-        $app        = new \Slim\App(['settings' => $config]);
+        $app        = new \Slim\App(['settings' => self::$config]);
         $container  = $app->getContainer();
         $container['twig'] = \KSL\Templates::getTwig($container);
 
