@@ -12,7 +12,8 @@ class TestBase extends \PHPUnit_Framework_TestCase {
         parent::setUpBeforeClass();
 
         if(Self::$isSetUp === false) {
-            if(getenv('TRAVIS') == true) require DIR_ROOT.'/KSL/config_travis_env.php';
+            if(file_exists(DIR_ROOT.'/KSL/config_c9_env.php')) require DIR_ROOT.'/KSL/config_c9_env.php';
+            else if(getenv('TRAVIS') == true) require DIR_ROOT.'/KSL/config_travis_env.php';
             else require DIR_ROOT.'/KSL/config_test_env.php';
 
             self::$config = $config;

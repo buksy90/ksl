@@ -3,3 +3,4 @@ vendor
 data/data_production.sql
 .idea
 .vscode
+KSL/config_c9_env.php
