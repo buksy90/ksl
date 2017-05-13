@@ -3,11 +3,20 @@ namespace KSL;
 
 class Routes {
     public static function set(\Slim\App $app) {
+        $instance = new Routes();
+        return $instance->setNonStatic($app);
+    }
+    
+    public function setNonStatic(\Slim\App $app) {
+        $container  = $app->getContainer();
+        $twig       = $container['twig'];
+        
         $app->get('/liga/o-nas', function ($request, $response, $args) {
-            return $response->write( $this->twig->render('o-nas.tpl', [
+            return $response->write( $twig->render('o-nas.tpl', [
                 'navigationSwitch' => 'liga'
             ]));
         })->setName('o-nas');
+        
         $app->get('/liga/pravidla', function ($request, $response, $args) {
             return $response->write( $this->twig->render('pravidla.tpl', [
                 'navigationSwitch' => 'liga'
