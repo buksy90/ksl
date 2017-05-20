@@ -1,0 +1,6 @@
+# Export only db structure
+#mysqldump --no-data -u ksl -pksl ksl > structure.sql
+
+# Export only db data
+#mysqldump --no-create-info -u ksl_test -pksl_test ksl_test > data_test.sql
+
