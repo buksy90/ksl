@@ -23,21 +23,26 @@ class Players extends Base
             'http://m.rgbimg.com/cache1nGjdA/users/h/hi/hisks/600/mhYpYCG.jpg',
             'http://www.clipartbest.com/cliparts/4T9/6RK/4T96RKgXc.jpg'
         ];
-
+        $gamesPlayed        = $player->GetGamesPlayed();
+        $gamesStatistics    = $player->GetGamesStatistics();
+        $gamesWonCount      = $gamesStatistics->won;
+        $gamesLostCount     = $gamesStatistics->lost;
+        $gamesSuccessRate   = ($gamesPlayedCount === 0) ? 0 : ($gamesWonCount / $gamesPlayedCount) * 100;
                 
         return $response->write( $this->ci->twig->render('player.tpl', [
             'player'            => $player,
             'team'              => $team,
             'gamesPlayedCount'  => $gamesPlayedCount,
-            'gamesWonCount'     => 'X',
-            'gamesLostCount'    => 'X',
-            'gamesSuccessRate'  => 'X',
             'playerRank'        => $playerRank,
             'playerOverall'     => $playerOverall,
             'scoredPoints'      => $player->GetPointsSum(false, true),
             'threePointsMade'   => $player->GetPointsSum(true, true),
             'image'             => $images[rand(0, count($images)-1)],
-            'navigationSwitch'  => ''
+            'navigationSwitch'  => '',
+            'gamesPlayed'       => $gamesPlayed,
+            'gamesWonCount'     => $gamesWonCount,
+            'gamesLostCount'    => $gamesLostCount,
+            'gamesSuccessRate'  => $gamesSuccessRate
         ]));
    }
 

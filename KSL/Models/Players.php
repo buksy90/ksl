@@ -116,7 +116,7 @@ class Players extends Base
             
             
         $fetched = $query->first();
-        return $fetched !== null ? $fetched->sum : 0;
+        return $fetched !== null && is_numeric($fetched->sum) ? $fetched->sum : 0;
     }
     
     
@@ -159,5 +159,36 @@ class Players extends Base
 
    public function GetOverall() {
        return 100 - $this->GetRank();
+   }
+
+
+    public function GetGamesPlayed($season_id = null) {
+        $games = Games::join('game_roster', function($join){
+                $join->on('games.id', '=', 'game_roster.game_id');
+                $join->where('game_roster.player_id', '=', $this->id);
+            });
+
+        if(is_numeric($season_id)) $games = $games->Where('season_id', $season_id);
+
+        return $games->get();
+   }
+
+
+   public function GetGamesStatistics($season_id = null) {
+        $games = Games::select($this->getConnection()->raw('
+            sum(`won` = "home" AND games.hometeam = roster.team_id)+sum(`won` = "away" AND games.awayteam = roster.team_id) AS `won`,
+            sum(`won` = "away" AND games.hometeam = roster.team_id)+sum(`won` = "home" AND games.awayteam = roster.team_id) AS `lost` '))
+            ->join('game_roster', function($join){
+                $join->on('games.id', '=', 'game_roster.game_id');
+                $join->where('game_roster.player_id', '=', $this->id);
+            })
+            ->join('roster', function($join){
+                $join->on('roster.season_id', 'games.season_id');
+                $join->where('roster.player_id', '=', $this->id);
+            });
+
+        if(is_numeric($season_id)) $games = $games->Where('season_id', $season_id);
+
+        return $games->first();
    }
 }

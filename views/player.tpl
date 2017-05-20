@@ -24,7 +24,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12">
-                            <img src="{{ image }}" class="img-responsive">
+                            <img src="{{ image }}" class="img-responsive" alt="{{ player.name }} {{ player.surname }}">
                         </div>
                     </div>
                     <div class="row">
@@ -96,6 +96,7 @@
                             </table>
                         </div>
                     </div>
+                </div>
                     
                 <div class="tab-pane fade" id="games">
                     <div class="panel panel-primary">
@@ -109,6 +110,14 @@
                                     <th class="text-center">Skóre</th>
                                 </tr>
                                 
+                                {% for game in gamesPlayed %}
+                                <tr>
+                                    <td class="text-center">{{ game.date | date('d.m.Y') }}</td>
+                                    <td class="text-center">{{ game.homeTeam.short }}</td>
+                                    <td class="text-center">{{ game.awayTeam.short }}</td>
+                                    <td class="text-center">{{ game.home_score }} : {{ game.away_score }}</td>
+                                </tr>
+                                {% endfor %}
                             </table>
                         </div>
                     </div>
