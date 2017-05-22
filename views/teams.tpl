@@ -181,7 +181,9 @@
                                 </tr>
                                 {% for player in players %}
                                 <tr>
-                                    <td class="hidden-xs text-center">{{ player.name }}</td>
+                                    <td class="hidden-xs text-center">
+                                        <a href="{{ router.pathFor('player', {'seo': player.seo}) }}">{{ player.name }}</a>
+                                    </td>
                                     <td class="hidden-xs text-center">{{ player.surname }}</td>
                                     <td class="hidden-xs text-center">{{ player.jersey }}</td>
                                     <td class="hidden-xs text-center">{{ player.GetGamesCount() }}</td>

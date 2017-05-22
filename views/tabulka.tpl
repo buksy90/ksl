@@ -119,7 +119,7 @@
                                     <td class="hidden-xs text-center">{{ loop.index }}</td>
                                     <td>
                                         <span class="tooltip-target" data-toggle="tooltip" data-placement="top" data-original-title="{{ player.playerObj.nick }}">
-                                            <a href="/players/{{ player.playerObj.seo }}">
+                                            <a href="{{ router.pathFor('player', {'seo': player.playerObj.seo}) }}">
                                                 {{ player.playerObj.name }} {{ player.playerObj.surname }}
                                             </a>
                                         </span>
