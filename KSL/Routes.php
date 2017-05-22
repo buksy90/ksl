@@ -39,5 +39,59 @@ class Routes {
         $app->get('/teams', '\KSL\Controllers\Teams:show')->setName('timy');
         $app->get('/teams/{short}', '\KSL\Controllers\Teams:showTeam')->setName('tim');
         $app->get('/players/{seo}', '\KSL\Controllers\Players:showPlayer')->setName('player');
+
+
+        $app->get( '/welcome', function($request, $response, $args) {
+            $body = $response->getBody();
+            $body->write('Welcome dear user '.$_SESSION['auth']);
+
+            return $response;
+        });
+
+        $app->get('/login/{idp}', function($request, $response, $args){
+            try {
+                require DIR_ROOT.'/KSL/config.php';
+                $hybridauth     = new \Hybridauth\Hybridauth($config['hybridauth']);
+                $adapter        = $hybridauth->authenticate( ucwords($args['idp']) );
+                $isConnected    = $adapter->isConnected();
+                $userProfile    = $adapter->getUserProfile();
+
+                if(empty($userProfile)) $response->withRedirect('/error');
+
+                $identifier = $userProfile->identifier;
+
+                if(\KSL\Models\User::IdentifierExists($identifier)) {
+                    $user   = new \KSL\Models\User();
+                    $user->Login($identifier);
+
+                    return $response->withHeader('Location', '/welcome?again=1');
+                }
+                else {
+                    $user   = \KSL\Models\User::Register($identifier, $userProfile->email, $userProfile->firstName, $userProfile->lastName, $userProfile->photoURL);
+                    $user->Login($identifier);
+                    
+                    return $responseres->withHeader('Location', '/welcome');
+                }
+            }
+            catch(Exception $e) {
+                die($e->getMessage());
+            }
+        });
+
+        $app->get('/logout', function($request, $response, $args){
+            $user   = new \KSL\Models\User();
+            $user->Logout();
+            \Hybrid_Auth::logoutAllProviders();
+            $response->withRedirect('/');                
+        });
+
+/*
+        $app->get( '/hybrid', function($request, $response, $args) {
+            require_once( 'vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php' );
+            require_once( 'vendor/hybridauth/hybridauth/hybridauth/Hybrid/Endpoint.php' );
+
+            \Hybrid_Endpoint::process();
+        });
+        */
     }
 }

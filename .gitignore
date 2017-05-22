@@ -1,6 +1,7 @@
-KSL/config.php
+KSL/config*
 vendor
 data/data_production.sql
 .idea
 .vscode
 KSL/config_c9_env.php
+hybrid_debug.txt
