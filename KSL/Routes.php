@@ -39,6 +39,9 @@ class Routes {
         $app->get('/teams', '\KSL\Controllers\Teams:show')->setName('timy');
         $app->get('/teams/{short}', '\KSL\Controllers\Teams:showTeam')->setName('tim');
         $app->get('/players/{seo}', '\KSL\Controllers\Players:showPlayer')->setName('player');
+        $app->get('/admin/news', '\KSL\Controllers\AdminNews:show')->setName('admin-news');
+        $app->get('/admin/news/new', '\KSL\Controllers\AdminNews:showNew')->setName('admin-news#new');
+        $app->post('/admin/news/create', '\KSL\Controllers\AdminNews:showCreate')->setName('admin-news#create');
 
 
         $app->get( '/welcome', function($request, $response, $args) {

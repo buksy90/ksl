@@ -4,7 +4,7 @@ namespace KSL\Controllers;
 use \KSL\Models;
 use \Illuminate\Database\Connection;
 
-class NovaSezona extends Base
+class NovaSezona extends BaseAdmin
 {
     public function show($request, $response, $args) {
     
