@@ -164,6 +164,17 @@
     </div>
     
     <div class="row">
+        {% for new in news %}
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <h3>{{ new.title }}</h3>
+                <p>{{ new.text | raw }}</p>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+
         <div class="col-xs-12">
             <div class="panel panel-default">
               <div class="panel-body">
@@ -192,7 +203,7 @@
         </div>
     </div>
     
-    
+    {#
     <div class="row">
         <div class="col-xs-12 text-center">
             <ul class="pagination">
@@ -204,6 +215,7 @@
             </ul>
         </div>
     </div>
+    #}
 </section>
     
     

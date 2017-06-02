@@ -55,8 +55,21 @@ class Index extends Base
             'games'             => $games,
             'players'           => $players,
             'season'            => $season,
-            'weather'           => array_values($weather)
+            'weather'           => array_values($weather),
+            'news'              => $this->GetNews()
         ]));
+   }
+
+   
+   private function GetNews() {
+       $news        = Models\News::all();
+       $parsedown   = new \Parsedown();
+
+       foreach($news as $newItem) {
+           $newItem->text = $parsedown->text($newItem->text);
+       }
+
+       return $news;
    }
    
    

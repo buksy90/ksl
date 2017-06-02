@@ -28,7 +28,7 @@
 
     <div class="row form-group">
         <div class="col-xs-12 col-sm-4 col-md-2">Text</div>
-        <div class="col-xs-12 col-sm-8 col-md-10"><textarea class="form-control" name="text">{{ text }}</textarea></div>
+        <div class="col-xs-12 col-sm-8 col-md-10"><textarea class="form-control" name="text" id="text">{{ text }}</textarea></div>
     </div>
 
     <div class="row">
@@ -39,4 +39,13 @@
     </div>
 </div>
 </form>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+<script>
+var simplemde = new SimpleMDE({ element: document.getElementById("text") });
+</script>
 {% endblock %}
