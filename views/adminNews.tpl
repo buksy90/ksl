@@ -35,6 +35,8 @@
                 <tr>
                     <td>{{ new.title }}</td>
                     <td>{{ new.updated_at | date('d.m.Y H:i') }}</td>
+                    <td><a href="{{ router.pathFor('admin-news#edit', { id: new.id }) }}" class="btn btn-sm btn-success">Upraviť</a></td>
+                    <td><a href="{{ router.pathFor('admin-news#delete', { id: new.id }) }}" class="btn btn-sm btn-danger">Odstraniť</a></td>
                 </tr>
                 {% endfor %}
             </table>

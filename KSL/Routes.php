@@ -41,7 +41,11 @@ class Routes {
         $app->get('/players/{seo}', '\KSL\Controllers\Players:showPlayer')->setName('player');
         $app->get('/admin/news', '\KSL\Controllers\AdminNews:show')->setName('admin-news');
         $app->get('/admin/news/new', '\KSL\Controllers\AdminNews:showNew')->setName('admin-news#new');
+        $app->get('/admin/news/edit/{id}', '\KSL\Controllers\AdminNews:showEdit')->setName('admin-news#edit');
+        $app->get('/admin/news/delete/{id}', '\KSL\Controllers\AdminNews:showDelete')->setName('admin-news#delete');
+        $app->get('/admin/news/remove/{id}', '\KSL\Controllers\AdminNews:showRemove')->setName('admin-news#remove');
         $app->post('/admin/news/create', '\KSL\Controllers\AdminNews:showCreate')->setName('admin-news#create');
+        $app->post('/admin/news/update/{id}', '\KSL\Controllers\AdminNews:showUpdate')->setName('admin-news#update');
 
 
         $app->get( '/welcome', function($request, $response, $args) {

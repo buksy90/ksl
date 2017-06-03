@@ -4,7 +4,12 @@
 
 {% block content %}
 
+{% if isEditting %}
+<form action="{{ router.pathFor('admin-news#update', { id: news.id }) }}" method="post">
+<input type="hidden" name="id" value="{{ news.id }}">
+{% else %}
 <form action="{{ router.pathFor('admin-news#create') }}" method="post">
+{% endif %}
 <div class="container">
     <div class="row page-header">
         {% if message %}
@@ -17,7 +22,9 @@
         {% endif %}
 
         <div class="col-xs-6">
-            <h1>Vytvoriť novinku</h1>
+            <h1>
+                {% if isEditting %}Editovať novinku{% else %}Vytvoriť novinku{% endif %}
+            </h1>
         </div>
     </div>
 
@@ -33,7 +40,11 @@
 
     <div class="row">
         <div class="col-xs-12 text-right">
-            <input type="submit" href="{{ router.pathFor('admin-news') }}" class="btn btn-success" value="Vytvoriť">
+            {% if isEditting %}
+            <input type="submit" class="btn btn-success" value="Upraviť">
+            {% else %}
+            <input type="submit" class="btn btn-success" value="Vytvoriť">
+            {% endif %}
             <a href="{{ router.pathFor('admin-news') }}" class="btn btn-danger">Zrušiť</a>
         </div>
     </div>
