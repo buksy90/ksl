@@ -14,6 +14,8 @@ class Templates {
         
         $env->addGlobal('router', $container['router']);
         $env->addGlobal('navigation', null);
+        $env->addGlobal('isLoggedIn', \KSL\Models\User::IsLoggedIn());
+        $env->addGlobal('user', \KSL\Models\User::GetUser());
         
         $env->addGlobal('navigation', [
             [ 'route' => 'index', 'text' => 'Úvod', 'navigationSwitch' => null ],

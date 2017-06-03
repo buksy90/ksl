@@ -29,6 +29,16 @@ class User extends Base
         return $user->save();
     }
 
+    public static function IsLoggedIn() {
+        return array_key_exists('auth', $_SESSION) && $_SESSION['auth'] !== null;
+    }
+
+    public static function GetUser() {
+        return static::IsLoggedIn()
+            ? static::where('identifier', '=', $_SESSION['auth'])->first()
+            : null;
+    }
+
     public function Login($identifier) {
         // \Hybrid_Auth::storage()->set('user', $identifier);
         $_SESSION['auth'] = $identifier;

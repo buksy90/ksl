@@ -99,6 +99,19 @@
 				          </ul>
 				        </li>
 			  		</ul> 
+
+					<ul class="nav navbar-nav navbar-right">
+						{% if user %}
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ user.firstName }} <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="{{ router.pathFor('logout') }}">Odhlásiť</a></li>
+							</ul>
+						</li>
+						{% else %}
+						<li><a href="{{ router.pathFor('login', {'idp': 'facebook'}) }}">Prihlásiť</a></li>
+						{% endif %}
+					</ul>
 	  			</div>
 		  	</div>
 		</nav>

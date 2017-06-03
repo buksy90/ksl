@@ -54,6 +54,9 @@ class Routes {
         $app->get('/login/{idp}', function($request, $response, $args){
             try {
                 require DIR_ROOT.'/KSL/config.php';
+                $returnDomain   = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/login/'.$args['idp'];
+                $config['hybridauth']['callback'] = $returnDomain;
+
                 $hybridauth     = new \Hybridauth\Hybridauth($config['hybridauth']);
                 $adapter        = $hybridauth->authenticate( ucwords($args['idp']) );
                 $isConnected    = $adapter->isConnected();
@@ -62,31 +65,33 @@ class Routes {
                 if(empty($userProfile)) $response->withRedirect('/error');
 
                 $identifier = $userProfile->identifier;
-
+                
                 if(\KSL\Models\User::IdentifierExists($identifier)) {
                     $user   = new \KSL\Models\User();
                     $user->Login($identifier);
 
-                    return $response->withHeader('Location', '/welcome?again=1');
+                    $path   = $this->router->pathFor('index');
+                    return $response->withHeader('Location', $path);
                 }
                 else {
                     $user   = \KSL\Models\User::Register($identifier, $userProfile->email, $userProfile->firstName, $userProfile->lastName, $userProfile->photoURL);
                     $user->Login($identifier);
                     
-                    return $responseres->withHeader('Location', '/welcome');
+                    return $response->withHeader('Location', '/welcome');
                 }
             }
             catch(Exception $e) {
                 die($e->getMessage());
             }
-        });
+        })->setName('login');
 
         $app->get('/logout', function($request, $response, $args){
             $user   = new \KSL\Models\User();
             $user->Logout();
-            \Hybrid_Auth::logoutAllProviders();
-            $response->withRedirect('/');                
-        });
+
+            $path   = $this->router->pathFor('index');
+            return $response->withHeader('Location', $path);
+        })->setName('logout');
 
 /*
         $app->get( '/hybrid', function($request, $response, $args) {
