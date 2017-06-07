@@ -16,7 +16,7 @@ class Teams extends Base
         $user_id    = $user ? $user->id : null;
         $registered = Models\PendingTeams::where('user_id', $user_id)->first();
 
-        if(\KSL\Models\UserPermissions::hasPermission($user_id, 'user') === false) {
+        if(Models\User::isLoggedIn() === false) {
             die('Nemáte oprávnenie na prístup k nasledujúcej stránke.');
         }
 
@@ -27,6 +27,8 @@ class Teams extends Base
     }
 
     public function showRegister($request, $response, $args) {
+        if(Models\User::isLoggedIn() === false) die('Nemáte oprávnenie na prístup k tejto stránke');
+
         $parameters     = $request->getParsedBody();
         $user           = \KSL\Models\User::GetUser();
         $user_id        = $user ? $user->id : null;

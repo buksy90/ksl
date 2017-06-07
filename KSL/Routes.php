@@ -40,7 +40,7 @@ class Routes {
         $app->get('/teams/register', '\KSL\Controllers\Teams:showNew')->setName('team#new');
         $app->post('/teams/register', '\KSL\Controllers\Teams:showRegister')->setName('team#register');
         $app->get('/teams/cancel-register', '\KSL\Controllers\Teams:showCancelRegister')->setName('team#cancel');
-        $app->get('/teams/{short}', '\KSL\Controllers\Teams:showTeam')->setName('tim');
+        $app->get('/teams/{short:[A-z]{3}}', '\KSL\Controllers\Teams:showTeam')->setName('tim');
         $app->get('/players/{seo}', '\KSL\Controllers\Players:showPlayer')->setName('player');
         $app->get('/admin/news', '\KSL\Controllers\AdminNews:show')->setName('admin-news');
         $app->get('/admin/news/new', '\KSL\Controllers\AdminNews:showNew')->setName('admin-news#new');
