@@ -12,7 +12,7 @@ class Routes {
         $twig       = $container['twig'];
         
         $app->get('/liga/o-nas', function ($request, $response, $args) {
-            return $response->write( $twig->render('o-nas.tpl', [
+            return $response->write( $this->twig->render('o-nas.tpl', [
                 'navigationSwitch' => 'liga'
             ]));
         })->setName('o-nas');
@@ -22,6 +22,7 @@ class Routes {
                 'navigationSwitch' => 'liga'
             ]));
         })->setName('pravidla');
+
         $app->get('/liga/pokuty-poplatky', function ($request, $response, $args) {
             return $response->write( $this->twig->render('pokuty_poplatky.tpl', [
                 'navigationSwitch' => 'liga'
