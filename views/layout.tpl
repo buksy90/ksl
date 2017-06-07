@@ -88,7 +88,7 @@
 
 					<ul class="nav navbar-nav navbar-right">
 						{% if user %}
-						<li class="dropdown">
+						<li class="dropdown{% if navigationSwitch == "user" %} active{% endif %}">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ user.firstName }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								{% if adminPermissions %}
@@ -96,6 +96,8 @@
 								<li><a href="{{ router.pathFor('admin-news') }}">Novinky</a></li>
 								<li class="divider"></li>
 								{% endif %}
+								<li><a href="{{ router.pathFor('team#new') }}">Zaregistrovať tím</a></li>
+								<li class="divider"></li>
 								<li><a href="{{ router.pathFor('logout') }}">Odhlásiť</a></li>
 							</ul>
 						</li>

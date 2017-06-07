@@ -37,6 +37,9 @@ class Routes {
         $app->get('/playground', '\KSL\Controllers\Playground:showList')->setName('playground');
         $app->get('/playground/{link}', '\KSL\Controllers\Playground:showPlayground')->setName('playgroundByLink');
         $app->get('/teams', '\KSL\Controllers\Teams:show')->setName('timy');
+        $app->get('/teams/register', '\KSL\Controllers\Teams:showNew')->setName('team#new');
+        $app->post('/teams/register', '\KSL\Controllers\Teams:showRegister')->setName('team#register');
+        $app->get('/teams/cancel-register', '\KSL\Controllers\Teams:showCancelRegister')->setName('team#cancel');
         $app->get('/teams/{short}', '\KSL\Controllers\Teams:showTeam')->setName('tim');
         $app->get('/players/{seo}', '\KSL\Controllers\Players:showPlayer')->setName('player');
         $app->get('/admin/news', '\KSL\Controllers\AdminNews:show')->setName('admin-news');
