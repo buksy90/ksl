@@ -24,6 +24,8 @@ class TestBase extends \PHPUnit_Framework_TestCase {
             $capsule->setAsGlobal();
             $capsule->bootEloquent();
 
+            $GLOBALS['_SESSION'] = [];
+
             self::$isSetUp = true;
         }
     }
