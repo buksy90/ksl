@@ -174,33 +174,6 @@
             </div>
         </div>
         {% endfor %}
-
-        <div class="col-xs-12">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <h3>Víťazom 21. ročníka KSL sa stalo DŽUNGELEE</h3>
-                <p>Po šiestich triumfoch na Amurskej ulici prepísali chlapci a dievčenská posila z družstva SMRŤ PRICHÁDZA Z DŽUNGELEE históriu a po 7 rokoch...</p>
-              </div>
-            </div>
-        </div>
-        
-        <div class="col-xs-12">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <h3>DŽUNGELEE víťazom pohára 2016</h3>
-                <p>Družstvo SMRŤ PRICHÁDZA Z DŽUNGELEE získalo po 4 rokoch opäť Streetballový pohár. Po víťazstvach 100:78 nad #TYDAMBOJZ a 100:89 nad 4FUN...</p>
-              </div>
-            </div>
-        </div>
-        
-        <div class="col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h3>Streetballový pohár 2016</h3>
-                    <p>DružstvoUž túto nedeľu 21. augusta 2016 sa uskutoční 20. ročník Streetballového pohára. Tento rok sa záujem o túto trofej mierne zväčšil a tak si to medzi sebou rozdajú až 3 družstvá. K tradičnému účastnikovi družstvu 4FUN sa pridali aj chlapci z #TYDAMBOJZ. Trojku doplnia cestovatelia z DŽUNGELEE na čele zo svojím čestvo oženeným kapitánom Jozefom. Hrá sa každý s každým a veríme, že nás čaká príjemné streetballové nedeľňajšie popoludnie.</p>
-                </div>
-            </div>
-        </div>
     </div>
     
     {#
