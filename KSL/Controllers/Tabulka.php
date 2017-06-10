@@ -56,7 +56,7 @@ class Tabulka extends Base
                 'team'              => $team,
                 'games'             => $games,
                 'points'            => $points,
-                'avg'               => $games > 0 ? $points / $games : 0
+                'avg'               => $games > 0 ? round($points / $games, 2) : 0
             ];
         })->toArray();
         
