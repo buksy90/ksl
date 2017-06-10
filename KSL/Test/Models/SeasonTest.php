@@ -10,6 +10,7 @@ class SeasonTest extends TestBase {
 
         $this->assertEquals(1, $season->count());
         $this->assertInstanceOf('KSL\Models\Season', $season);
+        $this->assertEquals(1, $season->active);
     }
 
 

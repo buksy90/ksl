@@ -9,10 +9,10 @@ class Season extends Base
     protected $table = 'season';
     
     public static function GetActual() {
-        $season = Static::find(['active' => 1]);
-
+        $season = Static::where(['active' => 1]);
+        
         if($season->count() === 1) return $season->first();
-        else return null;
+        else throw Exception('Unknown active season');
     }
 
 
