@@ -7,7 +7,7 @@
     <div class="row">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-lg-8">
+                <div class="col-xs-12 {# col-xs-12 col-sm-6 col-lg-8 #}">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="page-header">
@@ -108,7 +108,7 @@
                         {% endfor %}
                         </div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-lg-4">
+                <div class="col-xs-12 col-sm-6 col-lg-4 hidden">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="page-header">
