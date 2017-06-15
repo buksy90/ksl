@@ -30,19 +30,20 @@ class Teams extends Base
         // Sorting should be updated to order by direct matches in case of same points
         //
         
+        $gamesTable     = Games::getTableName();
         $sql = ['
             SELECT 
                 tt.*
-                ,(SELECT COUNT(*) FROM games tg WHERE (tt.id = tg.hometeam AND tg.won = "home") OR (tt.id = tg.awayteam AND tg.won = "away")) as `games_won`
-				,(SELECT COUNT(*) FROM games tg WHERE (tt.id = tg.hometeam AND tg.won = "away") OR (tt.id = tg.awayteam AND tg.won = "home")) as `games_lost`
-				,(SELECT COUNT(*) FROM games tg WHERE (tt.id = tg.hometeam OR tt.id = tg.awayteam) AND tg.won = "tied") as `games_tied`
-				,(SELECT COUNT(*) FROM games tg WHERE (tt.id = tg.hometeam OR tt.id = tg.awayteam) AND tg.won IS NOT NULL) as `games_played`
-				,(SELECT COALESCE(SUM(tg.home_score), 0) FROM games tg WHERE tt.id = tg.hometeam AND tg.won IS NOT NULL) + (SELECT COALESCE(SUM(tg.away_score), 0) FROM games tg WHERE tt.id = tg.awayteam AND tg.won IS NOT NULL) as `points_scored`
-				,(SELECT COALESCE(SUM(tg.home_score), 0) FROM games tg WHERE tt.id = tg.awayteam AND tg.won IS NOT NULL) + (SELECT COALESCE(SUM(tg.away_score), 0) FROM games tg WHERE tt.id = tg.hometeam AND tg.won IS NOT NULL) as `points_allowed`
+                ,(SELECT COUNT(*) FROM '.$gamesTable.' tg WHERE (tt.id = tg.hometeam AND tg.won = "home") OR (tt.id = tg.awayteam AND tg.won = "away")) as `games_won`
+				,(SELECT COUNT(*) FROM '.$gamesTable.' tg WHERE (tt.id = tg.hometeam AND tg.won = "away") OR (tt.id = tg.awayteam AND tg.won = "home")) as `games_lost`
+				,(SELECT COUNT(*) FROM '.$gamesTable.' tg WHERE (tt.id = tg.hometeam OR tt.id = tg.awayteam) AND tg.won = "tied") as `games_tied`
+				,(SELECT COUNT(*) FROM '.$gamesTable.' tg WHERE (tt.id = tg.hometeam OR tt.id = tg.awayteam) AND tg.won IS NOT NULL) as `games_played`
+				,(SELECT COALESCE(SUM(tg.home_score), 0) FROM '.$gamesTable.' tg WHERE tt.id = tg.hometeam AND tg.won IS NOT NULL) + (SELECT COALESCE(SUM(tg.away_score), 0) FROM '.$gamesTable.' tg WHERE tt.id = tg.awayteam AND tg.won IS NOT NULL) as `points_scored`
+				,(SELECT COALESCE(SUM(tg.home_score), 0) FROM '.$gamesTable.' tg WHERE tt.id = tg.awayteam AND tg.won IS NOT NULL) + (SELECT COALESCE(SUM(tg.away_score), 0) FROM '.$gamesTable.' tg WHERE tt.id = tg.hometeam AND tg.won IS NOT NULL) as `points_allowed`
 				,(SELECT `games_won`*3 + `games_tied`) AS `points`
 				,(SELECT `games_won`/`games_played` * 100) AS `success_rate`
             FROM
-                teams tt
+                '.Teams::getTableName().' tt
             ',
             '',
             '
@@ -73,7 +74,7 @@ class Teams extends Base
     
     public function GetPlayers() {
         return Players::
-            select($this->getConnection()->raw('`players`.*'))
+            select($this->getConnection()->raw('`'.Players::getTableName().'`.*'))
             ->join('roster', function($join){
                 $join->on('players.id', '=', 'roster.player_id');
                 $join->where('roster.season_id', '=', $this->getConnection()->raw(Season::GetActual()->id));
@@ -97,8 +98,9 @@ class Teams extends Base
      * Returns all time best shooter of team
      */
     public function GetBestShooter() {
-        $scoreList  = ScoreList::
-            select($this->getConnection()->raw('score_list.player_id, SUM(value) AS `sum`'))
+        $scoreListTable     = ScoreList::getTableName();
+        $scoreList          = ScoreList::
+            select($this->getConnection()->raw($scoreListTable.'.player_id, SUM(value) AS `sum`'))
             ->groupBy('score_list.player_id')
             ->join('roster', function($join){
                 $join->on('score_list.player_id', '=', 'roster.player_id');

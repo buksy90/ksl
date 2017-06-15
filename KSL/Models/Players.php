@@ -68,17 +68,18 @@ class Players extends Base
     //
     public function GetGamesCount() {
         $modelInstance = new Static();
+        $scoreListTable     = ScoreList::getTableName();
         
         $sql = '
             SELECT 
                 COUNT( * ) AS `count`
             FROM 
             (
-                SELECT score_list.id
-                FROM  `score_list` 
-                INNER JOIN  `roster` ON  `score_list`.`player_id` =  `roster`.`player_id` AND  `roster`.`season_id` = '.Season::GetActual()->id.'
-                WHERE  `score_list`.`player_id` = "'.(int)$this->id.'"
-                GROUP BY  `score_list`.`game_id`
+                SELECT t1.id
+                FROM  `'.$scoreListTable.'` t1 
+                INNER JOIN  `'.Roster::getTableName().'` AS t2 ON  `t1`.`player_id` =  `t2`.`player_id` AND  `t2`.`season_id` = '.Season::GetActual()->id.'
+                WHERE  `t1`.`player_id` = "'.(int)$this->id.'"
+                GROUP BY  `t1`.`game_id`
             ) t
             ';
         
@@ -96,12 +97,13 @@ class Players extends Base
     //          if false [default], returned number represents number of made points (from 2pt & 3pt shots)
     // $allSeasons - should points from all seasons be considered? If false [default] only active season is considered
     public function GetPointsSum($only3pt = null, $allSeasons = null) {
-        
+        $scoreListTable     = ScoreList::getTableName();
+
         if($only3pt === true) {
-            $query = ScoreList::select($this->getConnection()->raw('sum(`score_list`.`value`="3") as "sum"'));
+            $query = ScoreList::select($this->getConnection()->raw('sum(`'.$scoreListTable.'`.`value`="3") as "sum"'));
             $query->where('score_list.value', '3');
         }
-        else $query = ScoreList::select($this->getConnection()->raw('sum(`score_list`.`value`) as "sum"'));
+        else $query = ScoreList::select($this->getConnection()->raw('sum(`'.$scoreListTable.'`.`value`) as "sum"'));
         
         $query->where('score_list'.'.player_id', $this->id);
                 
@@ -139,13 +141,14 @@ class Players extends Base
 
 
    public function GetRank() {
-       $pointsScored = $this->GetPointsSum(false, true);
+       $pointsScored        = $this->GetPointsSum(false, true);
+       $scoreListTable      = ScoreList::getTableName();
 
 
        $betterPlayersSql = '
             SELECT COUNT(*) AS `count` FROM
             (
-                SELECT SUM(value) as `sum`, t1.* FROM score_list t1 GROUP BY player_id 
+                SELECT SUM(value) as `sum`, t1.* FROM '.$scoreListTable.' t1 GROUP BY player_id 
                 HAVING `sum` > '.(int)$pointsScored.'
                 ORDER BY `sum` DESC
             ) td1
@@ -174,21 +177,24 @@ class Players extends Base
    }
 
 
-   public function GetGamesStatistics($season_id = null) {
+    public function GetGamesStatistics($season_id = null) {
+        $gamesTable     = Games::getTableName();
+        $prefix         = $this->getConnection()->getTablePrefix();
+
         $games = Games::select($this->getConnection()->raw('
-            sum(`won` = "home" AND games.hometeam = roster.team_id)+sum(`won` = "away" AND games.awayteam = roster.team_id) AS `won`,
-            sum(`won` = "away" AND games.hometeam = roster.team_id)+sum(`won` = "home" AND games.awayteam = roster.team_id) AS `lost` '))
+            sum(`won` = "home" AND '.$gamesTable.'.hometeam = '.$prefix.'t3.team_id)+sum(`won` = "away" AND '.$gamesTable.'.awayteam = '.$prefix.'t3.team_id) AS `won`,
+            sum(`won` = "away" AND '.$gamesTable.'.hometeam = '.$prefix.'t3.team_id)+sum(`won` = "home" AND '.$gamesTable.'.awayteam = '.$prefix.'t3.team_id) AS `lost` '))
             ->join('game_roster', function($join){
                 $join->on('games.id', '=', 'game_roster.game_id');
                 $join->where('game_roster.player_id', '=', $this->id);
             })
-            ->join('roster', function($join){
-                $join->on('roster.season_id', 'games.season_id');
-                $join->where('roster.player_id', '=', $this->id);
+            ->join('roster as t3', function($join){
+                $join->on('t3.season_id', 'games.season_id');
+                $join->where('t3.player_id', '=', $this->id);
             });
 
         if(is_numeric($season_id)) $games = $games->Where('season_id', $season_id);
 
         return $games->first();
-   }
+    }
 }
