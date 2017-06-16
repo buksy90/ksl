@@ -50,6 +50,8 @@ class Routes {
         $app->get('/admin/news/remove/{id}', '\KSL\Controllers\AdminNews:showRemove')->setName('admin-news#remove');
         $app->post('/admin/news/create', '\KSL\Controllers\AdminNews:showCreate')->setName('admin-news#create');
         $app->post('/admin/news/update/{id}', '\KSL\Controllers\AdminNews:showUpdate')->setName('admin-news#update');
+        $app->get('/admin/officiate/{id}', '\KSL\Controllers\AdminOfficiate:showGame')->setName('admin-officiate#game');
+        $app->get('/admin/officiate/', '\KSL\Controllers\AdminOfficiate:showList')->setName('admin-officiate#list');
 
 
         $app->get( '/welcome', function($request, $response, $args) {
