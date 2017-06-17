@@ -44,10 +44,10 @@
       <div class="col-xs-6">
         <div class="row">
           <div class="col-xs-12">
-            <div class="btn btn-lg btn-primary btn-margin" data-toggle="modal" data-target="#homeroster">2pt</div>
+            <div class="btn btn-lg btn-primary btn-margin btn-2pt" data-toggle="modal" data-target="#homeroster">2pt</div>
           </div>
           <div class="col-xs-12">
-            <div class="btn btn-lg btn-warning btn-margin" data-toggle="modal" data-target="#homeroster">3pt</div>
+            <div class="btn btn-lg btn-warning btn-margin btn-3pt" data-toggle="modal" data-target="#homeroster">3pt</div>
           </div>
         </div>
       </div>
@@ -56,10 +56,10 @@
       <div class="col-xs-6">
         <div class="row">
           <div class="col-xs-12">
-            <div class="btn btn-lg btn-primary btn-margin pull-right" data-toggle="modal" data-target="#awayroster">2pt</div>
+            <div class="btn btn-lg btn-primary btn-margin btn-2pt pull-right" data-toggle="modal" data-target="#awayroster">2pt</div>
           </div>
           <div class="col-xs-12">
-            <div class="btn btn-lg btn-warning btn-margin pull-right" data-toggle="modal" data-target="#awayroster">3pt</div>
+            <div class="btn btn-lg btn-warning btn-margin btn-3pt pull-right" data-toggle="modal" data-target="#awayroster">3pt</div>
           </div>
         </div>
       </div>
@@ -69,9 +69,24 @@
       <div class="col-xs-12">
         <hr>
       </div>
-      <div class="col-xs-12">
-        <strong>FUN</strong> Zachar 2pt <span class="btn btn-sm btn-danger pull-right">X</span>
-      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-2">
+          <strong>FUN</strong>
+        </div>
+        <div class="col-xs-2">
+          <span class="label label-default">2pt</span>
+        </div>
+      <div class="col-xs-8"> Zachar <span class="btn btn-xs btn-danger pull-right">X</span></div>
+    </div>
+    <div class="row">
+      <div class="col-xs-2">
+          <strong>FUN</strong>
+        </div>
+        <div class="col-xs-2">
+          <span class="label label-success">3pt</span>
+        </div>
+      <div class="col-xs-8"> Zachar <span class="btn btn-xs btn-danger pull-right">X</span></div>
     </div>
 </div>
 
@@ -209,6 +224,20 @@
       }
     };
   }
+
+  
+  (function Score(){
+    var pointsValue   = null;
+    var points        = 0;
+
+    $(".btn-2pt").click(function(){ pointsValue = 2; })
+    $(".btn-3pt").click(function(){ pointsValue = 3; })
+
+    $(".btn-shooter").click(function(){
+      
+    });
+  })();
+
 
   function BtnSwitcher(el) {
     var $el     = $(el);
