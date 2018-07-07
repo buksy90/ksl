@@ -120,6 +120,8 @@ CREATE TABLE IF NOT EXISTS `season` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
+INSERT INTO `season` SET `name` = "2018", `year` = "2018", `active` = "2018"
+
 -- --------------------------------------------------------
 
 --
@@ -193,3 +195,40 @@ CREATE TABLE `pending_teams` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `news`
+--
+
+CREATE TABLE `news` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf32_slovak_ci NOT NULL,
+  `text` text COLLATE utf32_slovak_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `user`
+--
+
+CREATE TABLE `ksl`.`user` (
+  `id` INT NOT NULL,
+  `identifier` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `firstName` VARCHAR(45) NULL,
+  `lastName` VARCHAR(45) NULL,
+  `avatarUrl` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`));
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `user_permissions`
+--
+
+CREATE TABLE `ksl`.`user_permissions` (
+  `user_id` INT NOT NULL,
+  `permission` VARCHAR(16) NOT NULL,
+  PRIMARY KEY (`user_id`, `permission`));
