@@ -14,13 +14,27 @@ SET time_zone = "+00:00";
 -- Databáza: `c9`
 --
 
+DROP TABLE IF EXISTS `v2_game_roster`;
+DROP TABLE IF EXISTS `v2_user_permissions`;
+DROP TABLE IF EXISTS `v2_games`;
+DROP TABLE IF EXISTS `v2_players`;
+DROP TABLE IF EXISTS `v2_playground`;
+DROP TABLE IF EXISTS `v2_roster`;
+DROP TABLE IF EXISTS `v2_score_list`;
+DROP TABLE IF EXISTS `v2_season`;
+DROP TABLE IF EXISTS `v2_teams`;
+DROP TABLE IF EXISTS `v2_thumbs`;
+DROP TABLE IF EXISTS `v2_weather`;
+DROP TABLE IF EXISTS `v2_pending_teams`;
+DROP TABLE IF EXISTS `v2_news`;
+DROP TABLE IF EXISTS `v2_users`;
+
 -- --------------------------------------------------------
 
 --
 -- Štruktúra tabuľky pre tabuľku `games`
 --
 
-DROP TABLE IF EXISTS `v2_games`;
 CREATE TABLE IF NOT EXISTS `v2_games` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `season_id` tinyint(3) unsigned NOT NULL,
@@ -41,8 +55,7 @@ CREATE TABLE IF NOT EXISTS `v2_games` (
 -- Štruktúra tabuľky pre tabuľku `players`
 --
 
-DROP TABLE IF EXISTS `v2_players`;
-CREATE TABLE `players` (
+CREATE TABLE `v2_players` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(16) NOT NULL,
   `surname` varchar(32) NOT NULL,
@@ -64,7 +77,6 @@ CREATE TABLE `players` (
 -- Štruktúra tabuľky pre tabuľku `playground`
 --
 
-DROP TABLE IF EXISTS `v2_playground`;
 CREATE TABLE IF NOT EXISTS `v2_playground` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
@@ -82,7 +94,6 @@ CREATE TABLE IF NOT EXISTS `v2_playground` (
 -- Štruktúra tabuľky pre tabuľku `roster`
 --
 
-DROP TABLE IF EXISTS `v2_roster`;
 CREATE TABLE IF NOT EXISTS `v2_roster` (
   `team_id` int(11) NOT NULL,
   `player_id` int(11) NOT NULL,
@@ -96,7 +107,6 @@ CREATE TABLE IF NOT EXISTS `v2_roster` (
 -- Štruktúra tabuľky pre tabuľku `score_list`
 --
 
-DROP TABLE IF EXISTS `v2_score_list`;
 CREATE TABLE IF NOT EXISTS `v2_score_list` (
   `game_id` int(11) NOT NULL,
   `player_id` int(11) NOT NULL,
@@ -111,7 +121,6 @@ CREATE TABLE IF NOT EXISTS `v2_score_list` (
 -- Štruktúra tabuľky pre tabuľku `season`
 --
 
-DROP TABLE IF EXISTS `v2_season`;
 CREATE TABLE IF NOT EXISTS `v2_season` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(5) NOT NULL,
@@ -120,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `v2_season` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-INSERT INTO `season` SET `name` = "2018", `year` = "2018", `active` = "2018"
+INSERT INTO `v2_season` SET `name` = "2018", `year` = "2018", `active` = "2018";
 
 -- --------------------------------------------------------
 
@@ -128,7 +137,6 @@ INSERT INTO `season` SET `name` = "2018", `year` = "2018", `active` = "2018"
 -- Štruktúra tabuľky pre tabuľku `teams`
 --
 
-DROP TABLE IF EXISTS `v2_teams`;
 CREATE TABLE IF NOT EXISTS `v2_teams` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
@@ -143,7 +151,6 @@ CREATE TABLE IF NOT EXISTS `v2_teams` (
 -- Štruktúra tabuľky pre tabuľku `thumbs`
 --
 
-DROP TABLE IF EXISTS `v2_thumbs`;
 CREATE TABLE IF NOT EXISTS `v2_thumbs` (
   `VID` int(10) unsigned NOT NULL DEFAULT '0',
   `thumbs_up` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -156,7 +163,6 @@ CREATE TABLE IF NOT EXISTS `v2_thumbs` (
 -- Štruktúra tabuľky pre tabuľku `weather`
 --
 
-DROP TABLE IF EXISTS `v2_weather`;
 CREATE TABLE IF NOT EXISTS `v2_weather` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
@@ -170,14 +176,13 @@ CREATE TABLE IF NOT EXISTS `v2_weather` (
 -- --------------------------------------------------------
 
 
-DROP TABLE IF EXISTS `v2_game_roster`;
 CREATE TABLE IF NOT EXISTS `v2_game_roster` (
   `player_id` int(11) unsigned NOT NULL,
   `game_id` int(10) unsigned NOT NULL,
   UNIQUE KEY `unique` (`player_id`,`game_id`),
   KEY `fk_game_roster_2_idx` (`game_id`),
-  CONSTRAINT `fk_game_roster_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_game_roster_2` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_game_roster_1` FOREIGN KEY (`player_id`) REFERENCES `v2_players` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_game_roster_2` FOREIGN KEY (`game_id`) REFERENCES `v2_games` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -186,7 +191,6 @@ CREATE TABLE IF NOT EXISTS `v2_game_roster` (
 -- Štruktúra tabuľky pre tabuľku `pending_teams`
 --
 
-DROP TABLE IF EXISTS `v2_pending_teams`;
 CREATE TABLE IF NOT EXISTS `v2_pending_teams` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
@@ -201,13 +205,12 @@ CREATE TABLE IF NOT EXISTS `v2_pending_teams` (
 -- Štruktúra tabuľky pre tabuľku `news`
 --
 
-DROP TABLE IF EXISTS `v2_news`;
 CREATE TABLE IF NOT EXISTS `v2_news` (
   `id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf32_slovak_ci NOT NULL,
   `text` text COLLATE utf32_slovak_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci
+) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci;
 
 -- --------------------------------------------------------
 
@@ -215,7 +218,6 @@ CREATE TABLE IF NOT EXISTS `v2_news` (
 -- Štruktúra tabuľky pre tabuľku `user`
 --
 
-DROP TABLE IF EXISTS `v2_users`;
 CREATE TABLE IF NOT EXISTS `v2_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `identifier` varchar(45) COLLATE utf32_slovak_ci DEFAULT NULL,
@@ -226,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `v2_users` (
   `updated_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci;
 
 -- --------------------------------------------------------
 
@@ -234,9 +236,8 @@ CREATE TABLE IF NOT EXISTS `v2_users` (
 -- Štruktúra tabuľky pre tabuľku `user_permissions`
 --
 
-DROP TABLE IF EXISTS `v2_user_permissions`;
 CREATE TABLE IF NOT EXISTS `v2_user_permissions` (
   `user_id` int(11) NOT NULL,
   `permission` enum('none','admin') COLLATE utf32_slovak_ci NOT NULL,
   PRIMARY KEY (`user_id`,`permission`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci
+) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci;
