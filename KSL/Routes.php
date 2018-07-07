@@ -63,13 +63,13 @@ class Routes {
             return $response;
         });
 
-        $app->get('/login/{idp}', function($request, $response, $args){
+        $app->get('/login/{idp}', function($request, $response, $args) use($container) {
             try {
-                require DIR_ROOT.'/KSL/config.php';
-                $returnDomain   = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/login/'.$args['idp'];
-                $config['hybridauth']['callback'] = $returnDomain;
+                $hybridauthConfig = $container->get('settings')["hybridauth"];
+                $returnDomain     = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/login/'.$args['idp'];
+                $hybridauthConfig['callback'] = $returnDomain;
 
-                $hybridauth     = new \Hybridauth\Hybridauth($config['hybridauth']);
+                $hybridauth     = new \Hybridauth\Hybridauth($hybridauthConfig);
                 $adapter        = $hybridauth->authenticate( ucwords($args['idp']) );
                 $isConnected    = $adapter->isConnected();
                 $userProfile    = $adapter->getUserProfile();
