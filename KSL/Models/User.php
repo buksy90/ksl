@@ -26,7 +26,10 @@ class User extends Base
         $user->lastName         = $lastName;
         $user->avatarUrl        = $avatar;
 
-        return $user->save();
+        if(!$user->save())
+            throw new \Exception('Nepodarilo sa zaregistrovat používateľa');
+        
+        return $user;
     }
 
     public static function IsLoggedIn() {
