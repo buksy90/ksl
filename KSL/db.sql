@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `v2_season` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-INSERT INTO `v2_season` SET `name` = "2018", `year` = "2018", `active` = "2018";
+INSERT INTO `v2_season` SET `name` = "2018", `year` = "2018", `active` = "1";
 
 -- --------------------------------------------------------
 
