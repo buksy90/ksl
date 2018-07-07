@@ -8,6 +8,8 @@ set_time_limit(1);
 define('TIMEZONE', 'Europe/Bratislava');
 date_default_timezone_set(TIMEZONE);
 
+define('TABLE_PREFIX', 'v2_');
+
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
 
