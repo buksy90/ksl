@@ -213,14 +213,17 @@ CREATE TABLE `news` (
 -- Štruktúra tabuľky pre tabuľku `user`
 --
 
-CREATE TABLE `ksl`.`user` (
-  `id` INT NOT NULL,
-  `identifier` VARCHAR(45) NULL,
-  `email` VARCHAR(45) NULL,
-  `firstName` VARCHAR(45) NULL,
-  `lastName` VARCHAR(45) NULL,
-  `avatarUrl` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`));
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(45) COLLATE utf32_slovak_ci DEFAULT NULL,
+  `email` varchar(45) COLLATE utf32_slovak_ci DEFAULT NULL,
+  `firstName` varchar(45) COLLATE utf32_slovak_ci DEFAULT NULL,
+  `lastName` varchar(45) COLLATE utf32_slovak_ci DEFAULT NULL,
+  `avatarUrl` varchar(255) COLLATE utf32_slovak_ci DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci
 
 -- --------------------------------------------------------
 
@@ -228,7 +231,8 @@ CREATE TABLE `ksl`.`user` (
 -- Štruktúra tabuľky pre tabuľku `user_permissions`
 --
 
-CREATE TABLE `ksl`.`user_permissions` (
-  `user_id` INT NOT NULL,
-  `permission` VARCHAR(16) NOT NULL,
-  PRIMARY KEY (`user_id`, `permission`));
+CREATE TABLE `user_permissions` (
+  `user_id` int(11) NOT NULL,
+  `permission` enum(''none'',''admin'') COLLATE utf32_slovak_ci NOT NULL,
+  PRIMARY KEY (`user_id`,`permission`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci
