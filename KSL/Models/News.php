@@ -3,5 +3,5 @@ namespace KSL\Models;
 
 class News extends Base
 {
-    protected $table = 'news';
+    protected $table = TABLE_PREFIX . 'news';
 }

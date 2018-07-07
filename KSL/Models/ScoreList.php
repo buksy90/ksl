@@ -8,7 +8,7 @@ class ScoreList extends Base
     //
     // https://laravel.com/docs/5.3/eloquent
     //
-    protected $table = 'score_list';
+    protected $table = TABLE_PREFIX . 'score_list';
     //protected $primaryKey = 'id'; // Not necessary as this is default
     public $timestamps = false;
     
@@ -122,10 +122,10 @@ class ScoreList extends Base
 
         $scoreList   = $this->select($this->getConnection()->raw('SUM(`'.$scoreListTable.'`.`value`) as "sum", `'.$scoreListTable.'`.`player_id`'))
         ->where('game_id', $this->getConnection()->raw('"'.$game->id.'"'))
-        ->join('roster', function($join) use($game, $teamSide) {
-            $join->on('roster.team_id', '=', $this->getConnection()->raw('"'.$teamSide.'"'));
-            $join->on('roster.player_id', '=', 'score_list.player_id');
-            $join->where('roster.season_id', '=', Season::GetActual()->id);
+        ->join($rosterTableName, function($join) use($game, $teamSide) {
+            $join->on($rosterTableName.'.team_id', '=', $this->getConnection()->raw('"'.$teamSide.'"'));
+            $join->on($rosterTableName'.player_id', '=', 'score_list.player_id');
+            $join->where($rosterTableName.'.season_id', '=', Season::GetActual()->id);
         })
         ->groupBy('score_list.player_id')
         ->orderBy('sum', 'desc')

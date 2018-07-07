@@ -6,7 +6,7 @@ class Teams extends Base
     //
     // https://laravel.com/docs/5.3/eloquent
     //
-    protected $table = 'teams';
+    protected $table = TABLE_PREFIX . 'teams';
     //protected $primaryKey = 'id'; // Not necessary as this is default
     public $timestamps = false;
     
@@ -73,12 +73,15 @@ class Teams extends Base
     
     
     public function GetPlayers() {
+        $rosterTableName    = Roster::getTableName();
+        $playersTableName   = Players::getTableName();
+
         return Players::
             select($this->getConnection()->raw('`'.Players::getTableName().'`.*'))
-            ->join('roster', function($join){
-                $join->on('players.id', '=', 'roster.player_id');
-                $join->where('roster.season_id', '=', $this->getConnection()->raw(Season::GetActual()->id));
-                $join->where('roster.team_id', '=', $this->id);
+            ->join($rosterTableName, function($join){
+                $join->on($playersTableName.'.id', '=', $rosterTableName.'.player_id');
+                $join->where($rosterTableName.'.season_id', '=', $this->getConnection()->raw(Season::GetActual()->id));
+                $join->where($rosterTableName.'.team_id', '=', $this->id);
             })
             ->get();
     }
@@ -99,13 +102,15 @@ class Teams extends Base
      */
     public function GetBestShooter() {
         $scoreListTable     = ScoreList::getTableName();
+        $rosterTableName    = Roster::getTableName();
+
         $scoreList          = ScoreList::
             select($this->getConnection()->raw($scoreListTable.'.player_id, SUM(value) AS `sum`'))
             ->groupBy('score_list.player_id')
-            ->join('roster', function($join){
-                $join->on('score_list.player_id', '=', 'roster.player_id');
-                $join->on('roster.season_id', '=', $this->getConnection()->raw(Season::GetActual()->id));
-                $join->on('roster.team_id', '=', $this->getConnection()->raw($this->id));
+            ->join($rosterTableName, function($join){
+                $join->on('score_list.player_id', '=', $rosterTableName.'.player_id');
+                $join->on($rosterTableName.'.season_id', '=', $this->getConnection()->raw(Season::GetActual()->id));
+                $join->on($rosterTableName.'.team_id', '=', $this->getConnection()->raw($this->id));
             })
             ->orderBy('sum', 'desc')
             ->first();

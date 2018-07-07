@@ -7,7 +7,7 @@ class Players extends Base
     //
     // https://laravel.com/docs/5.3/eloquent
     //
-    protected $table = 'players';
+    protected $table = TABLE_PREFIX . 'players';
     //protected $primaryKey = 'id'; // Not necessary as this is default
     public $timestamps = false;
     
@@ -98,6 +98,7 @@ class Players extends Base
     // $allSeasons - should points from all seasons be considered? If false [default] only active season is considered
     public function GetPointsSum($only3pt = null, $allSeasons = null) {
         $scoreListTable     = ScoreList::getTableName();
+        $rosterTableName    = Roster::getTableName();
 
         if($only3pt === true) {
             $query = ScoreList::select($this->getConnection()->raw('sum(`'.$scoreListTable.'`.`value`="3") as "sum"'));
@@ -110,9 +111,9 @@ class Players extends Base
                 
         if($allSeasons !== true) {
             $query->groupBy('score_list.player_id')
-            ->join('roster', function($join){
-                $join->on('score_list.player_id', '=', 'roster.player_id');
-                $join->where('roster.season_id', '=', Season::GetActual()->id);
+            ->join($rosterTableName, function($join){
+                $join->on('score_list.player_id', '=', $rosterTableName.'.player_id');
+                $join->where($rosterTableName.'.season_id', '=', Season::GetActual()->id);
             });
         }
             
@@ -127,9 +128,12 @@ class Players extends Base
      */
     public static function GetPlayersBySeason($season_id) {
         $players            = [];
-        $playersCollection  = static::join('roster', function($join) use($season_id) {
-            $join->on('roster.player_id', '=', 'players.id')
-                 ->where('roster.season_id', '=', $season_id);
+        $rosterTableName    = Roster::getTableName();
+        $playersTableName   = Players::getTableName();
+
+        $playersCollection  = static::join($rosterTableName, function($join) use($season_id, $rosterTableName, $playersTableName) {
+            $join->on($rosterTableName.'.player_id', '=', $playersTableName.'.id')
+                 ->where($rosterTableName.'.season_id', '=', $season_id);
         })->get();
         
         foreach($playersCollection as $player) {

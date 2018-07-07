@@ -6,7 +6,7 @@ class Games extends Base
     //
     // https://laravel.com/docs/5.3/eloquent
     //
-    protected $table = 'games';
+    protected $table = TABLE_PREFIX . 'games';
     //protected $primaryKey = 'id'; // Not necessary as this is default
     public $timestamps = false;
     

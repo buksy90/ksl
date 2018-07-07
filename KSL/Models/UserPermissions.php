@@ -3,7 +3,7 @@ namespace KSL\Models;
 
 class UserPermissions extends Base
 {
-    protected $table = 'user_permissions';
+    protected $table = TABLE_PREFIX . 'user_permissions';
 
     public static function HasPermission($user_id, $permission) {
         return ($permission === 'user')

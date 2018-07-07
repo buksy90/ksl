@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 -- Štruktúra tabuľky pre tabuľku `games`
 --
 
-DROP TABLE IF EXISTS `games`;
-CREATE TABLE IF NOT EXISTS `games` (
+DROP TABLE IF EXISTS `v2_games`;
+CREATE TABLE IF NOT EXISTS `v2_games` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `season_id` tinyint(3) unsigned NOT NULL,
   `hometeam` int(11) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `games` (
 -- Štruktúra tabuľky pre tabuľku `players`
 --
 
-DROP TABLE IF EXISTS `players`;
+DROP TABLE IF EXISTS `v2_players`;
 CREATE TABLE `players` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(16) NOT NULL,
@@ -64,8 +64,8 @@ CREATE TABLE `players` (
 -- Štruktúra tabuľky pre tabuľku `playground`
 --
 
-DROP TABLE IF EXISTS `playground`;
-CREATE TABLE IF NOT EXISTS `playground` (
+DROP TABLE IF EXISTS `v2_playground`;
+CREATE TABLE IF NOT EXISTS `v2_playground` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `link` varchar(16) NOT NULL,
@@ -82,8 +82,8 @@ CREATE TABLE IF NOT EXISTS `playground` (
 -- Štruktúra tabuľky pre tabuľku `roster`
 --
 
-DROP TABLE IF EXISTS `roster`;
-CREATE TABLE IF NOT EXISTS `roster` (
+DROP TABLE IF EXISTS `v2_roster`;
+CREATE TABLE IF NOT EXISTS `v2_roster` (
   `team_id` int(11) NOT NULL,
   `player_id` int(11) NOT NULL,
   `season_id` tinyint(3) unsigned NOT NULL,
@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS `roster` (
 -- Štruktúra tabuľky pre tabuľku `score_list`
 --
 
-DROP TABLE IF EXISTS `score_list`;
-CREATE TABLE IF NOT EXISTS `score_list` (
+DROP TABLE IF EXISTS `v2_score_list`;
+CREATE TABLE IF NOT EXISTS `v2_score_list` (
   `game_id` int(11) NOT NULL,
   `player_id` int(11) NOT NULL,
   `timestamp` int(11) NOT NULL,
@@ -111,8 +111,8 @@ CREATE TABLE IF NOT EXISTS `score_list` (
 -- Štruktúra tabuľky pre tabuľku `season`
 --
 
-DROP TABLE IF EXISTS `season`;
-CREATE TABLE IF NOT EXISTS `season` (
+DROP TABLE IF EXISTS `v2_season`;
+CREATE TABLE IF NOT EXISTS `v2_season` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(5) NOT NULL,
   `year` int(11) NOT NULL,
@@ -128,8 +128,8 @@ INSERT INTO `season` SET `name` = "2018", `year` = "2018", `active` = "2018"
 -- Štruktúra tabuľky pre tabuľku `teams`
 --
 
-DROP TABLE IF EXISTS `teams`;
-CREATE TABLE IF NOT EXISTS `teams` (
+DROP TABLE IF EXISTS `v2_teams`;
+CREATE TABLE IF NOT EXISTS `v2_teams` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `short` varchar(3) NOT NULL,
@@ -143,8 +143,8 @@ CREATE TABLE IF NOT EXISTS `teams` (
 -- Štruktúra tabuľky pre tabuľku `thumbs`
 --
 
-DROP TABLE IF EXISTS `thumbs`;
-CREATE TABLE IF NOT EXISTS `thumbs` (
+DROP TABLE IF EXISTS `v2_thumbs`;
+CREATE TABLE IF NOT EXISTS `v2_thumbs` (
   `VID` int(10) unsigned NOT NULL DEFAULT '0',
   `thumbs_up` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `thumbs_down` mediumint(8) unsigned NOT NULL DEFAULT '0'
@@ -156,8 +156,8 @@ CREATE TABLE IF NOT EXISTS `thumbs` (
 -- Štruktúra tabuľky pre tabuľku `weather`
 --
 
-DROP TABLE IF EXISTS `weather`;
-CREATE TABLE IF NOT EXISTS `weather` (
+DROP TABLE IF EXISTS `v2_weather`;
+CREATE TABLE IF NOT EXISTS `v2_weather` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `hour` tinyint(3) unsigned NOT NULL,
@@ -170,8 +170,8 @@ CREATE TABLE IF NOT EXISTS `weather` (
 -- --------------------------------------------------------
 
 
-DROP TABLE IF EXISTS `game_roster`;
-CREATE TABLE `game_roster` (
+DROP TABLE IF EXISTS `v2_game_roster`;
+CREATE TABLE IF NOT EXISTS `v2_game_roster` (
   `player_id` int(11) unsigned NOT NULL,
   `game_id` int(10) unsigned NOT NULL,
   UNIQUE KEY `unique` (`player_id`,`game_id`),
@@ -186,7 +186,8 @@ CREATE TABLE `game_roster` (
 -- Štruktúra tabuľky pre tabuľku `pending_teams`
 --
 
-CREATE TABLE `pending_teams` (
+DROP TABLE IF EXISTS `v2_pending_teams`;
+CREATE TABLE IF NOT EXISTS `v2_pending_teams` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `short` char(3) NOT NULL,
@@ -200,7 +201,8 @@ CREATE TABLE `pending_teams` (
 -- Štruktúra tabuľky pre tabuľku `news`
 --
 
-CREATE TABLE `news` (
+DROP TABLE IF EXISTS `v2_news`;
+CREATE TABLE IF NOT EXISTS `v2_news` (
   `id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf32_slovak_ci NOT NULL,
   `text` text COLLATE utf32_slovak_ci NOT NULL,
@@ -213,7 +215,8 @@ CREATE TABLE `news` (
 -- Štruktúra tabuľky pre tabuľku `user`
 --
 
-CREATE TABLE `users` (
+DROP TABLE IF EXISTS `v2_users`;
+CREATE TABLE IF NOT EXISTS `v2_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `identifier` varchar(45) COLLATE utf32_slovak_ci DEFAULT NULL,
   `email` varchar(45) COLLATE utf32_slovak_ci DEFAULT NULL,
@@ -231,8 +234,9 @@ CREATE TABLE `users` (
 -- Štruktúra tabuľky pre tabuľku `user_permissions`
 --
 
-CREATE TABLE `user_permissions` (
+DROP TABLE IF EXISTS `v2_user_permissions`;
+CREATE TABLE IF NOT EXISTS `v2_user_permissions` (
   `user_id` int(11) NOT NULL,
-  `permission` enum(''none'',''admin'') COLLATE utf32_slovak_ci NOT NULL,
+  `permission` enum('none','admin') COLLATE utf32_slovak_ci NOT NULL,
   PRIMARY KEY (`user_id`,`permission`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci

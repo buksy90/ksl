@@ -6,7 +6,7 @@ class Season extends Base
     //
     // https://laravel.com/docs/5.3/eloquent
     //
-    protected $table = 'season';
+    protected $table = TABLE_PREFIX . 'season';
     
     public static function GetActual() {
         $season = Static::where(['active' => 1]);

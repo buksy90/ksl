@@ -7,7 +7,7 @@ use \Illuminate\Database\Connection;
 
 class Weather extends Base
 {
-    protected $table    = 'weather';
+    protected $table    = TABLE_PREFIX . 'weather';
     public $timestamps  = false;
     
     

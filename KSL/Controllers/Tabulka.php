@@ -42,10 +42,12 @@ class Tabulka extends Base
             $teams[$team->id] = $team;
         }
         
+        $playersTableName   = Models\Players::getTableName();
+        $rosterTableName    = Models\Roster::getTableName();
         
-        $shooters = Models\Players::join('roster', function($join) use($season) {
-            $join->on('players.id', '=', 'roster.player_id');
-            $join->where('roster.season_id', '=', $season->id);
+        $shooters = Models\Players::join($rosterTableName, function($join) use($season, $playersTableName, $rosterTableName) {
+            $join->on($playersTableName.'.id', '=', $rosterTableName.'.player_id');
+            $join->where($rosterTableName.'.season_id', '=', $season->id);
         })->get()->map(function($player) use($only3pt, $teams) {
             $team       = $teams[$player->team_id];
             $games      = $player->GetGamesCount();

@@ -3,7 +3,7 @@ namespace KSL\Models;
 
 class GameRoster extends Base
 {
-    protected $table = 'game_roster';
+    protected $table = TABLE_PREFIX . 'game_roster';
     public $timestamps = false;
 
 

@@ -6,7 +6,7 @@ class User extends Base
     //
     // https://laravel.com/docs/5.3/eloquent
     //
-    protected $table = 'users';
+    protected $table = TABLE_PREFIX . 'users';
 
     public static function IdentifierExists($identifier)
     {

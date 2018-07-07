@@ -6,7 +6,7 @@ class Playground extends Base
     //
     // https://laravel.com/docs/5.3/eloquent
     //
-    protected $table = 'playground';
+    protected $table = TABLE_PREFIX . 'playground';
 
     
     public static function GetList() {

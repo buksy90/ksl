@@ -87,9 +87,12 @@ class Index extends Base
    // returns all players active this season
    private function GetPlayers($season_id) {
         $players            = [];
-        $playersCollection  = Models\Players::join('roster', function($join) use($season_id) {
-            $join->on('roster.player_id', '=', 'players.id')
-                 ->where('roster.season_id', '=', $season_id);
+        $rosterTableName    = Models\Roster::getTableName();
+        $playersTableName   = Models\Players::getTableName();
+
+        $playersCollection  = Models\Players::join($rosterTableName, function($join) use($season_id, $rosterTableName, $playersTableName) {
+            $join->on($rosterTableName.'.player_id', '=', $playersTableName.'.id')
+                 ->where($rosterTableName.'.season_id', '=', $season_id);
         })->get();
         
         foreach($playersCollection as $player) {
