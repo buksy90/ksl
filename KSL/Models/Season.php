@@ -12,7 +12,7 @@ class Season extends Base
         $season = Static::where(['active' => 1]);
         
         if($season->count() === 1) return $season->first();
-        else throw Exception('Unknown active season');
+        else throw new \Exception('Unknown active season');
     }
 
 
