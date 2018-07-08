@@ -52,6 +52,8 @@ class Routes {
         $app->post('/admin/news/update/{id}', '\KSL\Controllers\AdminNews:showUpdate')->setName('admin-news#update');
         $app->get('/admin/officiate/{id}', '\KSL\Controllers\AdminOfficiate:showGame')->setName('admin-officiate#game');
         $app->get('/admin/officiate/', '\KSL\Controllers\AdminOfficiate:showList')->setName('admin-officiate#list');
+        $app->get('/admin/import/', '\KSL\Controllers\AdminImport:show')->setName('admin-import');
+        $app->get('/admin/import/{target}', '\KSL\Controllers\AdminImport:showImport')->setName('admin-import#import');
 
 
         $app->get( '/welcome', function($request, $response, $args) {

@@ -122,12 +122,12 @@ class ScoreList extends Base
 
         $scoreList   = $this->select($this->getConnection()->raw('SUM(`'.$scoreListTable.'`.`value`) as "sum", `'.$scoreListTable.'`.`player_id`'))
         ->where('game_id', $this->getConnection()->raw('"'.$game->id.'"'))
-        ->join($rosterTableName, function($join) use($game, $teamSide) {
+        ->join($rosterTableName, function($join) use($game, $teamSide, $rosterTableName, $scoreListTable) {
             $join->on($rosterTableName.'.team_id', '=', $this->getConnection()->raw('"'.$teamSide.'"'));
-            $join->on($rosterTableName'.player_id', '=', 'score_list.player_id');
+            $join->on($rosterTableName.'.player_id', '=', $scoreListTable.'.player_id');
             $join->where($rosterTableName.'.season_id', '=', Season::GetActual()->id);
         })
-        ->groupBy('score_list.player_id')
+        ->groupBy($scoreListTable.'.player_id')
         ->orderBy('sum', 'desc')
         ->get();
                 

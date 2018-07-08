@@ -61,14 +61,15 @@ CREATE TABLE `v2_players` (
   `surname` varchar(32) NOT NULL,
   `seo` varchar(32) NOT NULL,
   `nick` varchar(16) NOT NULL,
-  `birthdate` int(10) unsigned NOT NULL,
+  `birthdate` datetime NOT NULL,
   `jersey` tinyint(3) unsigned NOT NULL,
-  `category` enum('A','B') NOT NULL,
+  `category` enum(''A'',''B'') NOT NULL,
   `facebook` varchar(64) NOT NULL,
   `height` smallint(6) DEFAULT NULL,
   `weight` smallint(6) DEFAULT NULL,
+  `sex` enum(''male'',''female'') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 
 -- --------------------------------------------------------

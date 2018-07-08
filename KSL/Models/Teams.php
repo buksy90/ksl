@@ -78,7 +78,7 @@ class Teams extends Base
 
         return Players::
             select($this->getConnection()->raw('`'.Players::getTableName().'`.*'))
-            ->join($rosterTableName, function($join){
+            ->join($rosterTableName, function($join) use($rosterTableName, $playersTableName){
                 $join->on($playersTableName.'.id', '=', $rosterTableName.'.player_id');
                 $join->where($rosterTableName.'.season_id', '=', $this->getConnection()->raw(Season::GetActual()->id));
                 $join->where($rosterTableName.'.team_id', '=', $this->id);
@@ -106,9 +106,9 @@ class Teams extends Base
 
         $scoreList          = ScoreList::
             select($this->getConnection()->raw($scoreListTable.'.player_id, SUM(value) AS `sum`'))
-            ->groupBy('score_list.player_id')
-            ->join($rosterTableName, function($join){
-                $join->on('score_list.player_id', '=', $rosterTableName.'.player_id');
+            ->groupBy($scoreListTable.'.player_id')
+            ->join($rosterTableName, function($join) use($rosterTableName, $scoreListTable) {
+                $join->on($scoreListTable.'.player_id', '=', $rosterTableName.'.player_id');
                 $join->on($rosterTableName.'.season_id', '=', $this->getConnection()->raw(Season::GetActual()->id));
                 $join->on($rosterTableName.'.team_id', '=', $this->getConnection()->raw($this->id));
             })
