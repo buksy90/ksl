@@ -16,11 +16,12 @@ class PlayersTest extends TestBase {
 
     public function testGenerateSEOGlobally() {
         $players = Players::query();
-        $players->update(['seo' => null]);
+        $players->update(['seo' => '']);
 
         Players::GenerateSEOGlobally();
 
-        $noSeoPlayers = Players::Where(['seo' => null]);
+
+        $noSeoPlayers = Players::Where(['seo' => '']);
         $this->assertEquals(0, $noSeoPlayers->count());
     }
 
@@ -72,7 +73,7 @@ class PlayersTest extends TestBase {
        $this->assertEquals(2, $pippen->getRank());
 
        $rodman = Players::find(2);
-       $this->assertEquals(4, $rodman->getRank());
+       $this->assertEquals(3, $rodman->getRank());
    }
 
 
@@ -84,6 +85,6 @@ class PlayersTest extends TestBase {
        $this->assertEquals(98, $pippen->GetOverall());
 
        $rodman = Players::find(2);
-       $this->assertEquals(96, $rodman->GetOverall());
+       $this->assertEquals(97, $rodman->GetOverall());
    }
 }

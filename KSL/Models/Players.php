@@ -39,7 +39,7 @@ class Players extends Base
         $players = self::get();
         
         foreach($players as $player) {
-            if($player->seo != null) continue;
+            if($player->seo != null && strlen($player->seo) > 0) continue;
             
             $player->GenerateSEO();
         }
@@ -51,7 +51,7 @@ class Players extends Base
     // seo name is geenrated from nick (if set), otherwise from name
     //
     public function GenerateSEO() {
-        $seo      = iconv('UTF-8', 'ASCII//TRANSLIT', $this->nick != null 
+        $seo      = iconv('UTF-8', 'ASCII//TRANSLIT', $this->nick != null && strlen($this->nick) > 0
             ? $this->nick
             : $this->name.'_'.$this->surname);
             
@@ -152,8 +152,8 @@ class Players extends Base
        $betterPlayersSql = '
             SELECT COUNT(*) AS `count` FROM
             (
-                SELECT SUM(value) as `sum`, t1.* FROM '.$scoreListTable.' t1 GROUP BY player_id 
-                HAVING `sum` > '.(int)$pointsScored.'
+                SELECT SUM(value) as `sum` FROM '.$scoreListTable.' t1 GROUP BY player_id 
+                HAVING SUM(value) > '.(int)$pointsScored.'
                 ORDER BY `sum` DESC
             ) td1
             ';

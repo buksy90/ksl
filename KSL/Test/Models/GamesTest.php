@@ -8,18 +8,22 @@ class GamesTest extends TestBase {
     public function testGetHomeTeamReturnsTeam() {
         $randomGame = Games::first();
         
-        $homeTeam = $randomGame->GetHomeTeam();
-        $this->assertInstanceOf('KSL\Models\Teams', $homeTeam);
-        $this->assertEquals($homeTeam->id, $randomGame->hometeam);
+        if($randomGame instanceof Games) {
+            $homeTeam = $randomGame->GetHomeTeam();
+            $this->assertInstanceOf('KSL\Models\Teams', $homeTeam);
+            $this->assertEquals($homeTeam->id, $randomGame->hometeam);
+        }
     }
 
 
     public function testGetAwayTeamReturnsTeam() {
         $randomGame = Games::first();
         
-        $awayTeam = $randomGame->GetAwayTeam();
-        $this->assertInstanceOf('KSL\Models\Teams', $awayTeam);
-        $this->assertEquals($awayTeam->id, $randomGame->awayteam);
+        if($randomGame instanceof Games) {
+            $awayTeam = $randomGame->GetAwayTeam();
+            $this->assertInstanceOf('KSL\Models\Teams', $awayTeam);
+            $this->assertEquals($awayTeam->id, $randomGame->awayteam);
+        }
     }
 
 
