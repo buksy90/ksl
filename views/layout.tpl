@@ -95,6 +95,7 @@
 								<li><a href="{{ router.pathFor('nova-sezona') }}">Nová sezóna</a></li>
 								<li><a href="{{ router.pathFor('admin-news') }}">Novinky</a></li>
 								<li><a href="{{ router.pathFor('admin-import') }}">Import</a></li>
+								<li><a href="{{ router.pathFor('admin-teams') }}">Spravovať tímy</a></li>
 								<li class="divider"></li>
 								{% endif %}
 								<li><a href="{{ router.pathFor('team#new') }}">Zaregistrovať tím</a></li>
