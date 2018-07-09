@@ -49,7 +49,7 @@ class Games extends Base
         
         $query      = static::Select($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`))) AS `dayDate`'))
             ->Where('season_id', $season->id)
-            ->GroupBy($game->getConnection()->raw('DATE(FROM_UNIXTIME(`date`))'))
+            ->GroupBy($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`)))'))
             ->get();
         
         return $query->map(function($game){
@@ -79,7 +79,7 @@ class Games extends Base
         $result = static::Select($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`))) AS `dayDate`'))
             ->Where('season_id', $season->id)
             ->Where('date', '>=', time())
-            ->GroupBy($game->getConnection()->raw('DATE(FROM_UNIXTIME(`date`))'))
+            ->GroupBy($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`)))'))
             ->OrderBy('dayDate', 'asc')
             ->skip($x-1)
             ->first();
