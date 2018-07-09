@@ -55,6 +55,7 @@ class Routes {
         $app->get('/admin/import/', '\KSL\Controllers\AdminImport:show')->setName('admin-import');
         $app->get('/admin/import/{target}', '\KSL\Controllers\AdminImport:showImport')->setName('admin-import#import');
         $app->get('/admin/teams/', '\KSL\Controllers\AdminTeams:show')->setName('admin-teams');
+        $app->get('/admin/teams/{id}', '\KSL\Controllers\AdminTeams:showEdit')->setName('admin-teams#edit');
 
 
         $app->get( '/welcome', function($request, $response, $args) {

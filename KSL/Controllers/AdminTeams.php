@@ -37,4 +37,15 @@ class AdminTeams extends BaseAdmin
         ]));
     }
 
+
+    public function showEdit($request, $response, $args) {
+        $message = $messageClass = null;
+
+        return $response->write( $this->ci->twig->render('adminTeams_edit.tpl', [
+            'navigationSwitch'  => 'admin',
+            'message'           => $message,
+            'messageClass'      => $messageClass,
+            'team'              => Models\Teams::find((int)$args['id'])
+        ]));
+    }
 }

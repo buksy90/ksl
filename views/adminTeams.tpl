@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row form-group">
         <div class="col-xs-12">
             <ul class="nav nav-pills">
               <li class="active"><a href="#teams" data-toggle="tab" aria-expanded="false">Aktivne tímy</a></li>
@@ -41,16 +41,26 @@
                         <div class="panel-body">
                             <table class="table table-striped table-hover">
                                 <tr>
-                                    <th class="hidden-xs text-center">Názov</th>
-                                    <th class="text-center">Skratka</th>
+                                    <th class="hidden-xs">Názov</th>
+                                    <th>Skratka</th>
                                     <th>Kapitán</th>
+                                    <th>Akcia</th>
                                 </tr>
                                 
                                 {% for team in activeTeams %}
                                 <tr>
-                                    <td class="text-center">{{ team.name }}</td>
-                                    <td class="text-center">{{ team.short }}</td>
-                                    <td class="text-center">{{ team.user_id }}</td>
+                                    <td>{{ team.name }}</td>
+                                    <td>{{ team.short }}</td>
+                                    <td>
+                                        {% set captain = team.GetCaptain() %}
+                                        {% if captain != null %}
+                                            {{ captain.name }}
+                                            {{ captain.surname }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td><a href="{{ router.pathFor('admin-teams#edit', { id: team.id }) }}" class="btn btn-primary btn-sm">Editovať</a></td>
                                 </tr>
                                 {% endfor %}
                             </table>
