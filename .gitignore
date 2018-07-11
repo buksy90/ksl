@@ -1,5 +1,6 @@
 KSL/config*
 vendor
+KSL/vendor
 data/data_production.sql
 .idea
 .vscode

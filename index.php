@@ -7,9 +7,9 @@ session_start();
  * If you are not using Composer, you need to load Slim Framework with your own
  * PSR-4 autoloader.
  */
-define('DIR_ROOT', __DIR__.'/..');
+define('DIR_ROOT', __DIR__);
 require DIR_ROOT.'/KSL/config.php';
-require DIR_ROOT.'/vendor/autoload.php';
+require DIR_ROOT.'/KSL/vendor/autoload.php';
 
 
 use \Illuminate\Database\Connection;

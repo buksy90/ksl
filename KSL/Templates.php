@@ -3,7 +3,7 @@ namespace KSL;
 
 class Templates {
     public static function getTwig($container) {
-        $loader         = new \Twig_Loader_Filesystem(DIR_ROOT.'/views');
+        $loader         = new \Twig_Loader_Filesystem(DIR_ROOT.'/KSL/views');
         $env            = new \Twig_Environment($loader, array(
             //'cache' => '/cache'
             'debug'                 => true,
