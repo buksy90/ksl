@@ -40,14 +40,14 @@ CREATE TABLE IF NOT EXISTS `v2_games` (
   `season_id` tinyint(3) unsigned NOT NULL,
   `hometeam` int(11) NOT NULL,
   `awayteam` int(11) NOT NULL,
-  `date` int(11) NOT NULL,
+  `date` datetime NOT NULL,
   `playground_id` int(11) NOT NULL,
   `referee` int(11) NOT NULL,
   `won` enum('home','away') DEFAULT NULL,
   `home_score` tinyint(3) unsigned DEFAULT NULL,
   `away_score` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `v2_games` (
 -- Štruktúra tabuľky pre tabuľku `players`
 --
 
-CREATE TABLE `v2_players` (
+CREATE TABLE IF NOT EXISTS `v2_players` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(16) NOT NULL,
   `surname` varchar(32) NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `v2_playground` (
   `latitude` decimal(10,8) NOT NULL,
   `longitude` decimal(11,8) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
 
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `v2_season` (
   `year` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 INSERT INTO `v2_season` SET `name` = "2018", `year` = "2018", `active` = "1";
 
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `v2_teams` (
   `short` varchar(3) NOT NULL,
   `captain_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
 
@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `v2_weather` (
   `value` decimal(3,1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `date` (`date`,`hour`,`type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=673 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
 
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `v2_pending_teams` (
   `short` char(3) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `v2_users` (
   `updated_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci;
 
 -- --------------------------------------------------------
 
