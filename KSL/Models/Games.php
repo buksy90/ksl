@@ -76,10 +76,10 @@ class Games extends Base
         
         if($season instanceof Season === false) return false;
         
-        $result = static::Select($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`))) AS `dayDate`'))
+        $result = static::Select($game->getConnection()->raw('CONCAT(MONTH(`date`), "/", DAY(`date`), "/", YEAR(`date`)) AS `dayDate`'))
             ->Where('season_id', $season->id)
-            ->Where('date', '>=', time())
-            ->GroupBy($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`)))'))
+            ->Where('date', '>=', $game->getConnection()->raw('CURDATE()'))
+            ->GroupBy($game->getConnection()->raw('CONCAT(MONTH(`date`), "/", DAY(`date`), "/", YEAR(`date`))'))
             ->OrderBy('dayDate', 'asc')
             ->skip($x-1)
             ->first();
@@ -102,7 +102,7 @@ class Games extends Base
         if($season instanceof Season === false) return false;
         
         $q =  static::Where('season_id', $season->id)
-            ->Where($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`)))'), '=', $dayDate)
+            ->Where($game->getConnection()->raw('CONCAT(MONTH(`date`), "/", DAY(`date`), "/", YEAR(`date`))'), '=', $dayDate)
             ->get();
             
             return $q;

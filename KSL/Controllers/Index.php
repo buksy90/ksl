@@ -25,8 +25,6 @@ class Index extends Base
         }, $nextDays);
 
         $weather    = array_filter($weather, function($item){ return is_array($item) && count($item); });
-        
-        
         $season     = Models\Season::GetActual();
         $teams      = $this->GetTeams();
         $players    = $season instanceof Models\Season ? $this->GetPlayers($season->id) : null;
@@ -37,12 +35,13 @@ class Index extends Base
                 : $games->map(function($game) use($teams) {
             $homeScoreList = Models\ScoreList::GetFromGameStatic($game, 'home');
             $awayScoreList = Models\ScoreList::GetFromGameStatic($game, 'away');
+            $dateTimestamp = strtotime($game->date);
     
             return [
                 'gameObj'       => $game,
                 'homeScoreList' => $homeScoreList,
                 'awayScoreList' => $awayScoreList,
-                'dayDate'       => mktime(0,0,0, date('m', $game->date), date('j', $game->date), date('Y', $game->date)),
+                'dayDate'       => mktime(0,0,0, date('m', $dateTimestamp), date('j', $dateTimestamp), date('Y', $dateTimestamp)),
                 'homeTeam'      => $teams[$game->hometeam],
                 'awayTeam'      => $teams[$game->awayteam],
                 'homeHistory'   => $teams[$game->hometeam]->GetHistory(),
