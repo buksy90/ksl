@@ -118,7 +118,7 @@ class ScoreList extends Base
     
     public function GetFromGame(Games $game, $teamSide) {
         $scoreListTable     = ScoreList::getTableName();
-        $rosterTable        = Roster::getTableName();
+        $rosterTableName    = Roster::getTableName();
 
         $scoreList   = $this->select($this->getConnection()->raw('SUM(`'.$scoreListTable.'`.`value`) as "sum", `'.$scoreListTable.'`.`player_id`'))
         ->where('game_id', $this->getConnection()->raw('"'.$game->id.'"'))

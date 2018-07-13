@@ -47,13 +47,13 @@ class Games extends Base
         
         if($season instanceof Season === false) return false;
         
-        $query      = static::Select($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`))) AS `dayDate`'))
+        $query      = static::Select($game->getConnection()->raw('CONCAT(MONTH(`date`), "/", DAY(`date`), "/", YEAR(`date`)) AS `dayDate`'))
             ->Where('season_id', $season->id)
-            ->GroupBy($game->getConnection()->raw('UNIX_TIMESTAMP(DATE(FROM_UNIXTIME(`date`)))'))
+            ->GroupBy($game->getConnection()->raw('CONCAT(MONTH(`date`), "/", DAY(`date`), "/", YEAR(`date`))'))
             ->get();
         
         return $query->map(function($game){
-            return $game->dayDate;
+            return strtotime($game->dayDate);
         });
     }
     
