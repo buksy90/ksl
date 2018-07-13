@@ -125,6 +125,41 @@ class AdminImport extends BaseAdmin
 
 
 
+            case 'liga': {
+                if($db->table("v2_games")->count() != 0) {
+                    return $this->show($request, $response, ['action' => 'error', 'message' => 'Tabuľka už obsahuje dáta']);
+                }
+
+                $season         = Models\Season::GetActual();
+
+                return $db->statement('INSERT INTO `v2_games` (`season_id`, `hometeam`, `awayteam`, `date`, `playground_id`, `referee`, `won`, `home_score`, `away_score`) 
+                    SELECT "'.$season->id.'", t2.`id`, t4.`id`, DATE_FORMAT(ADDTIME(from_unixtime(g1.`datum`), g1.`cas`), "%Y-%m-%d %H:%i"), 
+                    g1.`ihrisko`, 1, IF(g1.`hrany`="N", null, IF(g1.`vysl1`>g1.`vysl2`, "HOME", "AWAY")), g1.`vysl1`, g1.`vysl2`
+                    FROM `liga` AS `g1`
+
+                    JOIN `druzstva` AS `t1` ON t1.`pc` = g1.`domaci`
+                    JOIN `v2_teams` AS `t2` ON t2.`name` = t1.`nazov`
+
+                    JOIN `druzstva` AS `t3` ON t3.`pc` = g1.`hostia`
+                    JOIN `v2_teams` AS `t4` ON t4.`name` = t3.`nazov`')
+                    ? $this->show($request, $response, ['action' => 'importSuccessful'])
+                    : $this->show($request, $response, ['action' => 'importError']);
+            } break;
+
+
+
+            case 'ihriska': {
+                if($db->table("v2_playground")->count() != 0) {
+                    return $this->show($request, $response, ['action' => 'error', 'message' => 'Tabuľka už obsahuje dáta']);
+                }
+
+                return $db->statement('INSERT INTO `v2_playground` (`name`, `link`, `address`, `district`, `latitude`, `longitude`)  SELECT i1.`nazov`, "", "", i1.`mcast`, 0, 0 FROM `ihriska` AS `i1`')
+                    ? $this->show($request, $response, ['action' => 'importSuccessful'])
+                    : $this->show($request, $response, ['action' => 'importError']);
+            }
+
+
+
             default: {
                 return $this->show($request, $response, ['action' => 'importUnsupported']);
             }
