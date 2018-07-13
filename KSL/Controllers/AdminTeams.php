@@ -10,20 +10,12 @@ class AdminTeams extends BaseAdmin
         $message = $messageClass = null;
 
         if(array_key_exists('action', $args)) {
-            if($args['action'] === 'created') {
-                $message        = 'Novinka bola vytvorená';
+            if($args['action'] === 'updated') {
+                $message        = 'Tím bol upravený';
                 $messageClass   = 'alert-success';
             }
-            else if($args['action'] === 'updated') {
-                $message        = 'Novinka bola upravená';
-                $messageClass   = 'alert-success';
-            }
-            else if($args['action'] === 'deleted') {
-                $message        = 'Novinka bola vymazaná';
-                $messageClass   = 'alert-success';
-            }
-            else if($args['action'] === 'deletedFailed') {
-                $message        = 'Novinku sa nepodarilo vymazať';
+            else if($args['action'] === 'failed') {
+                $message        = 'Vyskytla sa chyba';
                 $messageClass   = 'alert-danger';
             }
         }
@@ -47,5 +39,23 @@ class AdminTeams extends BaseAdmin
             'messageClass'      => $messageClass,
             'team'              => Models\Teams::find((int)$args['id'])
         ]));
+    }
+
+    public function showUpdate($request, $response, $args) {
+        $parameters = $request->getParsedBody();
+
+        $team           = Models\Teams::find($parameters['id']);
+        $team->name     = $parameters['name'];
+        $team->short    = $parameters['short'];
+
+        if($team->save()) {
+            $this->show($request, $response, ['action' => 'updated']);
+        } 
+        else {
+            $this->showEdit($request, $response, [
+                'action'    => 'failed',
+                'id'        => $parameters['id']
+            ]);
+        }
     }
 }

@@ -37,7 +37,8 @@
 
                 <div class="tab-pane fade active in" id="properties">
                         <div class="well">
-                            <form class="form-horizontal" id="new-season" action="{{ router.pathFor('nova-sezona#generate') }}" method="post">
+                            <form class="form-horizontal" id="new-season" action="{{ router.pathFor('admin-teams#update', { id: team.id }) }}" method="post">
+                                <input type="hidden" name="id" value="{{ team.id }}">
                                 <fieldset>
                                 <legend>{{ team.name }}</legend>
                                 <div class="form-group">
@@ -52,13 +53,15 @@
                                     <input type="text" class="form-control" id="short" name="short" placeholder="Skratka" maxlength="5" value="{{ team.short }}" required>
                                   </div>
                                 </div>
+                                <!--
                                 <div class="form-group">
                                   <label for="short" class="col-lg-3 control-label">Kapitán</label>
                                   <div class="col-lg-9">
                                     <input type="text" class="form-control" id="captain" name="captain" placeholder="Kapitán" maxlength="5" value="{{ team.captain_id }}" required>
                                   </div>
                                 </div>
-                                
+                                -->
+
                                 <div class="form-group">
                                   <div class="col-lg-9 col-lg-offset-3">
                                     <button type="reset" class="btn btn-default">Zrušiť</button>
