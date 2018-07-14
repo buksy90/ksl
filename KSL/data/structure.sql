@@ -1,90 +1,84 @@
--- MySQL dump 10.13  Distrib 5.7.18, for Linux (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.0.10deb1
+-- http://www.phpmyadmin.net
 --
--- Host: localhost    Database: ksl
--- ------------------------------------------------------
--- Server version	5.7.18-0ubuntu0.16.04.1
+-- Hostiteľ: 127.0.0.1
+-- Vygenerované: Št 23.Feb 2017, 09:27
+-- Verzia serveru: 5.5.50-0ubuntu0.14.04.1
+-- Verzia PHP: 5.5.9-1ubuntu4.19
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 --
--- Table structure for table `game_roster`
+-- Databáza: `c9`
 --
 
-DROP TABLE IF EXISTS `game_roster`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `game_roster` (
-  `player_id` int(11) unsigned NOT NULL,
-  `game_id` int(10) unsigned NOT NULL,
-  UNIQUE KEY `unique` (`player_id`,`game_id`),
-  KEY `fk_game_roster_2_idx` (`game_id`),
-  CONSTRAINT `fk_game_roster_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_game_roster_2` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `v2_game_roster`;
+DROP TABLE IF EXISTS `v2_user_permissions`;
+DROP TABLE IF EXISTS `v2_games`;
+DROP TABLE IF EXISTS `v2_players`;
+DROP TABLE IF EXISTS `v2_playground`;
+DROP TABLE IF EXISTS `v2_roster`;
+DROP TABLE IF EXISTS `v2_score_list`;
+DROP TABLE IF EXISTS `v2_season`;
+DROP TABLE IF EXISTS `v2_teams`;
+DROP TABLE IF EXISTS `v2_thumbs`;
+DROP TABLE IF EXISTS `v2_weather`;
+DROP TABLE IF EXISTS `v2_pending_teams`;
+DROP TABLE IF EXISTS `v2_news`;
+DROP TABLE IF EXISTS `v2_users`;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `games`
+-- Štruktúra tabuľky pre tabuľku `games`
 --
 
-DROP TABLE IF EXISTS `games`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `games` (
+CREATE TABLE IF NOT EXISTS `v2_games` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `season_id` tinyint(3) unsigned NOT NULL,
   `hometeam` int(11) NOT NULL,
   `awayteam` int(11) NOT NULL,
-  `date` int(11) NOT NULL,
+  `date` datetime NOT NULL,
   `playground_id` int(11) NOT NULL,
   `referee` int(11) NOT NULL,
-  `won` enum('home','away','tie') DEFAULT NULL,
+  `won` enum('home','away') DEFAULT NULL,
   `home_score` tinyint(3) unsigned DEFAULT NULL,
   `away_score` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `players`
+-- Štruktúra tabuľky pre tabuľku `players`
 --
 
-DROP TABLE IF EXISTS `players`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `players` (
+CREATE TABLE IF NOT EXISTS `v2_players` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(16) NOT NULL,
   `surname` varchar(32) NOT NULL,
   `seo` varchar(32) NOT NULL,
   `nick` varchar(16) NOT NULL,
-  `birthdate` int(10) unsigned NOT NULL,
+  `birthdate` datetime NOT NULL,
   `jersey` tinyint(3) unsigned NOT NULL,
   `category` enum('A','B') NOT NULL,
   `facebook` varchar(64) NOT NULL,
   `height` smallint(6) DEFAULT NULL,
   `weight` smallint(6) DEFAULT NULL,
+  `sex` enum('male','female') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `playground`
+-- Štruktúra tabuľky pre tabuľku `playground`
 --
 
-DROP TABLE IF EXISTS `playground`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `playground` (
+CREATE TABLE IF NOT EXISTS `v2_playground` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `link` varchar(16) NOT NULL,
@@ -93,84 +87,84 @@ CREATE TABLE `playground` (
   `latitude` decimal(10,8) NOT NULL,
   `longitude` decimal(11,8) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `roster`
+-- Štruktúra tabuľky pre tabuľku `roster`
 --
 
-DROP TABLE IF EXISTS `roster`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `roster` (
+CREATE TABLE IF NOT EXISTS `v2_roster` (
   `team_id` int(11) NOT NULL,
-  `player_id` int(11) unsigned NOT NULL,
+  `player_id` int(11) NOT NULL,
   `season_id` tinyint(3) unsigned NOT NULL,
-  UNIQUE KEY `player_id` (`player_id`),
-  CONSTRAINT `roster_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`)
+  UNIQUE KEY `player_id` (`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `score_list`
+-- Štruktúra tabuľky pre tabuľku `score_list`
 --
 
-DROP TABLE IF EXISTS `score_list`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `score_list` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `v2_score_list` (
   `game_id` int(11) NOT NULL,
   `player_id` int(11) NOT NULL,
-  `team_id` int(10) unsigned NOT NULL,
-  `second` int(11) NOT NULL,
-  `value` enum('1','2','3','') NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `game_id` (`game_id`,`player_id`,`second`)
-) ENGINE=InnoDB AUTO_INCREMENT=363 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `timestamp` int(11) NOT NULL,
+  `value` tinyint(4) NOT NULL,
+  UNIQUE KEY `game_id` (`game_id`,`player_id`,`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `season`
+-- Štruktúra tabuľky pre tabuľku `season`
 --
 
-DROP TABLE IF EXISTS `season`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `season` (
+CREATE TABLE IF NOT EXISTS `v2_season` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(5) NOT NULL,
   `year` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+INSERT INTO `v2_season` SET `name` = "2018", `year` = "2018", `active` = "1";
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `teams`
+-- Štruktúra tabuľky pre tabuľku `teams`
 --
 
-DROP TABLE IF EXISTS `teams`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `teams` (
+CREATE TABLE IF NOT EXISTS `v2_teams` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `short` varchar(3) NOT NULL,
   `captain_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `weather`
+-- Štruktúra tabuľky pre tabuľku `thumbs`
 --
 
-DROP TABLE IF EXISTS `weather`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `weather` (
+CREATE TABLE IF NOT EXISTS `v2_thumbs` (
+  `VID` int(10) unsigned NOT NULL DEFAULT '0',
+  `thumbs_up` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `thumbs_down` mediumint(8) unsigned NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `weather`
+--
+
+CREATE TABLE IF NOT EXISTS `v2_weather` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `hour` tinyint(3) unsigned NOT NULL,
@@ -178,16 +172,73 @@ CREATE TABLE `weather` (
   `value` decimal(3,1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `date` (`date`,`hour`,`type`)
-) ENGINE=InnoDB AUTO_INCREMENT=673 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+-- --------------------------------------------------------
 
--- Dump completed on 2017-05-11 12:20:22
+
+CREATE TABLE IF NOT EXISTS `v2_game_roster` (
+  `player_id` int(11) unsigned NOT NULL,
+  `game_id` int(10) unsigned NOT NULL,
+  UNIQUE KEY `unique` (`player_id`,`game_id`),
+  KEY `fk_game_roster_2_idx` (`game_id`),
+  CONSTRAINT `fk_game_roster_1` FOREIGN KEY (`player_id`) REFERENCES `v2_players` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_game_roster_2` FOREIGN KEY (`game_id`) REFERENCES `v2_games` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `pending_teams`
+--
+
+CREATE TABLE IF NOT EXISTS `v2_pending_teams` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `short` char(3) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `news`
+--
+
+CREATE TABLE IF NOT EXISTS `v2_news` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf32_slovak_ci NOT NULL,
+  `text` text COLLATE utf32_slovak_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `user`
+--
+
+CREATE TABLE IF NOT EXISTS `v2_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(45) COLLATE utf32_slovak_ci DEFAULT NULL,
+  `email` varchar(45) COLLATE utf32_slovak_ci DEFAULT NULL,
+  `firstName` varchar(45) COLLATE utf32_slovak_ci DEFAULT NULL,
+  `lastName` varchar(45) COLLATE utf32_slovak_ci DEFAULT NULL,
+  `avatarUrl` varchar(255) COLLATE utf32_slovak_ci DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `user_permissions`
+--
+
+CREATE TABLE IF NOT EXISTS `v2_user_permissions` (
+  `user_id` int(11) NOT NULL,
+  `permission` enum('none','admin') COLLATE utf32_slovak_ci NOT NULL,
+  PRIMARY KEY (`user_id`,`permission`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_slovak_ci;
