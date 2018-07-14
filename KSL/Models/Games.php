@@ -35,7 +35,8 @@ class Games extends Base
     
     
     public static function GetNextAtPlayground($playgroundId, $limit = 5) {
-        return static::Where('playground_id', $playgroundId)->Where('date', '>=', time())->take($limit)->get();
+        $game   = new Self();
+        return static::Where('playground_id', $playgroundId)->Where('date', '>=', $game->getConnection()->raw('CURDATE()'))->take($limit)->get();
     }
     
     /**
@@ -51,7 +52,7 @@ class Games extends Base
             ->Where('season_id', $season->id)
             ->GroupBy($game->getConnection()->raw('CONCAT(MONTH(`date`), "/", DAY(`date`), "/", YEAR(`date`))'))
             ->get();
-        
+
         return $query->map(function($game){
             return strtotime($game->dayDate);
         });
@@ -85,7 +86,7 @@ class Games extends Base
             ->first();
 
         return is_object($result)
-            ? $result->dayDate
+            ? strtotime($result->dayDate)
             : null;
     }
     

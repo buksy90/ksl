@@ -66,24 +66,24 @@ class GamesTest extends TestBase {
 
 
     public function testGetListOfDates() {
-        $dates = Games::GetListOfDates(1, 0);
+        $dates = Games::GetListOfDates();
         
         $this->assertEquals(2, $dates->count());
-        $this->assertEquals(1485900000, $dates[0]);
-        $this->assertEquals(1738360800, $dates[1]);
+        $this->assertEquals(1262386800, $dates[0]);
+        $this->assertEquals(1860706800, $dates[1]);
     }
 
     public function testGetNextDayDate() {
         $date = Games::GetNextDayDate();
-        $this->assertEquals(1738360800, $date);
+        $this->assertEquals(1860706800, $date);
     }
 
 
     public function testGetNextGames() {
         $date = Games::GetNextXDayDate(1);
-        $this->assertEquals(1738360800, $date);
+        $this->assertEquals(1860706800, $date);
         $date = Games::GetNextXDayDate(0);
-        $this->assertEquals(1738360800, $date);
+        $this->assertEquals(1860706800, $date);
         $date = Games::GetNextXDayDate(5);
         $this->assertEquals(null, $date);
     }
