@@ -1,0 +1,22 @@
+{
+  "name": "ksl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "docker-compose up",
+    "backend-build": "docker-compose up --build",
+    "docker-clean": "docker-compose down"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buksy90/ksl.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/buksy90/ksl/issues"
+  },
+  "homepage": "https://github.com/buksy90/ksl#readme"
+}

@@ -1,0 +1,94 @@
+[26-Jan-2019 01:25:56 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:25:56 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:25:58 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:25:58 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:26:15 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:26:15 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:26:56 Europe/Bratislava] PHP Warning:  readfile(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:26:56 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 14
+[26-Jan-2019 01:26:56 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 14
+[26-Jan-2019 01:28:15 Europe/Bratislava] PHP Warning:  opendir(/srv/app/public/../vendor/): failed to open dir: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:28:15 Europe/Bratislava] PHP Warning:  readdir() expects parameter 1 to be resource, boolean given in /srv/app/public/index.php on line 13
+[26-Jan-2019 01:28:15 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:15 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:18 Europe/Bratislava] PHP Warning:  opendir(/srv/app/public/../vendor/): failed to open dir: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:28:18 Europe/Bratislava] PHP Warning:  readdir() expects parameter 1 to be resource, boolean given in /srv/app/public/index.php on line 13
+[26-Jan-2019 01:28:18 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:18 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:36 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:36 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:58 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:28:58 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:32 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:32 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:37 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:37 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:39 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:39 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:40 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:40 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:40 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:40 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:08 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:08 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:10 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:10 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:11 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:11 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:31 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:31 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:45 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:45 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:03 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:03 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:15 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:15 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:20 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:20 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:50 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:50 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:58 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:58 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:35 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:35 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:55 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:55 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:59 Europe/Bratislava] PHP Warning:  opendir(/srv/app/KSL/../vendor): failed to open dir: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:39:59 Europe/Bratislava] PHP Warning:  readdir() expects parameter 1 to be resource, boolean given in /srv/app/public/index.php on line 13
+[26-Jan-2019 01:39:59 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:59 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:04 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:04 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:16 Europe/Bratislava] PHP Warning:  opendir(/srv/app/KSL/vendor): failed to open dir: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:40:16 Europe/Bratislava] PHP Warning:  readdir() expects parameter 1 to be resource, boolean given in /srv/app/public/index.php on line 13
+[26-Jan-2019 01:40:16 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:16 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:21 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:21 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 11:04:33 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: could not find driver in /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'ksl_test', '', Array)
+#1 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'ksl_test', '', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php(183): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /srv/app/KSL/vendor/illuminate/database/Connection.php(883): call_user_func(Object(Closure))
+#6 /srv/app/KSL/vendor/illuminate/database/Connect in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 11:04:35 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: could not find driver in /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'ksl_test', '', Array)
+#1 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'ksl_test', '', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php(183): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /srv/app/KSL/vendor/illuminate/database/Connection.php(883): call_user_func(Object(Closure))
+#6 /srv/app/KSL/vendor/illuminate/database/Connect in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 11:04:50 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: could not find driver in /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'ksl_test', '', Array)
+#1 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'ksl_test', '', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php(183): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /srv/app/KSL/vendor/illuminate/database/Connection.php(883): call_user_func(Object(Closure))
+#6 /srv/app/KSL/vendor/illuminate/database/Connect in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647

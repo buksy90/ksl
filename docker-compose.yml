@@ -1,0 +1,44 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    image: ksl-docker
+    ports:
+      - 8080:80
+    volumes:
+      - ./public:/srv/app/public
+    links:
+      - mysql
+      #- redis
+    environment:
+      DB_HOST: mysql
+      DB_DATABASE: ksl
+      DB_USERNAME: ksl
+      DB_PASSWORD: ksl
+      #REDIS_HOST: redis
+      #SESSION_DRIVER: redis
+      #CACHE_DRIVER: redis
+
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 13306:3306
+    environment:
+      MYSQL_DATABASE: ksl
+      MYSQL_USER: ksl
+      MYSQL_PASSWORD: ksl
+      MYSQL_ROOT_PASSWORD: ksl
+  #redis:
+  #  image: redis:4.0-alpine
+  #  ports:
+  #    - 16379:6379
+
+      #- .:/srv/app
+    #entrypoint:
+    #  - sh
+    #  - /srv/app/.docker/startup.sh
+    #command: /srv/app/.docker/startup.sh
+    #command: pwd && exec chmod +x /srv/app/.docker/startup.sh

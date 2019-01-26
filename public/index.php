@@ -1,5 +1,7 @@
 <?php
 session_start();
+error_reporting(E_ALL);
+
 
 /**
  * Step 1: Require the Slim Framework using Composer's autoloader
@@ -9,7 +11,7 @@ session_start();
  */
 define('DIR_ROOT', __DIR__.'/..');
 require DIR_ROOT.'/KSL/config.php';
-require DIR_ROOT.'/vendor/autoload.php';
+require DIR_ROOT.'/KSL/vendor/autoload.php';
 
 
 use \Illuminate\Database\Connection;
@@ -17,7 +19,7 @@ use \KSL\Models;
 use \KSL\Controllers;
 
 
-
+var_dump($config["db"]);
 $capsule = new \Illuminate\Database\Capsule\Manager;
 $capsule->addConnection($config['db']);
 
