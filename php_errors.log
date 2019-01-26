@@ -1,0 +1,203 @@
+[26-Jan-2019 01:25:56 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:25:56 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:25:58 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:25:58 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:26:15 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:26:15 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:26:56 Europe/Bratislava] PHP Warning:  readfile(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:26:56 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 14
+[26-Jan-2019 01:26:56 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 14
+[26-Jan-2019 01:28:15 Europe/Bratislava] PHP Warning:  opendir(/srv/app/public/../vendor/): failed to open dir: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:28:15 Europe/Bratislava] PHP Warning:  readdir() expects parameter 1 to be resource, boolean given in /srv/app/public/index.php on line 13
+[26-Jan-2019 01:28:15 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:15 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:18 Europe/Bratislava] PHP Warning:  opendir(/srv/app/public/../vendor/): failed to open dir: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:28:18 Europe/Bratislava] PHP Warning:  readdir() expects parameter 1 to be resource, boolean given in /srv/app/public/index.php on line 13
+[26-Jan-2019 01:28:18 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:18 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:36 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:36 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 17
+[26-Jan-2019 01:28:58 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:28:58 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:32 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:32 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:37 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:37 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:39 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:39 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:40 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:40 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:40 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:32:40 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:08 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:08 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:10 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:10 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:11 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:11 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:31 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:31 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:45 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:37:45 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:03 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:03 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:15 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:15 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:20 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:20 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:50 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:50 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:58 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:38:58 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:35 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:35 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:55 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:55 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:59 Europe/Bratislava] PHP Warning:  opendir(/srv/app/KSL/../vendor): failed to open dir: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:39:59 Europe/Bratislava] PHP Warning:  readdir() expects parameter 1 to be resource, boolean given in /srv/app/public/index.php on line 13
+[26-Jan-2019 01:39:59 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:39:59 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:04 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:04 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:16 Europe/Bratislava] PHP Warning:  opendir(/srv/app/KSL/vendor): failed to open dir: No such file or directory in /srv/app/public/index.php on line 12
+[26-Jan-2019 01:40:16 Europe/Bratislava] PHP Warning:  readdir() expects parameter 1 to be resource, boolean given in /srv/app/public/index.php on line 13
+[26-Jan-2019 01:40:16 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:16 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:21 Europe/Bratislava] PHP Warning:  require(/srv/app/public/../KSL/vendor/autoload.php): failed to open stream: No such file or directory in /srv/app/public/index.php on line 18
+[26-Jan-2019 01:40:21 Europe/Bratislava] PHP Fatal error:  require(): Failed opening required '/srv/app/public/../KSL/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /srv/app/public/index.php on line 18
+[26-Jan-2019 11:04:33 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: could not find driver in /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'ksl_test', '', Array)
+#1 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'ksl_test', '', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php(183): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /srv/app/KSL/vendor/illuminate/database/Connection.php(883): call_user_func(Object(Closure))
+#6 /srv/app/KSL/vendor/illuminate/database/Connect in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 11:04:35 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: could not find driver in /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'ksl_test', '', Array)
+#1 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'ksl_test', '', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php(183): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /srv/app/KSL/vendor/illuminate/database/Connection.php(883): call_user_func(Object(Closure))
+#6 /srv/app/KSL/vendor/illuminate/database/Connect in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 11:04:50 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: could not find driver in /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'ksl_test', '', Array)
+#1 /srv/app/KSL/vendor/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'ksl_test', '', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php(183): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /srv/app/KSL/vendor/illuminate/database/Connection.php(883): call_user_func(Object(Closure))
+#6 /srv/app/KSL/vendor/illuminate/database/Connect in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:24:24 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:24:25 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:24:39 Europe/Bratislava] PHP Notice:  Undefined index: driver in /srv/app/KSL/vendor/illuminate/database/DatabaseManager.php on line 115
+[26-Jan-2019 14:24:39 Europe/Bratislava] PHP Notice:  Undefined index: driver in /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php on line 77
+[26-Jan-2019 14:24:39 Europe/Bratislava] PHP Fatal error:  Uncaught InvalidArgumentException: Unsupported driver [] in /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php:286
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php(77): Illuminate\Database\Connectors\ConnectionFactory->createConnection(NULL, Object(Closure), 'ksl', '', Array)
+#1 /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php(51): Illuminate\Database\Connectors\ConnectionFactory->createSingleConnection(Array)
+#2 /srv/app/KSL/vendor/illuminate/database/DatabaseManager.php(119): Illuminate\Database\Connectors\ConnectionFactory->make(Array, 'default')
+#3 /srv/app/KSL/vendor/illuminate/database/DatabaseManager.php(74): Illuminate\Database\DatabaseManager->makeConnection('default')
+#4 /srv/app/KSL/vendor/illuminate/database/Eloquent/Model.php(1058): Illuminate\Database\DatabaseManager->connection('default')
+#5 /srv/app/KSL/vendor/illuminate/database/Eloquent/Model.php(1024): Illuminate\Database\Eloquent\Model::resolveConnection( in /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php on line 286
+[26-Jan-2019 14:24:41 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:29:04 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:29:05 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:42:35 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:42:36 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:42:38 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:43:01 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 16:15:31 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 16:16:58 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647

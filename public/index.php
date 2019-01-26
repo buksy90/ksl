@@ -9,13 +9,12 @@ session_start();
  */
 define('DIR_ROOT', __DIR__.'/..');
 require DIR_ROOT.'/KSL/config.php';
-require DIR_ROOT.'/vendor/autoload.php';
+require DIR_ROOT.'/KSL/vendor/autoload.php';
 
 
 use \Illuminate\Database\Connection;
 use \KSL\Models;
 use \KSL\Controllers;
-
 
 
 $capsule = new \Illuminate\Database\Capsule\Manager;
