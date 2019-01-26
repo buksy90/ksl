@@ -8,7 +8,8 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ./public:/srv/app/public
+      - .:/srv/app/
+      - /srv/app/KSL/vendor/ # this excludes vendor dir from mounted volume
     links:
       - mysql
       #- redis
@@ -31,6 +32,9 @@ services:
       MYSQL_USER: ksl
       MYSQL_PASSWORD: ksl
       MYSQL_ROOT_PASSWORD: ksl
+    volumes:
+    - ./KSL/data:/docker-entrypoint-initdb.d
+
   #redis:
   #  image: redis:4.0-alpine
   #  ports:

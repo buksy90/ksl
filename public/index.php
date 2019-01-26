@@ -1,7 +1,5 @@
 <?php
 session_start();
-error_reporting(E_ALL);
-
 
 /**
  * Step 1: Require the Slim Framework using Composer's autoloader
@@ -19,7 +17,6 @@ use \KSL\Models;
 use \KSL\Controllers;
 
 
-var_dump($config["db"]);
 $capsule = new \Illuminate\Database\Capsule\Manager;
 $capsule->addConnection($config['db']);
 

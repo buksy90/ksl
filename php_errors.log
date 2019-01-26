@@ -92,3 +92,112 @@ Stack trace:
 #4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
 #5 /srv/app/KSL/vendor/illuminate/database/Connection.php(883): call_user_func(Object(Closure))
 #6 /srv/app/KSL/vendor/illuminate/database/Connect in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:24:24 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:24:25 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:24:39 Europe/Bratislava] PHP Notice:  Undefined index: driver in /srv/app/KSL/vendor/illuminate/database/DatabaseManager.php on line 115
+[26-Jan-2019 14:24:39 Europe/Bratislava] PHP Notice:  Undefined index: driver in /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php on line 77
+[26-Jan-2019 14:24:39 Europe/Bratislava] PHP Fatal error:  Uncaught InvalidArgumentException: Unsupported driver [] in /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php:286
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php(77): Illuminate\Database\Connectors\ConnectionFactory->createConnection(NULL, Object(Closure), 'ksl', '', Array)
+#1 /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php(51): Illuminate\Database\Connectors\ConnectionFactory->createSingleConnection(Array)
+#2 /srv/app/KSL/vendor/illuminate/database/DatabaseManager.php(119): Illuminate\Database\Connectors\ConnectionFactory->make(Array, 'default')
+#3 /srv/app/KSL/vendor/illuminate/database/DatabaseManager.php(74): Illuminate\Database\DatabaseManager->makeConnection('default')
+#4 /srv/app/KSL/vendor/illuminate/database/Eloquent/Model.php(1058): Illuminate\Database\DatabaseManager->connection('default')
+#5 /srv/app/KSL/vendor/illuminate/database/Eloquent/Model.php(1024): Illuminate\Database\Eloquent\Model::resolveConnection( in /srv/app/KSL/vendor/illuminate/database/Connectors/ConnectionFactory.php on line 286
+[26-Jan-2019 14:24:41 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:29:04 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:29:05 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:42:35 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:42:36 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:42:38 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 14:43:01 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 16:15:31 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
+[26-Jan-2019 16:16:58 Europe/Bratislava] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ksl.v2_teams' doesn't exist in /srv/app/KSL/vendor/illuminate/database/Connection.php:319
+Stack trace:
+#0 /srv/app/KSL/vendor/illuminate/database/Connection.php(319): PDO->prepare('select `name`, ...')
+#1 /srv/app/KSL/vendor/illuminate/database/Connection.php(640): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name`, ...', Array)
+#2 /srv/app/KSL/vendor/illuminate/database/Connection.php(607): Illuminate\Database\Connection->runQueryCallback('select `name`, ...', Array, Object(Closure))
+#3 /srv/app/KSL/vendor/illuminate/database/Connection.php(326): Illuminate\Database\Connection->run('select `name`, ...', Array, Object(Closure))
+#4 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1705): Illuminate\Database\Connection->select('select `name`, ...', Array, true)
+#5 /srv/app/KSL/vendor/illuminate/database/Query/Builder.php(1690): Illuminate\Database\Query\Builder->runSelect()
+#6 /srv/app/KSL/vendor/ in /srv/app/KSL/vendor/illuminate/database/Connection.php on line 647
