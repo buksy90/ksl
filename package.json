@@ -1,13 +1,21 @@
 {
   "name": "ksl",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
+  "dependencies": {
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-scripts": "2.1.3"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "backend": "docker-compose up",
     "backend-build": "docker-compose up --build",
-    "docker-clean": "docker-compose down && yes | docker container prune && yes | docker volume prune"
+    "docker-clean": "docker-compose down && yes | docker container prune && yes | docker volume prune",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",
@@ -18,5 +26,14 @@
   "bugs": {
     "url": "https://github.com/buksy90/ksl/issues"
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "homepage": "https://github.com/buksy90/ksl#readme"
 }
