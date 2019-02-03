@@ -2,12 +2,12 @@ import React, { Component, Suspense, lazy } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
-import configureStore, { history } from './configureStore'
+import configureStore, { history } from '../configureStore'
 
 import MainMenu from "./MainMenu";
 
-const Home = lazy(() => import('./pages/Home'));
-const Schedule = lazy(() => import('./pages/Schedule'));
+const Home = lazy(() => import('../pages/Home'));
+const Schedule = lazy(() => import('../pages/Schedule'));
 
 const store = configureStore(/* provide initial state if any */)
 
