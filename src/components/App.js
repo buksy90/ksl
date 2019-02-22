@@ -6,8 +6,9 @@ import configureStore, { history } from '../configureStore'
 
 import MainMenu from "./MainMenu";
 
-const Home = lazy(() => import('../pages/Home'));
-const Schedule = lazy(() => import('../pages/Schedule'));
+const Home = lazy(() => import('./pages/Home'));
+const Schedule = lazy(() => import('./pages/Schedule'));
+const AboutUs = lazy(() => import('./pages/AboutUs'));
 
 const store = configureStore(/* provide initial state if any */)
 
@@ -23,6 +24,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={props => <Home {...props}/>}/>
               <Route path="/schedule" component={props => <Schedule {...props}/>}/>
+              <Route path="/aboutUs" component={props => <AboutUs {...props}/>}/>
             </Switch>
           </Suspense>
         </div>
