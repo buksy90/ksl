@@ -6,9 +6,9 @@ import configureStore, { history } from '../configureStore'
 
 import MainMenu from "./MainMenu";
 
-const Home = lazy(() => import('./pages/Home'));
-const Schedule = lazy(() => import('./pages/Schedule'));
-const AboutUs = lazy(() => import('./pages/AboutUs'));
+const Home = lazy(() => import('../pages/Home'));
+const Schedule = lazy(() => import('../pages/Schedule'));
+const AboutUs = lazy(() => import('../pages/AboutUs'));
 
 const store = configureStore(/* provide initial state if any */)
 
