@@ -20,6 +20,7 @@
     "docker-clean": "docker-compose down && yes | docker container prune && yes | docker volume prune",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "eslint": "node node_modules/eslint/bin/eslint.js -c .eslintrc.json src/ --fix",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
