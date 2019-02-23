@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom'
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const dropDownStyles = { cursor: "pointer" };
 var dropdownId = 0;
@@ -14,7 +14,7 @@ class DropDown extends PureComponent {
             id: dropdownId++,
             opened: false,
             links: this.props.items.map(item => <Link to={item.link} className="dropdown-item" key={item.link}>{item.text}</Link>)
-         };
+        };
     }
 
     menuOnClick() {
@@ -39,7 +39,7 @@ DropDown.propTypes = {
         link: PropTypes.string,
         text: PropTypes.string
     }))
-}
+};
 
 export default class MainMenu extends PureComponent {
     constructor(props) {
