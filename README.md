@@ -3,8 +3,8 @@
 ## install
 **Front-end**
 ~~~~
-npm run install # install
-npm run start # run
+npm install
+npm run start
 ~~~~
 
 open page at http://localhost:3000/
