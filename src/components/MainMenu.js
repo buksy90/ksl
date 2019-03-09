@@ -69,7 +69,7 @@ export default class MainMenu extends PureComponent {
                             <li className="nav-item"><Link to="/schedule" className="nav-link">Rozpis</Link></li>
                             <li className="nav-item"><a className="nav-link" href="/tabulka">Tabuľky</a></li>
                             <li className="nav-item"><a className="nav-link" href="/playground">Ihriská</a></li>
-                            <DropDown text="Liga" items={[{text: "Test1", link: "link1"}]}/>
+                            <DropDown text="Liga" items={[{text: "O nás", link: "/aboutUs"}]}/>
                             <li className="nav-item navbar-right"><a className="nav-link" href="/login/facebook">Prihlásiť</a></li>
                         </ul>
                     </div>

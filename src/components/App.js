@@ -8,7 +8,7 @@ import MainMenu from "./MainMenu";
 
 const Home = lazy(() => import('../pages/Home'));
 const Schedule = lazy(() => import('../pages/Schedule'));
-const PlayGroundList = lazy(() => import('../pages/PlaygroundList'));
+const PlaygroundList = lazy(() => import('../pages/PlaygroundList'));
 
 const store = configureStore(/* provide initial state if any */)
 
@@ -24,8 +24,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={props => <Home {...props}/>}/>
               <Route path="/schedule" component={props => <Schedule {...props}/>}/>
-              <Route path="/playground" component={props => <PlayGroundList heading="Ihriská"
-               listTitle="Zoznamy ihrísk"/>}/>
+              <Route path="/playground" component={props => <PlaygroundList {...props}/>}/>
             </Switch>
           </Suspense>
         </div>
