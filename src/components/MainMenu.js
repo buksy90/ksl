@@ -64,7 +64,7 @@ export default class MainMenu extends PureComponent {
                     </button>
 
                     <div className={"collapse navbar-collapse" + (this.state.opened ? " show" : "")} id="navbarSupportedContent">
-                        <ul className="navbar-nav w-100 d-flex ">
+                        <ul className="navbar-nav w-100">
                             <li className="nav-item active p-2"><Link to="/" className="nav-link">Úvod</Link></li>
                             <li className="nav-item p-2"><Link to="/schedule" className="nav-link">Rozpis</Link></li>
                             <li className="nav-item p-2"><a className="nav-link" href="/tabulka">Tabuľky</a></li>
