@@ -1,15 +1,13 @@
-import React from 'react';
-import providers from '../dataProvider';
+import React, { PureComponent } from 'react';
 
-const playgrounds = providers.getPlaygroundsList();
-const playgroundListItem = playgrounds.map( (playground,i) =>
-
-    <li className="list-group-item list-group-item-action list-group-item-light" key={playground.id}>
-    <a href='' > {playground.name} </a>
-    <span className="float-right"> {playground.district} </span>
-    </li>
-
-);
-
-export default playgroundListItem;
+export default class Playground extends PureComponent {
+    render() {
+        return (
+            <li className="list-group-item list-group-item-action list-group-item-light" key={this.props.id}>
+                <a href='' > {this.props.name} </a>
+                <span className="float-right"> {this.props.district} </span>
+            </li>
+        );
+    }
+}
 
