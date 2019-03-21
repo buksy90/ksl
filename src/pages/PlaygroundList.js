@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import playgroundListItem from '../components/Playground';
+import providers from '../dataProvider';
+import Playground from '../components/Playground';
 
 export default class PlayGroundList extends Component {
-  render(){
+  constructor(props){
+    super(props);
+    this.playgroundList = providers.getPlaygroundsList();
+  }
+  render() {
     return (
       <div className="container">
           <h1 className="display-4 border-bottom mb-4 mt-5">Ihriská</h1>
@@ -11,7 +16,11 @@ export default class PlayGroundList extends Component {
                     Zoznam ihrísk
                 </div>
                 <ul className="list-group list-group-flush">
-                    {playgroundListItem}
+                  {
+                    this.playgroundList.map( playground => (
+                      <Playground key={playground.id} name={playground.name} district={playground.district} />
+                    ))
+                  }
                 </ul>
           </div>
       </div>    
