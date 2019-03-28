@@ -1,27 +1,76 @@
+function graphQlRequest(query, variables) {
+    var debug = false;
+    var host = debug ? "//backend.ksl.localhost:3300/api.php" : "http://new.ksl.sk/api.php";
+    return fetch(host, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        mode: "cors",
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "omit", // include, *same-origin, omit
+        body: JSON.stringify({
+            query,
+            variables: variables,
+        })
+    })
+    .then(r => r.json())
+    .then(response => {
+        console.log('data returned:', response); 
+        return response.data;
+    });
+}
+
 const providers = {
-    getNewsList: function() {
-        return [
-            { id: 1, title: "Title 1", text: "This is text of new's item." },
-            { id: 2, title: "Title 2", text: "This is text of new's item." },
-            { id: 3, title: "Title 3", text: "This is text of new's item." },
-        ];
+    getTeamsStandings: function() {
+        var query = '{ teams { id, name } }';
+        graphQlRequest(query);
     },
 
-    getTeamsList: function() {
-        return [
-            { id: 1, name: "Team 1" },
-            { id: 2, name: "Team 2" },
-            { id: 3, name: "Team 3" },
-            { id: 4, name: "Team 4" },
-        ];
+    getNewsList: function() {
+        return graphQlRequest('{ news { id, title, text, date } }');
+    },
+
+    getMenuTeamsList: function() {
+        return graphQlRequest('{ teams { id, name } }');
     },
 
     getPlaygroundsList: function() {
-        return [
-            { id: 1, name: "Playground 1", district: "District 1" },
-            { id: 2, name: "Playground 2", district: "District 2" },
-            { id: 3, name: "Playground 3", district: "District 3" },
-        ];
+        return graphQlRequest('{ playgrounds { id, name, address, district } }');
+    },
+
+    get2ptShooters: function() {
+        return graphQlRequest(`{
+            shooters_2pt { 
+              standing
+              player { display_name },
+              team { name },
+              games,
+              points,
+              average
+            }
+          }`);
+    },
+
+    get3ptShooters: function() {
+        return graphQlRequest(`{
+            shooters_3pt { 
+              standing
+              player { display_name },
+              team { name },
+              games,
+              points,
+              average
+            }
+          }`);
+    },
+
+    getListOfPlayingDates: function() {
+        return graphQlRequest(`{matchDays {
+            timestamp,
+            date
+          }}`)
     }
 };
 
