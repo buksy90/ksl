@@ -5,7 +5,11 @@ import Playground from '../components/Playground';
 export default class PlayGroundList extends Component {
   constructor(props){
     super(props);
-    this.playgroundList = providers.getPlaygroundsList();
+    
+    this.state = { list: [] };
+    providers.getPlaygroundsList().then(data => {
+      this.setState({ list: data.playgrounds });
+    });
   }
   render() {
     return (
@@ -17,7 +21,7 @@ export default class PlayGroundList extends Component {
                 </div>
                 <ul className="list-group list-group-flush">
                   {
-                    this.playgroundList.map( playground => (
+                    this.state.list.map( playground => (
                       <Playground key={playground.id} name={playground.name} district={playground.district} />
                     ))
                   }

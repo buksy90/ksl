@@ -206,4 +206,56 @@ class Players extends Base
 
         return $games->first();
     }
+
+
+     //
+    // Get list of shooters with statistics
+    //
+    // Args:
+    // $only3pt - (bool) whether to count only 3pts made
+    //
+    //
+    //  TODO : ONLY PLAYERS THAT HAS PLAYED MORE THAN 50% OF TEAM GAMES SHOULD BE RETURNED
+    //
+    //
+    public static function GetShooters($only3pt = null) {
+        $season     = Season::GetActual();
+        if($season instanceof Season === false) return false;
+        
+        $teamsCollection    = Teams::orderBy('id', 'ASC')->get();
+        $teams              = [ ];
+        foreach($teamsCollection as $team) {
+            $teams[$team->id] = $team;
+        }
+        
+        $playersTableName   = Players::getTableName();
+        $rosterTableName    = Roster::getTableName();
+        
+        $shooters = Players::join($rosterTableName, function($join) use($season, $playersTableName, $rosterTableName) {
+            $join->on($playersTableName.'.id', '=', $rosterTableName.'.player_id');
+            $join->where($rosterTableName.'.season_id', '=', $season->id);
+        })->get()->map(function($player) use($only3pt, $teams) {
+            $team       = $teams[$player->team_id];
+            $games      = $player->GetGamesCount();
+            $points     = $player->GetPointsSum($only3pt);
+    
+            return [
+                'player'            => $player,
+                'team'              => $team,
+                'games'             => $games,
+                'points'            => $points,
+                'average'           => $games > 0 ? round($points / $games, 2) : 0
+            ];
+        })->toArray();
+        
+        usort($shooters, function($a, $b){
+            return $b['average']*100 - $a['average']*100;
+        });
+
+        for($i = 0; $i < count($shooters); $i++) {
+            $shooters[$i]['standing'] = $i + 1;
+        }
+        
+        return $shooters;
+    }
 }

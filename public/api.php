@@ -1,8 +1,14 @@
 <?php
-use \Illuminate\Database\Connection;
-use \KSL\Models;
-use \KSL\Controllers;
-
+// If CORS Preflight request is made
+// response with preflight headers
+if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    header('Access-Control-Allow-Methods: POST');
+    header('Access-Control-Allow-Headers: content-type');
+    header('Access-Control-Max-Age: 86400'); // 24 hours
+    header('Access-Control-Allow-Origin: *');
+    //header('Access-Control-Expose-Headers: Content-Length');
+    exit();
+}
 
 session_start();
 
@@ -16,6 +22,9 @@ define('DIR_ROOT', __DIR__.'/..');
 require DIR_ROOT.'/KSL/config.php';
 require DIR_ROOT.'/KSL/vendor/autoload.php';
 
+
+use GraphQL\GraphQL;
+use GraphQL\Error\Debug;
 
 $capsule = new \Illuminate\Database\Capsule\Manager;
 $capsule->addConnection($config['db']);
@@ -46,11 +55,30 @@ $container['connection'] = function($c) use ($capsule) {
     return $capsule->getConnection();
 };
 
-
-$container['twig']  = \KSL\Templates::getTwig($app->getContainer());
-
-
-\KSL\Routes::set($app);
+require __DIR__.'/schema.php';
 
 
-$app->run();
+$rawInput = file_get_contents('php://input');
+$input = json_decode($rawInput, true);
+$query = $input['query'];
+$variableValues = isset($input['variables']) ? $input['variables'] : null;
+
+try {
+    $result = GraphQL::executeQuery($schema, $query, null, null, $variableValues);
+
+    $debug = Debug::INCLUDE_DEBUG_MESSAGE | Debug::RETHROW_INTERNAL_EXCEPTIONS | Debug::INCLUDE_TRACE;
+    $output = $result->toArray($debug);
+} catch (\Exception $e) {
+    $output = [
+        'errors' => [
+            [
+                'message' => $e->getMessage()
+            ]
+        ]
+    ];
+}
+
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+
+die(json_encode($output));
