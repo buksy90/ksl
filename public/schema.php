@@ -7,6 +7,37 @@ use \KSL\Models;
 
 $team = null;
 
+$playgroundType = new ObjectType([
+    'name' => 'Playground',
+    'fields' => [
+        'id' => [ 'type' => Type::int() ],
+        'name' => [ 'type' => Type::string() ],
+        'address' => [ 'type' => Type::string() ],
+        'district' => [ 'type' => Type::string() ],
+        'latitude' => [ 'type' => Type::float() ],
+        'longitude' => [ 'type' => Type::float() ],
+    ]
+]);
+
+$dateType = new ObjectType([
+    'name' => 'Date',
+    'fields' => [
+        'timestamp' => [ 'type' => Type::int() ],
+        'date' => [ 
+            'type' => Type::string(),
+            'description' => 'Date format that should be parsable using javascripts Date.parse()',
+            'resolve' => function($date) { 
+                return date('c', $date['timestamp']); 
+            }
+        ],
+        'date_human' => [
+            'type' => Type::string(),
+            'description' => 'Date format that is easily read by human',
+            'resolve' => function($date) { return date('r', $date['timestamp']); }
+        ]
+    ]
+]);
+
 $player = New ObjectType([
     'name' => 'Player',
     'fields' => [
@@ -92,6 +123,57 @@ $team = new ObjectType([
     ]
 ]);
 
+$matchType = new ObjectType([
+    'name' => 'Match',
+    'fields' => [
+        'date' => [ 
+            'type' => $dateType,
+            'resolve' => function($match, $args) {
+                return [ 'timestamp' => strtotime($match->date) ];
+            }
+         ],
+        'home_team' => [ 
+            'type' => $team,
+            'resolve' => function($match) { 
+                if(is_numeric($match->hometeam)) {
+                    return Models\Teams::find($match->hometeam);
+                }
+                else return $match->hometeam;
+            }
+        ],
+        'away_team' => [ 
+            'type' => $team,
+            'resolve' => function($match) { 
+                if(is_numeric($match->awayteam)) {
+                    return Models\Teams::find($match->awayteam);
+                }
+                else return $match->awayteam;
+            }
+        ],
+        'playground' => [ 
+            'type' => $playgroundType,
+            'resolve' => function($match) {
+                return Models\Playground::find($match->playground_id);
+            }
+        ],
+        'home_score' => [ 
+            'type' => Type::int(),
+            'description' => 'number of points home team has scored',
+            'resolve' => function($match) { return $match->home_score == null ? null : $match->home_score; } ],
+        'away_score' => [ 
+            'type' => Type::int(),
+            'description' => 'number of points away team has scored',
+            'resolve' => function($match) { return $match->away_score == null ? null : $match->away_score; } ],
+        'played' => [
+            'type' => Type::boolean(),
+            'description' => 'Has the match been played?',
+            'resolve' => function($match) {
+                return $match->home_score != null && $match->away_score != null && strtotime($match->date) < time();
+            }
+        ]
+    ]
+]);
+
 $types = [
     'article' => new ObjectType([
         'name' => 'Article',
@@ -99,7 +181,7 @@ $types = [
             'id' => [ 'type' => Type::int() ],
             'title' => [ 'type' => Type::string() ],
             'text' => [ 'type' => Type::string() ],
-            'date' => [ 'type' => Type::int() ]
+            'date' => [ 'type' => $dateType ]
         ]
     ]),
 
@@ -118,34 +200,9 @@ $types = [
         ]
     ]),
 
-    'playground' => new ObjectType([
-        'name' => 'Playground',
-        'fields' => [
-            'id' => [ 'type' => Type::int() ],
-            'name' => [ 'type' => Type::string() ],
-            'address' => [ 'type' => Type::string() ],
-            'district' => [ 'type' => Type::string() ],
-            'latitude' => [ 'type' => Type::float() ],
-            'longitude' => [ 'type' => Type::float() ],
-        ]
-    ]),
-
-    'date' => new ObjectType([
-        'name' => 'Date',
-        'fields' => [
-            'timestamp' => [ 'type' => Type::int() ],
-            'date' => [ 
-                'type' => Type::string(),
-                'description' => 'Date format that should be parsable using javascripts Date.parse()',
-                'resolve' => function($date) { return date('c', $date['timestamp']); }
-            ],
-            'date_human' => [
-                'type' => Type::string(),
-                'description' => 'Date format that is easily read by human',
-                'resolve' => function($date) { return date('r', $date['timestamp']); }
-            ]
-        ]
-    ]),
+    'playground' => $playgroundType,
+    'date' => $dateType,
+    'match' => $matchType
 ];
 
 
@@ -255,6 +312,28 @@ $queries = new ObjectType([
                 });
                 return $dates;
             }
+        ],
+
+        'matches' => [
+            'type' => Type::listOf($matchType),
+            'resolve' => function($root, $args) {
+                if(array_key_exists('id', $args)) {
+                    $matches = [ Models\Games::find($args['id']) ];
+                }
+                else if(array_key_exists('team_id', $args)) {
+                    $matches = Models\Games::playedBy($args['team_id'])->get();
+                }
+                else $matches = Models\Games::all();
+                
+                return $matches;
+            },
+            'args' => [
+                'id' => [ 'type' => Type::int() ],
+                'team_id' => [
+                    'type' => Type::int(),
+                    'description' => 'Id of team whose matches should be returned'
+                ] 
+            ]   
         ]
     ],
 ]);
