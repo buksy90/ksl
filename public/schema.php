@@ -5,6 +5,8 @@ use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use \KSL\Models;
 
+$team = null;
+
 $player = New ObjectType([
     'name' => 'Player',
     'fields' => [
@@ -20,8 +22,22 @@ $player = New ObjectType([
         ],
         'category' => [ 'type' => Type::string() ],
         'jersey' => [ 'type' => Type::int() ],
+        'team' => [
+            'type' => &$team,
+            'resolve' => function($root, $args) {
+                $roster = Models\Roster::select('team_id')
+                    ->where('player_id', $root->id)
+                    ->orderBy('season_id', 'desc')
+                    ->first();
+
+                $team = Models\Teams::find($roster->team_id);
+
+                return $team;
+            }
+        ]
     ]
 ]);
+
 
 $team = new ObjectType([
     'name' => 'Team',
@@ -29,12 +45,41 @@ $team = new ObjectType([
     'fields' => [
         'id' => [ 'type' => Type::int() ],
         'name' => [ 'type' => Type::string() ],
+        'short' => [ 'type' => Type::string() ],
+        'captain' => [ 
+            'type' => $player, 
+            'resolve' => function($root, $args) {
+                $team = Models\Teams::select('captain_id')->where('id', $root->id)->first();
+                if($team->captain_id) {
+                    $captain = Models\Players::find($team->captain_id);
+                    return $captain;
+                }
+                
+                return null;
+            }
+        ],
         'standing' => [ 'type' => Type::int(), 'description' => 'Position of team in standings' ],
         'score' => [ 
             'type' => Type::string(),
             'description' => 'Number of points team has scored and other teams has scored against it',
             'resolve' => function ($team) {
                 return $team->points_scored . ':' . $team->points_allowed;
+            }
+        ],
+        'current_roster' => [ 
+            'type' => Type::listOf($player),
+            'description' => 'Returns team players from last season',
+            'resolve' => function($root, $args) {
+                $roster = Models\Roster::select('player_id')
+                    ->where('team_id', $root->id)
+                    ->orderBy('season_id', 'desc')
+                    ->get();
+
+                $players = $roster->map(function($roster_item) {
+                    return Models\Players::find($roster_item->player_id);
+                });
+
+                return $players;
             }
         ],
         'games_played' => [ 'type' => Type::int() ],
@@ -109,12 +154,61 @@ $queries = new ObjectType([
     'fields' => [
         'news' => [
             'type' => Type::listOf($types['article']),
-            'resolve' => function() {
-                return Models\News::all();
-            }
+            'resolve' => function($root, $args) {
+                if(array_key_exists('id', $args)) {
+                    $news = [ Models\News::find($args['id']) ];
+                }
+                else $news = Models\News::all();
+
+                return $news;
+            },
+            'args' => [
+                'id' => [ 'type' => Type::int() ]
+            ]
         ],
 
         'teams' => [
+            'type' => Type::listOf($types['team']),
+            'resolve' => function($root, $args) {
+                if(array_key_exists('id', $args)) {
+                    $teams = [ Models\Teams::find($args['id']) ];
+                }
+                else $teams = Models\Teams::all();
+
+                return $teams;
+            },
+            'args' => [
+                'id' => [ 'type' => Type::int() ]
+            ]
+        ],
+
+        'players' => [
+            'type' => Type::listOf($types['player']),
+            'resolve' => function($root, $args) {
+                if(array_key_exists('id', $args)) {
+                    $players = [ Models\Players::find($args['id']) ];
+                }
+                else if(array_key_exists('team_id', $args)) {
+                    $roster = Models\Roster::select('player_id')
+                        ->where('team_id', $args['team_id'])
+                        ->orderBy('season_id', 'desc')
+                        ->get();
+
+                    $players = $roster->map(function($roster_item) {
+                        return Models\Players::find($roster_item->player_id);
+                    });
+                }
+                else $players = Models\Players::all();
+
+                return $players;
+            },
+            'args' => [
+                'id' => [ 'type' => Type::int() ],
+                'team_id' => [ 'type' => Type::int() ]
+            ]
+        ],
+
+        'team_standings' => [
             'type' => Type::listOf($types['team']),
             'resolve' => function() {
                 $teams = Models\Teams::GetStandings();
@@ -140,10 +234,17 @@ $queries = new ObjectType([
 
         'playgrounds' => [
             'type' => Type::listOf($types['playground']),
-            'resolve' => function() {
-                $players = Models\Playground::all();
-                return $players;
-            }
+            'resolve' => function($root, $args) {
+                if(array_key_exists('id', $args)) {
+                    $playgrounds = [ Models\Playground::find($args['id']) ];
+                }
+                else $playgrounds = Models\Playground::all();
+
+                return $playgrounds;
+            },
+            'args' => [
+                'id' => [ 'type' => Type::int() ]
+            ]
         ],
 
         'matchDays' => [
@@ -154,7 +255,7 @@ $queries = new ObjectType([
                 });
                 return $dates;
             }
-        ],
+        ]
     ],
 ]);
 
