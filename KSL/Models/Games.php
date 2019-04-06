@@ -19,11 +19,9 @@ class Games extends Base
         return Teams::find($this->awayteam);
     }
     
-    /*
     public function scopePlayedBy($query, $teamId) {
         return $query->where('hometeam', $teamId)->orWhere('awayTeam', $teamId);
     }
-    */
     
     public function scopeWonBy($query, $teamId) {
         return $query->where([['hometeam', $teamId], ['won', 'home']])->orWhere([['awayTeam', $teamId], ['won', 'away']]);
@@ -32,7 +30,15 @@ class Games extends Base
     public function scopeLostBy($query, $teamId) {
         return $query->where([['hometeam', $teamId], ['won', 'away']])->orWhere([['awayTeam', $teamId], ['won', 'home']]);
     }
-    
+
+    public function scopeAlreadyPlayed($query) {
+        return $query->whereNotNull('won');
+    }
+
+    public function scopeNotPlayedYet($query) {
+        return $query->whereNull('won');
+    }
+
     
     public static function GetNextAtPlayground($playgroundId, $limit = 5) {
         $game   = new Self();
