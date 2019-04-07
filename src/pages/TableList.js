@@ -87,8 +87,8 @@ export default class TableList extends Component {
 
     // Render particular table content
     // Use Bootstrap Card because Bootstrap Panel is not available in Bootstrap v.4
-
     return (
+      
       <div className="container">
         <h1 className="display-4 border-bottom mb-4 mt-5"> Tabuľky </h1>
         <ul className="nav nav-pills mb-3" > {tabList} </ul>
