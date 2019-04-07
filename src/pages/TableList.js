@@ -1,55 +1,24 @@
 import React, { Component } from 'react';
-import Tab from '../components/Tab'
-import StatsTable from '../components/StatsTable'
+//import StatsTable from '../components/StatsTable';
+import providers from '../dataProvider';
 
 export default class TableList extends Component {
+
   constructor(props) {
     super(props);
 
-    /** mock up table data  */
-    const teams = [
-      ['Poradie','Názov tímu','Skóre','Z','V','P','Body','Úspešnosť'],
-      [1,'#TYDAMBOJZ', '503:407',  1,5,0,15, '100%'],
-      [2,'BALKÁNSKE BANÁNY', '385:350',   4,3,1,9, '75%' ],
-      [3,'SOUTH PARK', '396:336',  4,3,1,9, '75%'],
-      [4,'BLACK STREET', '363:389',  4,1,3,3, '25%'],
-      [5,'4FUN','427:477',  5,1,4,3,  '20%'],
-      [6,'BAD BOYZ','271:386',  4,0,4,0, '0%']
-    ];
-
-    const players = [
-      ['Poradie','Hráč','Tím','Zápasy','Body','Priemer',],
-      [1,'Matej Tešliar','BALKÁNSKE BANÁNY',  0,0,0] ,
-      [2,'Filip Duda','4FUN',0,0,0 ],
-      [3,'Romana Strehlíková','SOUTH PARK',0,0,0 ],
-      [4,'Peter Kriller','SOUTH PARK',0,0,0 ],
-      [5,'Jakub Tušan','4FUN', 0,0,0 ]
-    ];
-
-    const playerTriples = [
-      ['Poradie','Hráč','Tím','Zápasy','Body','Priemer',],
-      [1,'Peter Kriller','SOUTH PARK',0,0,0 ],
-      [2,'Jakub Tušan','4FUN', 0,0,0 ],
-      [3,'Romana Strehlíková','SOUTH PARK',0,0,0 ],
-      [4,'Matej Tešliar','BALKÁNSKE BANÁNY',  0,0,0] ,
-      [5,'Filip Duda','4FUN',0,0,0 ],
-    ];
-
-    /**************************************************************************/
-    /* End of data mock up
-    /**************************************************************************/
-
     // Navigation tab
     const tabs = [
-      { label: 'Poradie tímov', name: 'team-standing', content: teams },
-      { label: 'Strelci', name: 'shooters', content: players },
-      { label: '3 bodový strelci', name: '3p-shooters', content: playerTriples }
+      { label: 'Poradie tímov', name: "teams" },
+      { label: 'Strelci', name: "shooters_2pt" },
+      { label: '3 bodový strelci', name: "shooters_3pt" }
     ];
 
     this.state = {
       tabs: tabs,
       active: 0,
-      content: tabs[0].content,
+      name: "teams",
+      content: [], //content: this.fetchTeamsData(),
       label: tabs[0].label
     }
   }
@@ -57,10 +26,51 @@ export default class TableList extends Component {
   handleOnClick(item, index) {
     this.setState(() => ({
       active: index,
-      content: item.content,
       name: item.name,
-      label: item.label
+      label: item.label,
+      content: []
     }));
+
+    if (item.name === "teams") this.fetchTeamsData();
+    if (item.name === "shooters_2pt") this.fetch2ptShootersData();
+    if (item.name === "shooters_3pt") this.fetch3ptShootersData();
+
+  }
+
+  // Fetch Statistics of each team
+  fetchTeamsData() {
+    providers.getTeamsStandings()
+      .then(data => {
+        this.setState(() => ({
+          content: [] //content: JSON.stringify(data.teams)
+        }));
+      })
+      .catch(error => { console.log("Something went wrong " + error); });
+  }
+
+  // Fetch Statistics of each player 2-point shot
+  fetch2ptShootersData() {
+    providers.get2ptShooters()
+      .then(data => {
+        this.setState(() => ({
+          content: [] //content: JSON.stringify(data.shooters_2pt)
+        }));
+      })
+      .catch(error => {
+        console.log("Something went wrong " + error);
+      });
+  }
+
+  // Fetch Statistics of each player 3-point shot 
+  fetch3ptShootersData() {
+    providers.get3ptShooters().then(data => {
+      this.setState(() => ({
+        content: [] //content: JSON.stringify(data.shooters_3pt)
+      }));
+    })
+      .catch(error => {
+        console.log("Something went wrong " + error);
+      });
   }
 
   render() {
@@ -69,12 +79,15 @@ export default class TableList extends Component {
     const tabList = this.state.tabs.map((item, index) => {
       let isActive = (this.state.active === index ? 'active bg-dark' : '');
       return (
-        <Tab active={isActive} name={item} href={item.name} key={index} onClick={this.handleOnClick.bind(this, item, index)} label={item.label} />
+        <li className="nav-item" key={index} name={index}>
+          <span className={`nav-link btn ${isActive} text-black`} name={item.name} onClick={this.handleOnClick.bind(this, item, index)} > {item.label} </span>
+        </li>
       )
     });
 
     // Render particular table content
     // Use Bootstrap Card because Bootstrap Panel is not available in Bootstrap v.4
+
     return (
       <div className="container">
         <h1 className="display-4 border-bottom mb-4 mt-5"> Tabuľky </h1>
@@ -83,7 +96,14 @@ export default class TableList extends Component {
           <div className="card-header text-white bg-dark ">
             {this.state.label}
           </div>
-          <StatsTable data={this.state.content}/>         
+          {this.state.content}
+          {/* 
+          /** 
+           * it will be replaced by KslTable
+           * StatsTable were created only as mock up table
+           * * 
+          <StatsTable data={this.state.content} />   
+          */}
         </div>
       </div>
     );
