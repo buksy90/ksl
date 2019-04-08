@@ -24,8 +24,7 @@ function graphQlRequest(query, variables) {
 
 const providers = {
     getTeamsStandings: function() {
-        var query = '{ teams { id, name } }';
-        graphQlRequest(query);
+        return returngraphQlRequest('{ teams { id, name } }');
     },
 
     getNewsList: function() {
