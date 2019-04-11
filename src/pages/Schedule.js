@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import provider from "../dataProvider";
+import Utils from "../utils";
 
 export default class Schedule extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dates: this.fetchListOfPlayingDates() ? this.fetchListOfPlayingDates() : []
-    }
+      dates: []
+    };
+
+    this.fetchListOfPlayingDates();
   }
 
   fetchListOfPlayingDates() {
@@ -17,17 +20,8 @@ export default class Schedule extends Component {
     })
   }
 
-  getDateOption(date) {
-    const days = ['Nedeľa', 'Pondelok', 'Utorok', 'Streda', 'Štvrtok', 'Piatok', 'Sobota'];
-    const actualDate = new Date(date);
-    const getDay = actualDate.getDay();
-    const getDate = actualDate.getDate();
-    const getMonth = actualDate.getMonth() + 1;
-
-    return `${getDate}.${getMonth} ${days[getDay]}`;
-  }
-
   render() {
+
     return (
       <div className="container">
         <h1 className="display-4 border-bottom mb-4 mt-5">Rozpis</h1>
@@ -38,7 +32,7 @@ export default class Schedule extends Component {
             <select className="custom-select">
               {
                 this.state.dates.map((dateObj, index) => {
-                  const kslDate = this.getDateOption(dateObj.date);
+                  const kslDate = Utils.getDateOption(dateObj.date);
                   return (
                     <option key={index} value={index}> {kslDate} </option>
                   )
