@@ -9,7 +9,7 @@ function graphQlRequest(query, variables, options) {
         },
         mode: "cors",
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: options && options.useCookies ? "include" : "omit",
+        credentials: options && options.cookies ? "include" : "omit",
         body: JSON.stringify({
             query,
             variables: variables,
