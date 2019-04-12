@@ -1,8 +1,6 @@
 <?php
 require 'init.php';
 
-session_start();
-
 try {
     $hybridauthConfig = $container->get('settings')["hybridauth"];
     $hybridauthConfig['callback']  = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/login_facebook.php';

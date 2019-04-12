@@ -1,8 +1,6 @@
 <?php
 require 'init.php';
 
-session_start();
-
 try {
     $user   = new \KSL\Models\User();
     $user->Logout();

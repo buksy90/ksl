@@ -1,12 +1,4 @@
 <?php
-
-
-/**
- * Step 1: Require the Slim Framework using Composer's autoloader
- *
- * If you are not using Composer, you need to load Slim Framework with your own
- * PSR-4 autoloader.
- */
 define('DIR_ROOT', __DIR__.'/..');
 require DIR_ROOT.'/KSL/config.php';
 require DIR_ROOT.'/KSL/vendor/autoload.php';
@@ -17,7 +9,6 @@ $capsule->addConnection($config['db']);
 
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
-
 
 
 /**
@@ -32,11 +23,4 @@ $app        = new Slim\App(['settings' => $config]);
 $container  = $app->getContainer();
 
 
-// DB Connection 
-// TODO: 
-// This shouldn't be needed as models have their own pointer to db instance
-// Right now, only controllers are using this, but all db logic should be moved
-// from controllers to models
-$container['connection'] = function($c) use ($capsule) {
-    return $capsule->getConnection();
-};
+session_start();

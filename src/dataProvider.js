@@ -1,4 +1,4 @@
-function graphQlRequest(query, variables) {
+function graphQlRequest(query, variables, options) {
     var debug = false;
     var host = debug ? "//backend.ksl.localhost:3300/api.php" : "http://new.ksl.sk/api.php";
     return fetch(host, {
@@ -9,7 +9,7 @@ function graphQlRequest(query, variables) {
         },
         mode: "cors",
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "include", // include, *same-origin, omit
+        credentials: options && options.useCookies ? "include" : "omit",
         body: JSON.stringify({
             query,
             variables: variables,
@@ -23,8 +23,8 @@ function graphQlRequest(query, variables) {
 }
 
 const providers = {
-    getCookies: function() {
-        return graphQlRequest('{ user { name } }');
+    getUser: function() {
+        return graphQlRequest('{ user { name } }', null, { cookies: true });
     },
 
     getTeamsStandings: function() {

@@ -17,10 +17,8 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit();
 }
 
+
 require 'init.php';
-
-session_start();
-
 use GraphQL\GraphQL;
 use GraphQL\Error\Debug;
 
