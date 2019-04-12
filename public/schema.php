@@ -202,7 +202,34 @@ $types = [
 
     'playground' => $playgroundType,
     'date' => $dateType,
-    'match' => $matchType
+    'match' => $matchType,
+
+    'user' => new ObjectType([
+        'name' => 'User',
+        'fields' => [
+            'id' => [ 'type' => Type::int() ],
+            //'identifier' => [ 'type' => Type::string() ],
+            //'email' => [ 'type' => Type::string() ],
+            'name' => [ 
+                'type' => Type::string(),
+                'resolve' => function($root) {
+                    return $root->firstName;
+                }
+            ],
+            'surname' => [ 
+                'type' => Type::string(),
+                'resolve' => function($root) {
+                    return $root->lastName;
+                }
+            ],
+            'avatar_url' => [ 
+                'type' => Type::string(),
+                'resolve' => function($root) {
+                    return $root->avatarUrl;
+                }
+            ],
+        ]
+    ]),
 ];
 
 
@@ -336,10 +363,10 @@ $queries = new ObjectType([
             ]   
         ],
 
-        'cookie' => [
-            'type' => Type::string(),
+        'user' => [
+            'type' => $types['user'],
             'resolve' => function($root, $args) {
-               return json_encode($_COOKIE);
+               return Models\User::GetUser();
             }
         ]
     ]

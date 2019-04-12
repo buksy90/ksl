@@ -23,6 +23,10 @@ function graphQlRequest(query, variables) {
 }
 
 const providers = {
+    getCookies: function() {
+        return graphQlRequest('{ user { name } }');
+    },
+
     getTeamsStandings: function() {
         return graphQlRequest('{ teams { id, name } }');
     },

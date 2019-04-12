@@ -1,16 +1,25 @@
 <?php
+$origin = array_key_exists('HTTP_ORIGIN', $_SERVER)
+? $_SERVER['HTTP_ORIGIN']
+: (array_key_exists('HTTP_REFERER', $_SERVER)
+    ? $_SERVER['HTTP_REFERER']
+    : $_SERVER['REMOTE_ADDR']);
+
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: content-type, cookie');
+header('Access-Control-Max-Age: 86400'); // 24 hours
+header('Access-Control-Allow-Origin: '.$origin);
+header('Access-Control-Allow-Credentials: true');
+
 // If CORS Preflight request is made
-// response with preflight headers
+// response only with preflight headers
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    header('Access-Control-Allow-Methods: POST');
-    header('Access-Control-Allow-Headers: content-type, cookie');
-    header('Access-Control-Max-Age: 86400'); // 24 hours
-    header('Access-Control-Allow-Origin: *');
-    //header('Access-Control-Expose-Headers: Content-Length');
     exit();
 }
 
 require 'init.php';
+
+session_start();
 
 use GraphQL\GraphQL;
 use GraphQL\Error\Debug;
@@ -37,8 +46,5 @@ try {
         ]
     ];
 }
-
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
 
 die(json_encode($output));

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
-import dataProvider from '../dataProvider';
+import providers from '../dataProvider';
 
 const dropDownStyles = { cursor: "pointer" };
 var dropdownId = 0;
@@ -47,9 +47,8 @@ export default class MainMenu extends PureComponent {
         super(props);
         this.state = { opened: false };
         this.toggleOnClick = this.toggleOnClick.bind(this);
-
-        console.log(dataProvider);
-        //dataProvider.getCookies();
+        
+        providers.getCookies();
     }
 
     toggleOnClick() {
