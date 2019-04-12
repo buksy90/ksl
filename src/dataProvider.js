@@ -32,7 +32,7 @@ const providers = {
     },
 
     getMenuTeamsList: function() {
-        return graphQlRequest('{ teams { id, name } }');
+        return graphQlRequest('{ teams { short, name } }');
     },
 
     getPlaygroundsList: function() {
