@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import provider from '../dataProvider';
 
 const dropDownStyles = { cursor: "pointer" };
 var dropdownId = 0;
@@ -10,11 +11,12 @@ class DropDown extends PureComponent {
         super(props);
 
         this.menuOnClick = this.menuOnClick.bind(this);
-        this.state = { 
+        this.state = {
             id: dropdownId++,
             opened: false,
             links: this.props.items.map(item => <Link to={item.link} className="dropdown-item" key={item.link}>{item.text}</Link>)
-         };
+        };
+
     }
 
     menuOnClick() {
@@ -22,7 +24,7 @@ class DropDown extends PureComponent {
     }
 
     render() {
-        return  <li className="nav-item dropdown  p-2" onClick={this.menuOnClick}>
+        return <li className="nav-item dropdown  p-2" onClick={this.menuOnClick}>
             <span className="nav-link dropdown-toggle  p-2" href="#" id={"navbarDropdown" + this.state.id} style={dropDownStyles} role="button" aria-haspopup="true" aria-expanded={this.state.opened}>
                 {this.props.text} <span className="caret"></span>
             </span>
@@ -44,12 +46,28 @@ DropDown.propTypes = {
 export default class MainMenu extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = { opened: false };
+        this.state = {
+            opened: false,
+            teamMenuList: []   
+        };
         this.toggleOnClick = this.toggleOnClick.bind(this);
+        this.getMenuTeamsList();
     }
 
     toggleOnClick() {
         this.setState({ opened: !this.state.opened });
+    }
+
+    getMenuTeamsList() {
+        provider.getMenuTeamsList().then(data => {
+            const teamArray = data.teams.map((el,index) =>{
+                return {
+                    text : el.name,
+                    link : `/${el.short}`
+                }
+            });            
+            this.setState({ teamMenuList : teamArray });
+        });
     }
 
     render() {
@@ -57,7 +75,7 @@ export default class MainMenu extends PureComponent {
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container">
                     <Link to="/" className="navbar-brand">
-                        <img src="/images/logo_mini.png" width="77" height="47" alt="KSL.sk logo"/>
+                        <img src="/images/logo_mini.png" width="77" height="47" alt="KSL.sk logo" />
                     </Link>
                     <button className="navbar-toggler" type="button" onClick={this.toggleOnClick} data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -68,8 +86,10 @@ export default class MainMenu extends PureComponent {
                             <li className="nav-item active p-2"><Link to="/" className="nav-link">Úvod</Link></li>
                             <li className="nav-item p-2"><Link to="/schedule" className="nav-link">Rozpis</Link></li>
                             <li className="nav-item p-2"><a className="nav-link" href="/tabulka">Tabuľky</a></li>
+                            {console.log("Dropdown props.items is now \n ------ \n " + JSON.stringify(this.state.teamMenuList))}
+                            <DropDown text="Tímy" items={ this.state.teamMenuList }/>
                             <li className="nav-item p-2"><a className="nav-link" href="/playground">Ihriská</a></li>
-                            <DropDown text="Liga" items={[{text: "O nás", link: "/aboutUs"}]}/>
+                            <DropDown text="Liga" items={[{ text: "O nás", link: "/aboutUs" }]} />
                             <li className="nav-item ml-auto p-2 "><a className="nav-link " href="/login/facebook">Prihlásiť</a></li>
                         </ul>
                     </div>
