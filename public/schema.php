@@ -334,8 +334,15 @@ $queries = new ObjectType([
                     'description' => 'Id of team whose matches should be returned'
                 ] 
             ]   
+        ],
+
+        'cookie' => [
+            'type' => Type::string(),
+            'resolve' => function($root, $args) {
+               return json_encode($_COOKIE);
+            }
         ]
-    ],
+    ]
 ]);
 
 
