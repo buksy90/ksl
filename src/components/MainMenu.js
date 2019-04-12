@@ -70,7 +70,7 @@ export default class MainMenu extends PureComponent {
                             <li className="nav-item p-2"><a className="nav-link" href="/tabulka">Tabuľky</a></li>
                             <li className="nav-item p-2"><a className="nav-link" href="/playground">Ihriská</a></li>
                             <DropDown text="Liga" items={[{text: "O nás", link: "/aboutUs"}]}/>
-                            <li className="nav-item ml-auto p-2 "><a className="nav-link " href="/login/facebook">Prihlásiť</a></li>
+                            <li className="nav-item ml-auto p-2"><a className="nav-link" href="http://new.ksl.sk/login_facebook.php">Prihlásiť</a></li>
                         </ul>
                     </div>
                 </div>
