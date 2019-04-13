@@ -5,19 +5,6 @@ use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use \KSL\Models;
 
-$team = null;
-
-$playgroundType = new ObjectType([
-    'name' => 'Playground',
-    'fields' => [
-        'id' => [ 'type' => Type::int() ],
-        'name' => [ 'type' => Type::string() ],
-        'address' => [ 'type' => Type::string() ],
-        'district' => [ 'type' => Type::string() ],
-        'latitude' => [ 'type' => Type::float() ],
-        'longitude' => [ 'type' => Type::float() ],
-    ]
-]);
 
 $dateType = new ObjectType([
     'name' => 'Date',
@@ -38,7 +25,33 @@ $dateType = new ObjectType([
     ]
 ]);
 
-$player = New ObjectType([
+$articleType = new ObjectType([
+    'name' => 'Article',
+    'fields' => [
+        'id' => [ 'type' => Type::int() ],
+        'title' => [ 'type' => Type::string() ],
+        'text' => [ 'type' => Type::string() ],
+        'date' => [ 'type' => $dateType ]
+    ]
+]);
+
+$playgroundType = new ObjectType([
+    'name' => 'Playground',
+    'fields' => [
+        'id' => [ 'type' => Type::int() ],
+        'name' => [ 'type' => Type::string() ],
+        'address' => [ 'type' => Type::string() ],
+        'district' => [ 'type' => Type::string() ],
+        'latitude' => [ 'type' => Type::float() ],
+        'longitude' => [ 'type' => Type::float() ],
+    ]
+]);
+
+// teamType is defined later but must be 
+// declared here because player references to it
+$teamType = null;
+
+$playerType = New ObjectType([
     'name' => 'Player',
     'fields' => [
         'id' => [ 'type' => Type::int() ],
@@ -54,7 +67,7 @@ $player = New ObjectType([
         'category' => [ 'type' => Type::string() ],
         'jersey' => [ 'type' => Type::int() ],
         'team' => [
-            'type' => &$team,
+            'type' => &$teamType,
             'resolve' => function($root, $args) {
                 $roster = Models\Roster::select('team_id')
                     ->where('player_id', $root->id)
@@ -70,7 +83,7 @@ $player = New ObjectType([
 ]);
 
 
-$team = new ObjectType([
+$teamType = new ObjectType([
     'name' => 'Team',
     'description' => 'Represents team of players',
     'fields' => [
@@ -78,7 +91,7 @@ $team = new ObjectType([
         'name' => [ 'type' => Type::string() ],
         'short' => [ 'type' => Type::string() ],
         'captain' => [ 
-            'type' => $player, 
+            'type' => $playerType, 
             'resolve' => function($root, $args) {
                 $team = Models\Teams::select('captain_id')->where('id', $root->id)->first();
                 if($team->captain_id) {
@@ -98,7 +111,7 @@ $team = new ObjectType([
             }
         ],
         'current_roster' => [ 
-            'type' => Type::listOf($player),
+            'type' => Type::listOf($playerType),
             'description' => 'Returns team players from last season',
             'resolve' => function($root, $args) {
                 $roster = Models\Roster::select('player_id')
@@ -123,6 +136,18 @@ $team = new ObjectType([
     ]
 ]);
 
+$shooterType = new ObjectType([
+    'name' => 'Shooter',
+    'fields' => [
+        'standing' => [ 'type' => Type::int() ],
+        'player' => [ 'type' => $playerType ],
+        'team' => [ 'type' => $teamType ],
+        'games' => [ 'type' => Type::int() ],
+        'points' => [ 'type' => Type::int() ],
+        'average' => [ 'type' => Type::int() ],
+    ]
+]);
+
 $matchType = new ObjectType([
     'name' => 'Match',
     'fields' => [
@@ -133,7 +158,7 @@ $matchType = new ObjectType([
             }
          ],
         'home_team' => [ 
-            'type' => $team,
+            'type' => $teamType,
             'resolve' => function($match) { 
                 if(is_numeric($match->hometeam)) {
                     return Models\Teams::find($match->hometeam);
@@ -142,7 +167,7 @@ $matchType = new ObjectType([
             }
         ],
         'away_team' => [ 
-            'type' => $team,
+            'type' => $teamType,
             'resolve' => function($match) { 
                 if(is_numeric($match->awayteam)) {
                     return Models\Teams::find($match->awayteam);
@@ -174,62 +199,51 @@ $matchType = new ObjectType([
     ]
 ]);
 
+$userType = new ObjectType([
+    'name' => 'User',
+    'fields' => [
+        'id' => [ 'type' => Type::int() ],
+        //'identifier' => [ 'type' => Type::string() ],
+        //'email' => [ 'type' => Type::string() ],
+        'name' => [ 
+            'type' => Type::string(),
+            'resolve' => function($root) {
+                return $root->firstName;
+            }
+        ],
+        'surname' => [ 
+            'type' => Type::string(),
+            'resolve' => function($root) {
+                return $root->lastName;
+            }
+        ],
+        'avatar_url' => [ 
+            'type' => Type::string(),
+            'resolve' => function($root) {
+                return $root->avatarUrl;
+            }
+        ],
+        'roles' => [
+            'type' => Type::listOf(Type::string()),
+            'resolve' => function($user) {
+                $roles = [ 'user' ];
+                if(Models\UserPermissions::HasPermission($user->id, 'admin')) array_push($roles, 'admin');
+
+                return $roles;
+            }
+        ]
+    ]
+]);
+
 $types = [
-    'article' => new ObjectType([
-        'name' => 'Article',
-        'fields' => [
-            'id' => [ 'type' => Type::int() ],
-            'title' => [ 'type' => Type::string() ],
-            'text' => [ 'type' => Type::string() ],
-            'date' => [ 'type' => $dateType ]
-        ]
-    ]),
-
-    'team' => $team,
-    'player' => $player,
-
-    'shooter' => new ObjectType([
-        'name' => 'Shooter',
-        'fields' => [
-            'standing' => [ 'type' => Type::int() ],
-            'player' => [ 'type' => $player ],
-            'team' => [ 'type' => $team ],
-            'games' => [ 'type' => Type::int() ],
-            'points' => [ 'type' => Type::int() ],
-            'average' => [ 'type' => Type::int() ],
-        ]
-    ]),
-
+    'article' => $articleType,
+    'team' => $teamType,
+    'player' => $playerType,
+    'shooter' => $shooterType,
     'playground' => $playgroundType,
     'date' => $dateType,
     'match' => $matchType,
-
-    'user' => new ObjectType([
-        'name' => 'User',
-        'fields' => [
-            'id' => [ 'type' => Type::int() ],
-            //'identifier' => [ 'type' => Type::string() ],
-            //'email' => [ 'type' => Type::string() ],
-            'name' => [ 
-                'type' => Type::string(),
-                'resolve' => function($root) {
-                    return $root->firstName;
-                }
-            ],
-            'surname' => [ 
-                'type' => Type::string(),
-                'resolve' => function($root) {
-                    return $root->lastName;
-                }
-            ],
-            'avatar_url' => [ 
-                'type' => Type::string(),
-                'resolve' => function($root) {
-                    return $root->avatarUrl;
-                }
-            ],
-        ]
-    ]),
+    'user' => $userType
 ];
 
 
@@ -252,7 +266,7 @@ $queries = new ObjectType([
         ],
 
         'teams' => [
-            'type' => Type::listOf($types['team']),
+            'type' => Type::listOf($teamType),
             'resolve' => function($root, $args) {
                 if(array_key_exists('id', $args)) {
                     $teams = [ Models\Teams::find($args['id']) ];
@@ -267,7 +281,7 @@ $queries = new ObjectType([
         ],
 
         'players' => [
-            'type' => Type::listOf($types['player']),
+            'type' => Type::listOf($playerType),
             'resolve' => function($root, $args) {
                 if(array_key_exists('id', $args)) {
                     $players = [ Models\Players::find($args['id']) ];
@@ -293,7 +307,7 @@ $queries = new ObjectType([
         ],
 
         'team_standings' => [
-            'type' => Type::listOf($types['team']),
+            'type' => Type::listOf($teamType),
             'resolve' => function() {
                 $teams = Models\Teams::GetStandings();
                 return $teams;
