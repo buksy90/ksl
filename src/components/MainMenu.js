@@ -13,10 +13,8 @@ class DropDown extends PureComponent {
         this.menuOnClick = this.menuOnClick.bind(this);
         this.state = {
             id: dropdownId++,
-            opened: false,
-            links: this.props.items.map(item => <Link to={item.link} className="dropdown-item" key={item.link}>{item.text}</Link>)
+            opened: false
         };
-
     }
 
     menuOnClick() {
@@ -24,12 +22,13 @@ class DropDown extends PureComponent {
     }
 
     render() {
+        var links = this.props.items.map(item => <Link to={item.link} className="dropdown-item" key={item.link}>{item.text}</Link>);
         return <li className="nav-item dropdown  p-2" onClick={this.menuOnClick}>
             <span className="nav-link dropdown-toggle  p-2" href="#" id={"navbarDropdown" + this.state.id} style={dropDownStyles} role="button" aria-haspopup="true" aria-expanded={this.state.opened}>
                 {this.props.text} <span className="caret"></span>
             </span>
             <div className={"dropdown-menu" + (this.state.opened ? " show" : "")} aria-labelledby={"navbarDropdown" + this.state.id}>
-                {this.state.links}
+                {links}
             </div>
         </li>;
     }
@@ -44,6 +43,8 @@ DropDown.propTypes = {
 }
 
 export default class MainMenu extends PureComponent {
+    leagueDropdown = [{text: "O nás", link: "/aboutUs"}];
+
     constructor(props) {
         super(props);
         this.state = {
@@ -86,10 +87,9 @@ export default class MainMenu extends PureComponent {
                             <li className="nav-item active p-2"><Link to="/" className="nav-link">Úvod</Link></li>
                             <li className="nav-item p-2"><Link to="/schedule" className="nav-link">Rozpis</Link></li>
                             <li className="nav-item p-2"><a className="nav-link" href="/tabulka">Tabuľky</a></li>
-                            {console.log("Dropdown props.items is now \n ------ \n " + JSON.stringify(this.state.teamMenuList))}
                             <DropDown text="Tímy" items={ this.state.teamMenuList }/>
                             <li className="nav-item p-2"><a className="nav-link" href="/playground">Ihriská</a></li>
-                            <DropDown text="Liga" items={[{text: "O nás", link: "/aboutUs"}]}/>
+                            <DropDown text="Liga" items={ this.leagueDropdown }/>
                             <li className="nav-item ml-auto p-2"><a className="nav-link" href="http://new.ksl.sk/login_facebook.php">Prihlásiť</a></li>
                         </ul>
                     </div>
