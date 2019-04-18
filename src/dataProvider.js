@@ -24,7 +24,7 @@ function graphQlRequest(query, variables, options) {
 
 const providers = {
     getUser: function() {
-        return graphQlRequest('{ user { name } }', null, { cookies: true });
+        return graphQlRequest('{ user { name, roles } }', null, { cookies: true });
     },
 
     getTeamsStandings: function() {
