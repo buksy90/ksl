@@ -378,8 +378,8 @@ $queries = new ObjectType([
         ],
 
         'user' => [
-            'type' => $types['user'],
-            'resolve' => function($root, $args) {
+            'type' => $userType,
+            'resolve' => function($root, $args) {                
                return Models\User::GetUser();
             }
         ]
@@ -390,3 +390,5 @@ $queries = new ObjectType([
 $schema = new Schema([
     'query' => $queries
 ]);
+
+return $schema;
