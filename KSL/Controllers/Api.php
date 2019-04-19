@@ -6,33 +6,24 @@ use GraphQL\Error\Debug;
 
 class Api extends Base
 {
-    private $allowedOrigins = ['http://localhost/', 'http://localhost:', 'http://ksl.sk/', 'chrome-extension://'];
+    private $allowedOrigins = ['http://localhost/', 'http://localhost:', 'http://ksl.sk/', 'chrome-extension://', 'phpunit://'];
 
     public function show($request, $response, $args) {
-        $this->sendHeaders($this->getOrigin());
-
-        // If CORS Preflight request is made
-        // response only with preflight headers
-        if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-            exit();
-        }
-        
-        $rawInput = file_get_contents('php://input');
-        $input = json_decode($rawInput, true);
+        $response = $this->sendHeaders($this->getOrigin(), $response);
+        $input = json_decode($this->getInput(), true);
         $query = $input['query'];
         $variableValues = isset($input['variables']) ? $input['variables'] : null;
-        
-        $result = $this->execute($query, $variableValues);
 
+        $result = $this->execute($query, $variableValues);
         return $response->write(json_encode($result));
    }
 
     public function showOptions($request, $response, $args) {
-        $this->sendHeaders($this->getOrigin());
+        $response = $this->sendHeaders($this->getOrigin(), $response);
         return $response;
     }
 
-   public function execute($query, $variableValues) {
+    public function execute($query, $variableValues) {
         $output = null;
 
         try {
@@ -50,17 +41,20 @@ class Api extends Base
         }
 
         return $output;
-   }
+    }
 
-   public function getOrigin() {
+    public function getOrigin() {
         return array_key_exists('HTTP_ORIGIN', $_SERVER)
             ? $_SERVER['HTTP_ORIGIN']
             : (array_key_exists('HTTP_REFERER', $_SERVER)
                 ? $_SERVER['HTTP_REFERER']
-                : $_SERVER['REMOTE_ADDR']);
-   }
+                : (array_key_exists('REMOTE_ADDR', $_SERVER)
+                    ? $_SERVER['REMOTE_ADDR']
+                    : 'phpunit://'
+                    ));
+    }
 
-   public function sendHeaders($origin) {
+    public function sendHeaders($origin, $response) {
         $origin = $this->getOrigin();
         $isAllowed = count(array_filter($this->allowedOrigins, function($allowed) use ($origin) { return strstr($origin, $allowed) !== false; })) == 1;
 
@@ -69,15 +63,22 @@ class Api extends Base
             die('Forbidden for '.$origin);
         }
 
-        header('Access-Control-Allow-Methods: POST');
-        header('Access-Control-Allow-Headers: content-type, cookie');
-        header('Access-Control-Max-Age: 86400'); // 24 hours
-        header('Access-Control-Allow-Origin: '.$origin);
-        header('Access-Control-Allow-Credentials: true');
-   }
+        return $response
+            ->withHeader('Access-Control-Allow-Methods', 'POST')
+            ->withHeader('Access-Control-Allow-Headers', 'content-type, cookie')
+            ->withHeader('Access-Control-Max-Age', '86400')
+            ->withHeader('Access-Control-Allow-Origin', $origin)
+            ->withHeader('Access-Control-Allow-Credentials', 'true');
+    }
 
-   private function getSchema() {
+    private function getSchema() {
         $schema = require DIR_ROOT.'/public/schema.php';
         return $schema;
-   }
+    }
+
+    private function getInput() {
+        return array_key_exists('argv', $_SERVER) && strpos($_SERVER['argv'][0], 'phpunit') !== FALSE
+            ? $_POST['input']
+            : file_get_contents('php://input');
+    }
 }
