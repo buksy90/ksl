@@ -20,13 +20,17 @@ class TestBaseControllers extends \KSL\Test\TestBase {
         $this->app = $app;
     }
 
-    protected function getRouteResponse($route) {
+    protected function getRouteResponse($route, $method = 'GET', $input = null) {
         $environment    = \Slim\Http\Environment::mock([
-            'REQUEST_METHOD' => 'GET',
+            'REQUEST_METHOD' => $method,
             'REQUEST_URI' => $route
         ]);
 
+        $_POST['input'] = json_encode($input);
+
         $request    = \Slim\Http\Request::createFromEnvironment($environment);
+        $request->withParsedBody(["a" => 4]);
+
         $this->app->getContainer()['request'] = $request;
         return $this->app->run(true);
     }

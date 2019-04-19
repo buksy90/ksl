@@ -18,6 +18,8 @@ class TestBase extends \PHPUnit_Framework_TestCase {
 
             self::$config = $config;
 
+            require DIR_ROOT.'/KSL/vendor/autoload.php';
+
             $capsule = new \Illuminate\Database\Capsule\Manager;
             $capsule->addConnection($config['db']);
 

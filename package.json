@@ -21,6 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test-php": "cd KSL && ../KSL/vendor/bin/phpunit 2>&1 && cd ..",
     "eject": "react-scripts eject"
   },
   "repository": {

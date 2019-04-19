@@ -57,6 +57,7 @@ class Routes {
         $app->get('/admin/teams/', '\KSL\Controllers\AdminTeams:show')->setName('admin-teams');
         $app->get('/admin/teams/{id}', '\KSL\Controllers\AdminTeams:showEdit')->setName('admin-teams#edit');
         $app->post('/admin/teams/update/{id}', '\KSL\Controllers\AdminTeams:showUpdate')->setName('admin-teams#update');
+        $app->post('/api.php', '\KSL\Controllers\Api:show');
 
 
         $app->get( '/welcome', function($request, $response, $args) {
