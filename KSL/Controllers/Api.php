@@ -77,7 +77,7 @@ class Api extends Base
     }
 
     private function getInput() {
-        return array_key_exists('argv', $_SERVER) && is_string($_SERVER['argv']) && strpos($_SERVER['argv'][0], 'phpunit') !== FALSE
+        return array_key_exists('argv', $_SERVER) && count($_SERVER['argv']) > 0 && strpos($_SERVER['argv'][0], 'phpunit') !== FALSE
             ? $_POST['input']
             : file_get_contents('php://input');
     }

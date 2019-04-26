@@ -10,18 +10,23 @@ $dateType = new ObjectType([
     'name' => 'Date',
     'fields' => [
         'timestamp' => [ 'type' => Type::int() ],
-        'date' => [ 
+        'datetime' => [ 
             'type' => Type::string(),
-            'description' => 'Date format that should be parsable using javascripts Date.parse()',
+            'description' => 'Date and time format that should be parsable using javascripts Date.parse()',
             'resolve' => function($date) { 
                 return date('c', $date['timestamp']); 
             }
         ],
-        'date_human' => [
+        'datetime_human' => [
             'type' => Type::string(),
-            'description' => 'Date format that is easily read by human',
+            'description' => 'Date and time format that is easily read by human',
             'resolve' => function($date) { return date('r', $date['timestamp']); }
-        ]
+        ],
+        'date' => [
+            'type' => Type::string(),
+            'description' => 'Date of match',
+            'resolve' => function($date) { return date('Y-m-d', $date['timestamp']); }
+        ],
     ]
 ]);
 
@@ -391,7 +396,7 @@ $queries = new ObjectType([
         ],
 
         'matchDays' => [
-            'type' => Type::listOf($types['date']),
+            'type' => Type::listOf($dateType),
             'resolve' => function() {
                 $dates = Models\Games::GetListOfDates()->map(function($item) {
                     return [ 'timestamp' => $item ];
@@ -411,6 +416,13 @@ $queries = new ObjectType([
                 }
                 else $matches = Models\Games::all();
                 
+                if(array_key_exists('date', $args)) {
+                    $matches = $matches->filter(function($match) use ($args) {
+                        $matchDate = explode(' ', $match->date);
+                        return $matchDate[0] == $args['date'];
+                    });
+                }
+
                 return $matches;
             },
             'args' => [
@@ -418,7 +430,11 @@ $queries = new ObjectType([
                 'team_id' => [
                     'type' => Type::int(),
                     'description' => 'Id of team whose matches should be returned'
-                ] 
+                ],
+                'date' => [
+                    'type' => Type::string(),
+                    'descirption' => 'Date filter, should be in YYYY-MM-DD format, same information returns matchDays query under date property'
+                ]
             ]   
         ],
 

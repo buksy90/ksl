@@ -72,4 +72,80 @@ class ApiTest extends TestBaseControllers {
         $this->assertTrue($this->compareObjects(['points' => 0, 'points_scored' => 0, 'points_allowed' => 0, 'success_rate' => 0], $teams[2]));
     }
 
+    public function testDateType() {
+        $response       = $this->getRouteResponse('/api.php', 'POST', [
+            'query' => '{ matches { date { timestamp, datetime, datetime_human, date } } }'
+        ]);
+        $body = $response->getBody();
+        $body->seek(0);
+        
+        $result = json_decode($body->read(1024));
+        //var_dump($result);
+        $matches = $result->data->matches;
+
+        $this->assertCount(2, $matches);
+        $this->assertTrue($this->compareObjects(['timestamp' => 1262442600, 'datetime' => '2010-01-02T15:30:00+01:00', 'datetime_human' => 'Sat, 02 Jan 2010 15:30:00 +0100', 'date' => '2010-01-02'], $matches[0]->date));
+        $this->assertTrue($this->compareObjects(['timestamp' => 1860762600, 'datetime' => '2028-12-18T15:30:00+01:00', 'datetime_human' => 'Mon, 18 Dec 2028 15:30:00 +0100', 'date' => '2028-12-18'], $matches[1]->date));
+    }
+
+    public function testMatchesQuery() {
+        $response       = $this->getRouteResponse('/api.php', 'POST', [
+            'query' => '{ matches {
+                date { timestamp },
+                home_team { id },
+                away_team { id },
+                home_score,
+                away_score,
+                played
+              } }'
+        ]);
+        $body = $response->getBody();
+        $body->seek(0);
+        
+        $result = json_decode($body->read(1024));
+        $matches = $result->data->matches;
+
+        $this->assertCount(2, $matches);
+        $this->assertTrue($this->compareObjects(['date' => ['timestamp' => 1262442600], 'home_team' => ['id' => 1], 'away_team' => ['id' => 2], 'home_score' => 11, 'away_score' => 2, 'played' => true], $matches[0]));
+        $this->assertTrue($this->compareObjects(['date' => ['timestamp' => 1860762600], 'home_team' => ['id' => 2], 'away_team' => ['id' => 1], 'home_score' => null, 'away_score' => null, 'played' => false], $matches[1]));
+    }
+
+    public function testMatchesQueryWithTeamArgument() {
+        $response       = $this->getRouteResponse('/api.php', 'POST', [
+            'query' => '{ matches(team_id: 1) {
+                home_team { id },
+                away_team { id },
+                played
+              } }'
+        ]);
+        $body = $response->getBody();
+        $body->seek(0);
+        
+        $result = json_decode($body->read(1024));
+        $matches = $result->data->matches;
+        //var_dump($matches);
+
+        $this->assertCount(2, $matches);
+        $this->assertTrue($this->compareObjects(['home_team' => ['id' => 1], 'away_team' => ['id' => 2], 'played' => true], $matches[0]));
+        $this->assertTrue($this->compareObjects(['home_team' => ['id' => 2], 'away_team' => ['id' => 1], 'played' => false], $matches[1]));
+    }
+
+    public function testMatchesQueryWithDateArgument() {
+        $response       = $this->getRouteResponse('/api.php', 'POST', [
+            'query' => '{ matches(date: "2010-01-02") {
+                date { datetime }
+                played
+              } }'
+        ]);
+        $body = $response->getBody();
+        $body->seek(0);
+        
+        $result = json_decode($body->read(1024));
+        $matches = $result->data->matches;
+        //var_dump($matches);
+        
+        $this->assertCount(1, $matches);
+        $this->assertTrue($this->compareObjects(['date' => ['datetime' => '2010-01-02T15:30:00+01:00'], 'played' => true], $matches[0]));
+    }
+
 }
