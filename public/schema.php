@@ -102,12 +102,18 @@ $teamType = new ObjectType([
                 return null;
             }
         ],
-        'standing' => [ 'type' => Type::int(), 'description' => 'Position of team in standings' ],
+        'standing' => [ 
+            'type' => Type::int(), 
+            'description' => 'Position of team in standings',
+            'resolve' => function($root, $args) {
+                return Models\Teams::TeamStandingOrder($root->id);
+            }
+        ],
         'score' => [ 
             'type' => Type::string(),
             'description' => 'Number of points team has scored and other teams has scored against it',
-            'resolve' => function ($team) {
-                return $team->points_scored . ':' . $team->points_allowed;
+            'resolve' => function ($root, $args) {
+                return Models\Teams::GetStandings($root->id)->points_scored . ':' . Models\Teams::GetStandings($root->id)->points_allowed;
             }
         ],
         'current_roster' => [ 
@@ -126,13 +132,52 @@ $teamType = new ObjectType([
                 return $players;
             }
         ],
-        'games_played' => [ 'type' => Type::int() ],
-        'games_won' => [ 'type' => Type::int() ],
-        'games_lost' => [ 'type' => Type::int() ],
-        'points' => [ 'type' => Type::int(), 'description' => 'Number of points team has in table for wins' ],
-        'points_scored' => [ 'type' => Type::int() ],
-        'points_allowed' => [ 'type' => Type::int() ],
-        'success_rate' => [ 'type' => Type::int() ]
+        'games_played' => [ 
+            'type' => Type::int(), 
+            'resolve' => function($root, $args) {
+                $won =  Models\Games::WonBy($root->id)->count();
+                $lost = Models\Games::LostBy($root->id)->count();
+
+                return $won + $lost;
+            }
+        ],
+        'games_won' => [ 
+            'type' => Type::int(),
+            'resolve' => function($root, $args) {
+                return Models\Games::WonBy($root->id)->count();
+            }
+        ],
+        'games_lost' => [ 
+            'type' => Type::int(),
+            'resolve' => function($root, $args) {
+                return Models\Games::LostBy($root->id)->count();
+            }
+        ],
+        'points' => [ 
+            'type' => Type::int(), 
+            'description' => 'Number of points team has in table for wins',
+            'resolve' => function($root, $args) {
+                return Models\Teams::GetStandings($root->id)->points;
+            }
+        ],
+        'points_scored' => [ 
+            'type' => Type::int(),
+            'resolve' => function($root, $args) {
+                return Models\Teams::GetStandings($root->id)->points_scored;
+            }
+        ],
+        'points_allowed' => [ 
+            'type' => Type::int(),
+            'resolve' => function($root, $args) {
+                return Models\Teams::GetStandings($root->id)->points_allowed;
+            }
+        ],
+        'success_rate' => [ 
+            'type' => Type::int(),
+            'resolve' => function($root, $args) {
+                return (int) Models\Teams::GetStandings($root->id)->success_rate;
+            }
+        ]
     ]
 ]);
 

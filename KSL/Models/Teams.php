@@ -16,6 +16,30 @@ class Teams extends Base
     public function GetCaptain() {
         return Players::find($this->captain_id);
     }
+
+    public function ScopeTeamStandingOrder($query, $teamId) {
+        $modelInstance = new Static();
+        $gamesTable     = Games::getTableName();
+        $sql = '
+            SELECT 
+                tt.id
+                ,(SELECT COUNT(*) FROM '.$gamesTable.' tg WHERE (tt.id = tg.hometeam OR tt.id = tg.awayteam) AND tg.won IS NOT NULL) as `games_played`
+                ,(SELECT COUNT(*) FROM '.$gamesTable.' tg WHERE (tt.id = tg.hometeam AND tg.won = "home") OR (tt.id = tg.awayteam AND tg.won = "away")) as `games_won`
+				,(SELECT COUNT(*) FROM '.$gamesTable.' tg WHERE (tt.id = tg.hometeam OR tt.id = tg.awayteam) AND tg.won = "tied") as `games_tied`
+				,(SELECT `games_won`*3 + `games_tied`) AS `points`
+            FROM
+                '.Teams::getTableName().' tt
+			ORDER BY `points` DESC, `games_played` DESC
+        ';
+
+        $results = $modelInstance->getConnection()->select($sql);
+        for($i = 0; $i < count($results); $i++) {
+            if($results[$i]->id == $teamId)
+                return $i+1;
+        }
+
+        return null;
+    }
     
     // Get standing of current team (instance)
     public function GetStanding() {
