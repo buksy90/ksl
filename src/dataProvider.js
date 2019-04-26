@@ -28,7 +28,7 @@ const providers = {
     },
 
     getTeamsStandings: function() {
-        return graphQlRequest('{ teams { id, name } }');
+        return graphQlRequest('{ teams { standing, name, score, games_played, games_won, games_lost, points, success_rate } }');
     },
 
     getNewsList: function() {

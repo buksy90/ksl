@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import provider from '../dataProvider';
 
-import provider from '../dataProvider';
-provider.getUser();
-
 const dropDownStyles = { cursor: "pointer" };
 var dropdownId = 0;
 
