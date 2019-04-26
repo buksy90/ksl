@@ -86,9 +86,9 @@ export default class MainMenu extends PureComponent {
                         <ul className="navbar-nav w-100">
                             <li className="nav-item active p-2"><Link to="/" className="nav-link">Úvod</Link></li>
                             <li className="nav-item p-2"><Link to="/schedule" className="nav-link">Rozpis</Link></li>
-                            <li className="nav-item p-2"><a className="nav-link" href="/tabulka">Tabuľky</a></li>
+                            <li className="nav-item p-2"><Link className="nav-link" to="/tabulka">Tabuľky</Link></li>
                             <DropDown text="Tímy" items={ this.state.teamMenuList }/>
-                            <li className="nav-item p-2"><a className="nav-link" href="/playground">Ihriská</a></li>
+                            <li className="nav-item p-2"><Link className="nav-link" to="/playground">Ihriská</Link></li>
                             <DropDown text="Liga" items={ this.leagueDropdown }/>
                             <li className="nav-item ml-auto p-2"><a className="nav-link" href="http://new.ksl.sk/login_facebook.php">Prihlásiť</a></li>
                         </ul>
