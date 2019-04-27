@@ -14,9 +14,7 @@ export default class Schedule extends Component {
 
   fetchListOfPlayingDates() {
     provider.getListOfPlayingDates().then(data => {
-      this.setState(() => ({
-        dates: data.matchDays
-      }));
+      this.setState({ dates: data.matchDays });
     })
   }
 
