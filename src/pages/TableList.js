@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-//import StatsTable from '../components/StatsTable';
-import providers from '../dataProvider';
+import KslTable from '../components/KslTable';
+import providers from '../dataProvider'
 
 export default class TableList extends Component {
 
@@ -18,8 +18,9 @@ export default class TableList extends Component {
       tabs: tabs,
       active: 0,
       name: "teams",
-      content: [], //content: this.fetchTeamsData(),
-      label: tabs[0].label
+      content:[] , //content: this.fetchTeamsData(),
+      label: tabs[0].label,
+      header:[],
     }
   }
 
@@ -28,7 +29,7 @@ export default class TableList extends Component {
       active: index,
       name: item.name,
       label: item.label,
-      content: []
+ 
     }));
 
     if (item.name === "teams") this.fetchTeamsData();
@@ -42,7 +43,8 @@ export default class TableList extends Component {
     providers.getTeamsStandings()
       .then(data => {
         this.setState(() => ({
-          content: [] //content: JSON.stringify(data.teams)
+          content: data.teams.map(item => [item.id, item.name]),  
+          header: ["Id", "Tím"]
         }));
       })
       .catch(error => { console.log("Something went wrong " + error); });
@@ -50,10 +52,20 @@ export default class TableList extends Component {
 
   // Fetch Statistics of each player 2-point shot
   fetch2ptShootersData() {
-    providers.get2ptShooters()
-      .then(data => {
-        this.setState(() => ({
-          content: [] //content: JSON.stringify(data.shooters_2pt)
+    providers.get2ptShooters().then(data => {
+        let dataShooters_2pt = data.shooters_2pt.map(item=> 
+          [ item.standing,
+            item.player.display_name, 
+            item.team.name,
+            item.games,
+            item.points, 
+            item.average,
+          ]
+        );
+
+      this.setState(() => ({        
+          content:  dataShooters_2pt,
+          header:  ["Poradie", "Hráč", "Tím", "Zápasy", "Body", "Priemer"],
         }));
       })
       .catch(error => {
@@ -64,8 +76,19 @@ export default class TableList extends Component {
   // Fetch Statistics of each player 3-point shot 
   fetch3ptShootersData() {
     providers.get3ptShooters().then(data => {
-      this.setState(() => ({
-        content: [] //content: JSON.stringify(data.shooters_3pt)
+        let dataShooters_3pt = data.shooters_3pt.map(item=> 
+          [ item.standing,
+            item.player.display_name, 
+            item.team.name,
+            item.games,
+            item.points, 
+            item.average,
+          ]
+        );
+
+      this.setState(() => ({      
+        content: dataShooters_3pt ,
+        header: ["Poradie", "Hráč", "Tím", "Zápasy", "Body", "Priemer"]
       }));
     })
       .catch(error => {
@@ -96,14 +119,9 @@ export default class TableList extends Component {
           <div className="card-header text-white bg-dark ">
             {this.state.label}
           </div>
-          {this.state.content}
-          {/* 
-          /** 
-           * it will be replaced by KslTable
-           * StatsTable were created only as mock up table
-           * * 
-          <StatsTable data={this.state.content} />   
-          */}
+          <div>
+            <KslTable header={this.state.header} data={this.state.content} />
+          </div>
         </div>
       </div>
     );
