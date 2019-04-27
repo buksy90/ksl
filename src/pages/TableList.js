@@ -43,12 +43,8 @@ export default class TableList extends Component {
     providers.getTeamsStandings()
       .then(data => {
         this.setState(() => ({
-          content: data.teams.map((item) => {
-             return (
-              Object.values(item)               
-            )
-          }),  
-          header: ["Id", "Teams"]
+          content: data.teams.map(item => [item.id, item.name]),  
+          header: ["Id", "Tím"]
         }));
       })
       .catch(error => { console.log("Something went wrong " + error); });
@@ -56,22 +52,20 @@ export default class TableList extends Component {
 
   // Fetch Statistics of each player 2-point shot
   fetch2ptShootersData() {
-    providers.get2ptShooters()
-      .then(data => {
-          let dataShooters_2pt = data.shooters_2pt;
-            dataShooters_2pt=dataShooters_2pt.map(x=> 
-              Object.values({ standing: x.standing,
-                              player:Object.values(x.player), 
-                              team: Object.values(x.team),
-                              games: x.games,
-                              points:x.points, 
-                              average: x.average,
-                            })
-              );
-         
-        this.setState(() => ({        
+    providers.get2ptShooters().then(data => {
+        let dataShooters_2pt = data.shooters_2pt.map(item=> 
+          [ item.standing,
+            item.player.display_name, 
+            item.team.name,
+            item.games,
+            item.points, 
+            item.average,
+          ]
+        );
+
+      this.setState(() => ({        
           content:  dataShooters_2pt,
-          header:  ["Standing", "Player", "Team", "Games", "Points", "Average"],
+          header:  ["Poradie", "Hráč", "Tím", "Zápasy", "Body", "Priemer"],
         }));
       })
       .catch(error => {
@@ -82,21 +76,19 @@ export default class TableList extends Component {
   // Fetch Statistics of each player 3-point shot 
   fetch3ptShootersData() {
     providers.get3ptShooters().then(data => {
-      let dataShooters_3pt = data.shooters_3pt;
-        dataShooters_3pt=dataShooters_3pt.map(x=> 
-          Object.values({ standing: x.standing,
-                          player:Object.values(x.player), 
-                          team: Object.values(x.team),
-                          games: x.games,
-                          points:x.points, 
-                          average: x.average,
-                        })
-          );
+        let dataShooters_3pt = data.shooters_3pt.map(item=> 
+          [ item.standing,
+            item.player.display_name, 
+            item.team.name,
+            item.games,
+            item.points, 
+            item.average,
+          ]
+        );
 
-      this.setState(() => ({
-        
+      this.setState(() => ({      
         content: dataShooters_3pt ,
-        header: ["Standing", "Player", "Team", "Games", "Points", "Average"]
+        header: ["Poradie", "Hráč", "Tím", "Zápasy", "Body", "Priemer"]
       }));
     })
       .catch(error => {
