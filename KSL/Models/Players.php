@@ -66,7 +66,9 @@ class Players extends Base
     //
     // Get count of games played by $this player this (Roster::GetActualYear) season
     //
+    // @deprecated
     public function GetGamesCount() {
+        return $this->GetGamesPlayedCount();
         $modelInstance  = new Static();
         $scoreListTable = ScoreList::getTableName();
         
@@ -100,15 +102,8 @@ class Players extends Base
         $scoreListTable     = ScoreList::getTableName();
         $rosterTableName    = Roster::getTableName();
 
-        if($only3pt === true) {
-            $query = ScoreList::select($this->getConnection()->raw('sum(`'.$scoreListTable.'`.`value`="3") as "sum"'));
-            $query->where($scoreListTable.'.value', '3');
-        }
-        else $query = ScoreList::select($this->getConnection()->raw('sum(`'.$scoreListTable.'`.`value`) as "sum"'));
-        
-        $query->where($scoreListTable.'.player_id', $this->id);
-                
-                
+        $query = ScoreList::where($scoreListTable.'.player_id', $this->id)->where($scoreListTable.'.value', $only3pt ? '3' : '2');
+                                
         if($allSeasons !== true) {
             $query->groupBy($scoreListTable.'.player_id')
             ->join($rosterTableName, function($join) use($rosterTableName, $scoreListTable) {
@@ -116,10 +111,8 @@ class Players extends Base
                 $join->where($rosterTableName.'.season_id', '=', Season::GetActual()->id);
             });
         }
-            
-            
-        $fetched = $query->first();
-        return $fetched !== null && is_numeric($fetched->sum) ? $fetched->sum : 0;
+
+        return $query->count();
     }
     
     
@@ -145,7 +138,9 @@ class Players extends Base
 
 
    public function GetRank() {
-       $pointsScored        = $this->GetPointsSum(false, true);
+       $made2pt             = $this->GetPointsSum(false, true);
+       $made3pt             = $this->GetPointsSum(true, true);
+       $pointsScored        = $made2pt*2 + $made3pt*3;
        $scoreListTable      = ScoreList::getTableName();
 
 
@@ -171,7 +166,7 @@ class Players extends Base
 
     public function GetGamesPlayed($season_id = null) {
         $gameRosterTable    = GameRoster::getTableName();
-        $gameTable          = Game::getTableName();
+        $gameTable          = Games::getTableName();
 
         $games = Games::join($gameRosterTable, function($join) use($gameRosterTable, $gameTable) {
                 $join->on($gameTable.'.id', '=', $gameRosterTable.'.game_id');
@@ -182,6 +177,19 @@ class Players extends Base
 
         return $games->get();
    }
+
+   public function GetGamesPlayedCount($season_id = null) {
+    $gameRosterTable    = GameRoster::getTableName();
+    $gameTable          = Games::getTableName();
+    $games = Games::join($gameRosterTable, function($join) use($gameRosterTable, $gameTable) {
+            $join->on($gameTable.'.id', '=', $gameRosterTable.'.game_id');
+            $join->where($gameRosterTable.'.player_id', '=', $this->id);
+        });
+
+    if(is_numeric($season_id)) $games = $games->Where('season_id', $season_id);
+
+    return $games->count("*");
+}
 
 
     public function GetGamesStatistics($season_id = null) {

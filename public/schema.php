@@ -83,7 +83,31 @@ $playerType = New ObjectType([
 
                 return $team;
             }
-        ]
+        ],
+        'matches_count' => [
+            'type' => Type::int(),
+            'resolve' => function($root, $args) {
+                $player = Models\Players::find($root->id);
+
+                return $player->GetGamesPlayedCount();
+            }
+        ],
+        'made_2pt' => [
+            'type' => Type::int(),
+            'resolve' => function($root, $args) {
+                $player = Models\Players::find($root->id);
+
+                return $player->GetPointsSum();
+            }
+        ],
+        'made_3pt' => [
+            'type' => Type::int(),
+            'resolve' => function($root, $args) {
+                $player = Models\Players::find($root->id);
+
+                return $player->GetPointsSum(true);
+            }
+        ],
     ]
 ]);
 

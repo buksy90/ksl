@@ -78,3 +78,4 @@ const providers = {
 };
 
 export default providers;
+export { graphQlRequest };

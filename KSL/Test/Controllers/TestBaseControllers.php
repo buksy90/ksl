@@ -68,7 +68,7 @@ class TestBaseControllers extends \KSL\Test\TestBase {
             
             // or if key1 & key2 are scalar types but are not equal
             else if($key1 != $key2)
-                return 'Following key is not equal: '.$key;
+                return 'Following key is not equal: '.$key.', '.$key1.' vs '.$key2;
         }
 
         return true;

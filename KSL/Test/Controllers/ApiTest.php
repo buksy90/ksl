@@ -148,4 +148,25 @@ class ApiTest extends TestBaseControllers {
         $this->assertTrue($this->compareObjects(['date' => ['datetime' => '2010-01-02T15:30:00+01:00'], 'played' => true], $matches[0]));
     }
 
+    public function testPlayerPoints() {
+        $response       = $this->getRouteResponse('/api.php', 'POST', [
+            'query' => '{ teams(id: 1) {
+                current_roster { surname, matches_count, made_2pt, made_3pt }
+              } }'
+        ]);
+        $body = $response->getBody();
+        $body->seek(0);
+        
+        $result = json_decode($body->read(1024));
+        $teams = $result->data->teams;
+        $roster = $teams[0]->current_roster;
+        //var_dump($teams);
+        
+        $this->assertCount(1, $teams);
+        $this->assertCount(3, $roster);
+        $this->assertTrue($this->compareObjects(['surname' => 'Jordan', 'matches_count' => 1, 'made_2pt' => 4, 'made_3pt' => 0], $roster[0]));
+        $this->assertTrue($this->compareObjects(['surname' => 'Rodman', 'matches_count' => 1, 'made_2pt' => 0, 'made_3pt' => 0], $roster[1]));
+        $this->assertTrue($this->compareObjects(['surname' => 'Pippen', 'matches_count' => 1, 'made_2pt' => 0, 'made_3pt' => 1], $roster[2]));
+    }
+
 }

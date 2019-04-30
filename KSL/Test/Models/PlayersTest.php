@@ -49,11 +49,11 @@ class PlayersTest extends TestBase {
 
     public function testGetPointsSum($only3pt = null, $allSeasons = null) {        
         $jordan = Players::find(1);
-        $this->assertEquals(8, $jordan->GetPointsSum());
+        $this->assertEquals(4, $jordan->GetPointsSum());
         $this->assertEquals(0, $jordan->GetPointsSum(true));
 
         $pippen = Players::find(3);
-        $this->assertEquals(3, $pippen->GetPointsSum());
+        $this->assertEquals(0, $pippen->GetPointsSum());
         $this->assertEquals(1, $pippen->GetPointsSum(true));
     }
 
