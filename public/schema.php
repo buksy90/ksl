@@ -55,6 +55,7 @@ $playgroundType = new ObjectType([
 // teamType is defined later but must be 
 // declared here because player references to it
 $teamType = null;
+$matchType = null;
 
 $playerType = New ObjectType([
     'name' => 'Player',
@@ -115,99 +116,109 @@ $playerType = New ObjectType([
 $teamType = new ObjectType([
     'name' => 'Team',
     'description' => 'Represents team of players',
-    'fields' => [
-        'id' => [ 'type' => Type::int() ],
-        'name' => [ 'type' => Type::string() ],
-        'short' => [ 'type' => Type::string() ],
-        'captain' => [ 
-            'type' => $playerType, 
-            'resolve' => function($root, $args) {
-                $team = Models\Teams::select('captain_id')->where('id', $root->id)->first();
-                if($team->captain_id) {
-                    $captain = Models\Players::find($team->captain_id);
-                    return $captain;
+    'fields' => function() use($playerType, &$matchType) {
+        return [
+            'id' => [ 'type' => Type::int() ],
+            'name' => [ 'type' => Type::string() ],
+            'short' => [ 'type' => Type::string() ],
+            'captain' => [ 
+                'type' => $playerType, 
+                'resolve' => function($root, $args) {
+                    $team = Models\Teams::select('captain_id')->where('id', $root->id)->first();
+                    if($team->captain_id) {
+                        $captain = Models\Players::find($team->captain_id);
+                        return $captain;
+                    }
+                    
+                    return null;
                 }
-                
-                return null;
-            }
-        ],
-        'standing' => [ 
-            'type' => Type::int(), 
-            'description' => 'Position of team in standings',
-            'resolve' => function($root, $args) {
-                return Models\Teams::TeamStandingOrder($root->id);
-            }
-        ],
-        'score' => [ 
-            'type' => Type::string(),
-            'description' => 'Number of points team has scored and other teams has scored against it',
-            'resolve' => function ($root, $args) {
-                return Models\Teams::GetStandings($root->id)->points_scored . ':' . Models\Teams::GetStandings($root->id)->points_allowed;
-            }
-        ],
-        'current_roster' => [ 
-            'type' => Type::listOf($playerType),
-            'description' => 'Returns team players from last season',
-            'resolve' => function($root, $args) {
-                $roster = Models\Roster::select('player_id')
-                    ->where('team_id', $root->id)
-                    ->orderBy('season_id', 'desc')
-                    ->get();
+            ],
+            'standing' => [ 
+                'type' => Type::int(), 
+                'description' => 'Position of team in standings',
+                'resolve' => function($root, $args) {
+                    return Models\Teams::TeamStandingOrder($root->id);
+                }
+            ],
+            'score' => [ 
+                'type' => Type::string(),
+                'description' => 'Number of points team has scored and other teams has scored against it',
+                'resolve' => function ($root, $args) {
+                    return Models\Teams::GetStandings($root->id)->points_scored . ':' . Models\Teams::GetStandings($root->id)->points_allowed;
+                }
+            ],
+            'current_roster' => [ 
+                'type' => Type::listOf($playerType),
+                'description' => 'Returns team players from last season',
+                'resolve' => function($root, $args) {
+                    $roster = Models\Roster::select('player_id')
+                        ->where('team_id', $root->id)
+                        ->orderBy('season_id', 'desc')
+                        ->get();
 
-                $players = $roster->map(function($roster_item) {
-                    return Models\Players::find($roster_item->player_id);
-                });
+                    $players = $roster->map(function($roster_item) {
+                        return Models\Players::find($roster_item->player_id);
+                    });
 
-                return $players;
-            }
-        ],
-        'games_played' => [ 
-            'type' => Type::int(), 
-            'resolve' => function($root, $args) {
-                $won =  Models\Games::WonBy($root->id)->count();
-                $lost = Models\Games::LostBy($root->id)->count();
+                    return $players;
+                }
+            ],
+            'games_played' => [ 
+                'type' => Type::int(), 
+                'resolve' => function($root, $args) {
+                    $won =  Models\Games::WonBy($root->id)->count();
+                    $lost = Models\Games::LostBy($root->id)->count();
 
-                return $won + $lost;
-            }
-        ],
-        'games_won' => [ 
-            'type' => Type::int(),
-            'resolve' => function($root, $args) {
-                return Models\Games::WonBy($root->id)->count();
-            }
-        ],
-        'games_lost' => [ 
-            'type' => Type::int(),
-            'resolve' => function($root, $args) {
-                return Models\Games::LostBy($root->id)->count();
-            }
-        ],
-        'points' => [ 
-            'type' => Type::int(), 
-            'description' => 'Number of points team has in table for wins',
-            'resolve' => function($root, $args) {
-                return Models\Teams::GetStandings($root->id)->points;
-            }
-        ],
-        'points_scored' => [ 
-            'type' => Type::int(),
-            'resolve' => function($root, $args) {
-                return Models\Teams::GetStandings($root->id)->points_scored;
-            }
-        ],
-        'points_allowed' => [ 
-            'type' => Type::int(),
-            'resolve' => function($root, $args) {
-                return Models\Teams::GetStandings($root->id)->points_allowed;
-            }
-        ],
-        'success_rate' => [ 
-            'type' => Type::int(),
-            'resolve' => function($root, $args) {
-                return (int) Models\Teams::GetStandings($root->id)->success_rate;
-            }
-        ]
-    ]
+                    return $won + $lost;
+                }
+            ],
+            'games_won' => [ 
+                'type' => Type::int(),
+                'resolve' => function($root, $args) {
+                    return Models\Games::WonBy($root->id)->count();
+                }
+            ],
+            'games_lost' => [ 
+                'type' => Type::int(),
+                'resolve' => function($root, $args) {
+                    return Models\Games::LostBy($root->id)->count();
+                }
+            ],
+            'points' => [ 
+                'type' => Type::int(), 
+                'description' => 'Number of points team has in table for wins',
+                'resolve' => function($root, $args) {
+                    return Models\Teams::GetStandings($root->id)->points;
+                }
+            ],
+            'points_scored' => [ 
+                'type' => Type::int(),
+                'resolve' => function($root, $args) {
+                    return Models\Teams::GetStandings($root->id)->points_scored;
+                }
+            ],
+            'points_allowed' => [ 
+                'type' => Type::int(),
+                'resolve' => function($root, $args) {
+                    return Models\Teams::GetStandings($root->id)->points_allowed;
+                }
+            ],
+            'success_rate' => [ 
+                'type' => Type::int(),
+                'resolve' => function($root, $args) {
+                    return (int) Models\Teams::GetStandings($root->id)->success_rate;
+                }
+            ],
+            'matches' => [ 
+                'type' => Type::listOf($matchType),
+                'resolve' => function($root, $args) {
+                    $matches = Models\Games::playedBy($root->id)->get();
+
+                    return $matches;
+                }
+            ],
+        ];
+    }
 ]);
 
 $shooterType = new ObjectType([
