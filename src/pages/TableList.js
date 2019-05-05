@@ -23,6 +23,7 @@ export default class TableList extends Component {
       header:[],
     }
   }
+  
 
   handleOnClick(item, index) {
     this.setState(() => ({
