@@ -18,7 +18,7 @@ export default class TableList extends Component {
       tabs: tabs,
       active: 0,
       name: "teams",
-      content:[] , //content: this.fetchTeamsData(),
+      content: [] , //content: this.fetchTeamsData(),
       label: tabs[0].label,
       header:[],
     }
@@ -40,11 +40,23 @@ export default class TableList extends Component {
 
   // Fetch Statistics of each team
   fetchTeamsData() {
-    providers.getTeamsStandings()
-      .then(data => {
+    providers.getTeamsStandings().then(data => {
+       var dataTeams=data.teams.map(item =>          
+            [ item.standing,
+              item.name, 
+              item.score,
+              item.games_played,
+              item.games_won, 
+              item.games_lost,
+              item.points,
+              item.success_rate
+            ]
+          );
+
         this.setState(() => ({
-          content: data.teams.map(item => [item.id, item.name]),  
-          header: ["Id", "Tím"]
+          content:  dataTeams.sort(),
+          header: ["Poradie",  "Tím", "Score", "Odohrané hry", "Výhrý", "Prehry", "Body", "Úspešnosť"]
+
         }));
       })
       .catch(error => { console.log("Something went wrong " + error); });
