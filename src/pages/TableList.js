@@ -17,11 +17,13 @@ export default class TableList extends Component {
     this.state = {
       tabs: tabs,
       active: 0,
-      name: "tems",
+      name: "teams",
       content: [] , //content: this.fetchTeamsData(),
       label: tabs[0].label,
       header:[],
-    };
+    }
+  }
+  
 
     this.fetchTeamsData();
   }
