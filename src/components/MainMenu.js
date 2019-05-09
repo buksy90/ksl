@@ -43,7 +43,11 @@ DropDown.propTypes = {
 }
 
 export default class MainMenu extends PureComponent {
-    leagueDropdown = [{text: "O nás", link: "/aboutUs"}];
+    leagueDropdown = [
+        {text: "O nás", link: "/aboutUs"},
+        {text: "Poplatky a pokuty", link: "/Poplatky"},
+        {text: "Kontaky", link: "/Kontakty"}
+    ];
 
     constructor(props) {
         super(props);
