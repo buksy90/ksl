@@ -21,7 +21,9 @@ export default class TableList extends Component {
       content: [] , //content: this.fetchTeamsData(),
       label: tabs[0].label,
       header:[],
-    }
+    };
+
+    this.fetchTeamsData();
   }
   
 
