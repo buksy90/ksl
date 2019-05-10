@@ -11,6 +11,8 @@ const Schedule = lazy(() => import('../pages/Schedule'));
 const AboutUs = lazy(() => import('../pages/AboutUs'));
 const TableList = lazy(() => import('../pages/TableList'));
 const PlaygroundList = lazy(() => import('../pages/PlaygroundList'));
+const Poplatky = lazy(() => import('../pages/Poplatky'));
+
 
 const store = configureStore(/* provide initial state if any */)
 
@@ -29,6 +31,7 @@ class App extends Component {
               <Route path="/aboutUs" component={props => <AboutUs {...props}/>}/>
               <Route path="/tabulka" component={props => <TableList {...props}/>}/>
               <Route path="/playground" component={props => <PlaygroundList {...props}/>}/>
+              <Route path="/poplatky" component={props => <Poplatky {...props}/>}/>
             </Switch>
           </Suspense>
         </div>
