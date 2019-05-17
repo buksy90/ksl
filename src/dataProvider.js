@@ -15,35 +15,35 @@ function graphQlRequest(query, variables, options) {
             variables: variables,
         })
     })
-    .then(r => r.json())
-    .then(response => {
-        console.log('data returned:', response); 
-        return response.data;
-    });
+        .then(r => r.json())
+        .then(response => {
+            console.log('data returned:', response);
+            return response.data;
+        });
 }
 
 const providers = {
-    getUser: function() {
+    getUser: function () {
         return graphQlRequest('{ user { name, roles } }', null, { cookies: true });
     },
 
-    getTeamsStandings: function() {
+    getTeamsStandings: function () {
         return graphQlRequest('{ teams { standing, name, score, games_played, games_won, games_lost, points, success_rate } }');
     },
 
-    getNewsList: function() {
+    getNewsList: function () {
         return graphQlRequest('{ news { id, title, text, date } }');
     },
 
-    getMenuTeamsList: function() {
-        return graphQlRequest('{ teams { short, name } }');
+    getMenuTeamsList: function () {
+        return graphQlRequest('{ teams { id, short, name } }');
     },
 
-    getPlaygroundsList: function() {
+    getPlaygroundsList: function () {
         return graphQlRequest('{ playgrounds { id, name, address, district } }');
     },
 
-    get2ptShooters: function() {
+    get2ptShooters: function () {
         return graphQlRequest(`{
             shooters_2pt { 
               standing
@@ -56,7 +56,7 @@ const providers = {
           }`);
     },
 
-    get3ptShooters: function() {
+    get3ptShooters: function () {
         return graphQlRequest(`{
             shooters_3pt { 
               standing
@@ -69,10 +69,34 @@ const providers = {
           }`);
     },
 
-    getListOfPlayingDates: function() {
+    getListOfPlayingDates: function () {
         return graphQlRequest(`{matchDays {
             timestamp,
             date
+          }}`)
+    },
+
+    getListOfScheduledMatches: function () {
+        return graphQlRequest(`{ matches {
+            home_team {
+              id,
+              short,
+              games_won,
+              games_lost
+            },
+            away_team {
+              id,
+              short,
+              games_won,
+              games_lost
+            },
+            date {
+              timestamp
+              date,
+              datetime_human
+            }
+            home_score,
+            away_score
           }}`)
     }
 };
