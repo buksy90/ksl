@@ -23,7 +23,7 @@ class DropDown extends PureComponent {
   
     render() {
         var links = this.props.items.map(item => <Link to={item.link} className="dropdown-item" key={item.link}>{item.text}</Link>);
-        return <li className="nav-item dropdown "  onClick={this.menuOnClick}>
+        return <li className="nav-item dropdown " onClick={this.menuOnClick}>
             <span className="nav-link dropdown-toggle  " href="#" id={"navbarDropdown" + this.state.id} style={dropDownStyles} role="button" aria-haspopup="true" aria-expanded={this.state.opened}>
                 {this.props.text} <span className="caret"></span>
             </span>
