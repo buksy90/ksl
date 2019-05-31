@@ -20,11 +20,11 @@ class DropDown extends PureComponent {
     menuOnClick() {
         this.setState({ opened: !this.state.opened });
     }
-  
+
     render() {
         var links = this.props.items.map(item => <Link to={item.link} className="dropdown-item" key={item.link}>{item.text}</Link>);
-        return <li className="nav-item dropdown " onClick={this.menuOnClick}>
-            <span className="nav-link dropdown-toggle  " href="#" id={"navbarDropdown" + this.state.id} style={dropDownStyles} role="button" aria-haspopup="true" aria-expanded={this.state.opened}>
+        return <li className="nav-item dropdown px-lg-2" onClick={this.menuOnClick}>
+            <span className="nav-link dropdown-toggle" href="#" id={"navbarDropdown" + this.state.id} style={dropDownStyles} role="button" aria-haspopup="true" aria-expanded={this.state.opened}>
                 {this.props.text} <span className="caret"></span>
             </span>
             <div className={"dropdown-menu" + (this.state.opened ? " show" : "")} aria-labelledby={"navbarDropdown" + this.state.id}>
@@ -52,7 +52,7 @@ export default class MainMenu extends PureComponent {
         super(props);
         this.state = {
             opened: false,
-            teamMenuList: []   
+            teamMenuList: []
         };
         this.toggleOnClick = this.toggleOnClick.bind(this);
         this.getMenuTeamsList();
@@ -69,7 +69,7 @@ export default class MainMenu extends PureComponent {
                     text : el.name,
                     link : `/${el.short}`
                 }
-            });            
+            });
             this.setState({ teamMenuList : teamArray });
         });
     }
@@ -86,14 +86,14 @@ export default class MainMenu extends PureComponent {
                     </button>
 
                     <div className={"collapse navbar-collapse" + (this.state.opened ? " show" : "")} id="navbarSupportedContent">
-                        <ul className="navbar-nav  w-100 ">
-                            <li className="nav-item active "><Link to="/" className="nav-link">Úvod</Link></li>
-                            <li className="nav-item "><Link to="/schedule" className="nav-link">Rozpis</Link></li>
-                            <li className="nav-item "><Link className="nav-link" to="/tabulka">Tabuľky</Link></li>
-                            <DropDown text="Tímy"  items={ this.state.teamMenuList }/>
-                            <li className="nav-item "><Link className="nav-link" to="/playground">Ihriská</Link></li>
-                            <DropDown text="Liga"  items={ this.leagueDropdown }/>
-                            <li className="nav-item ml-lg-auto "><a className="nav-link" href="http://new.ksl.sk/login_facebook.php">Prihlásiť</a></li>
+                        <ul className="navbar-nav w-100">
+                            <li className="nav-item px-lg-2 active"><Link to="/" className="nav-link">Úvod</Link></li>
+                            <li className="nav-item px-lg-2"><Link to="/schedule" className="nav-link">Rozpis</Link></li>
+                            <li className="nav-item px-lg-2"><Link className="nav-link" to="/tabulka">Tabuľky</Link></li>
+                            <DropDown text="Tímy" items={ this.state.teamMenuList }/>
+                            <li className="nav-item px-lg-2"><Link className="nav-link" to="/playground">Ihriská</Link></li>
+                            <DropDown text="Liga" items={ this.leagueDropdown }/>
+                            <li className="nav-item ml-lg-auto"><a className="nav-link" href="http://new.ksl.sk/login_facebook.php">Prihlásiť</a></li>
                         </ul>
                     </div>
                 </div>
