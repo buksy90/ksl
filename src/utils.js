@@ -12,14 +12,21 @@ const Utils = {
 
   getPlayTime: function (time) {
     const currentDate = new Date(time);
-    const hours = currentDate.getHours();
-    const minutes = currentDate.getMinutes();
+    const hours = currentDate.getHours().toString();
+    const minutes = currentDate.getMinutes().toString();
 
     if (minutes < 10) {
-      return `${hours}:0${minutes}`
+      return hours + ":" + minutes.padStart(2, '0');
     }
-    
-    return `${hours}:${minutes}`;
+    return hours + ":" + minutes
+  },
+
+  getPlayTimeforMobile: function (matchDateTime) {
+
+    const helpArray = matchDateTime.split(' ');
+    helpArray.splice(1, 1, '');
+
+    return helpArray.join(' ');
   }
 
 }
