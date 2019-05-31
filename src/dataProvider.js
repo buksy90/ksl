@@ -30,9 +30,9 @@ const providers = {
     getTeamsStandings: function() {
         return graphQlRequest('{ teams { standing, name, score, games_played, games_won, games_lost, points, success_rate } }');
     },
-
+  
     getNewsList: function() {
-        return graphQlRequest('{ news { id, title, text, date } }');
+        return graphQlRequest('{ news { id, title, text, date {date} } }');
     },
 
     getMenuTeamsList: function() {
