@@ -11,7 +11,7 @@ export default class NewsList extends PureComponent {
           this.setState({ list: data.news });
       });
     }
-
+    
     render() {
         return <div className="container">
                     <div className="border-bottom mt-2">
