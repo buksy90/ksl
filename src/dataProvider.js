@@ -23,27 +23,27 @@ function graphQlRequest(query, variables, options) {
 }
 
 const providers = {
-    getUser: function () {
+    getUser: function() {
         return graphQlRequest('{ user { name, roles } }', null, { cookies: true });
     },
 
-    getTeamsStandings: function () {
+    getTeamsStandings: function() {
         return graphQlRequest('{ teams { standing, name, score, games_played, games_won, games_lost, points, success_rate } }');
     },
 
-    getNewsList: function () {
+    getNewsList: function() {
         return graphQlRequest('{ news { id, title, text, date } }');
     },
 
-    getMenuTeamsList: function () {
+    getMenuTeamsList: function() {
         return graphQlRequest('{ teams { id, short, name } }');
     },
 
-    getPlaygroundsList: function () {
+    getPlaygroundsList: function() {
         return graphQlRequest('{ playgrounds { id, name, address, district } }');
     },
 
-    get2ptShooters: function () {
+    get2ptShooters: function() {
         return graphQlRequest(`{
             shooters_2pt { 
               standing
@@ -56,7 +56,7 @@ const providers = {
           }`);
     },
 
-    get3ptShooters: function () {
+    get3ptShooters: function() {
         return graphQlRequest(`{
             shooters_3pt { 
               standing
@@ -69,14 +69,14 @@ const providers = {
           }`);
     },
 
-    getListOfPlayingDates: function () {
+    getListOfPlayingDates: function() {
         return graphQlRequest(`{matchDays {
             timestamp,
             date
           }}`)
     },
 
-    getListOfScheduledMatches: function () {
+    getListOfScheduledMatches: function() {
         return graphQlRequest(`{ matches {
             home_team {
               id,
