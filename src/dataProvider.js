@@ -15,11 +15,11 @@ function graphQlRequest(query, variables, options) {
             variables: variables,
         })
     })
-    .then(r => r.json())
-    .then(response => {
-        console.log('data returned:', response); 
-        return response.data;
-    });
+        .then(r => r.json())
+        .then(response => {
+            console.log('data returned:', response);
+            return response.data;
+        });
 }
 
 const providers = {
@@ -36,7 +36,7 @@ const providers = {
     },
 
     getMenuTeamsList: function() {
-        return graphQlRequest('{ teams { short, name } }');
+        return graphQlRequest('{ teams { id, short, name } }');
     },
 
     getPlaygroundsList: function() {
@@ -73,6 +73,30 @@ const providers = {
         return graphQlRequest(`{matchDays {
             timestamp,
             date
+          }}`)
+    },
+
+    getListOfScheduledMatches: function() {
+        return graphQlRequest(`{ matches {
+            home_team {
+              id,
+              short,
+              games_won,
+              games_lost
+            },
+            away_team {
+              id,
+              short,
+              games_won,
+              games_lost
+            },
+            date {
+              timestamp
+              date,
+              datetime_human
+            }
+            home_score,
+            away_score
           }}`)
     }
 };
