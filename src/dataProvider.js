@@ -74,7 +74,23 @@ const providers = {
             timestamp,
             date
           }}`)
+    },
+
+    getListOfTeamsDetail: function() {
+        return graphQlRequest(`{ teams { name,short, captain{display_name},current_roster{id}}}`)
+    },
+    getListOfTeamsStatistics: function() {
+        return graphQlRequest(`{ teams { 
+                games_played,
+                games_won,
+                games_lost,
+                standing,
+                points_scored,
+                points_allowed,
+                success_rate
+            }}`)
     }
+   
 };
 
 export default providers;
